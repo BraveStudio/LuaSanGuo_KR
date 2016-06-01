@@ -140,6 +140,9 @@ local function ReadRoleCardConfig()
 		{'passiveSpellId1', tonumber},	--被动技能1ID
 		{'passiveSpellId2', tonumber},	--被动技能2ID
 		{'passiveSpellId3', tonumber},	--被动技能3ID
+		{'passiveSpellId4', tonumber},	--被动技能4ID
+		{'passiveSpellId5', tonumber},	--被动技能5ID
+		{'passiveSpellId6', tonumber},	--被动技能6ID
 	}
 	LoadConfig('data/heroclass.txt', classTableTitle,
 		function (row)
@@ -738,12 +741,32 @@ local ReadPassiveSpellConfig = function()
 		{'id', tonumber},				-- 序号
 		{'name', tostring},				-- 姓名
 		{'describe', tostring},			-- 描述
-		{'range', tonumber},		    -- 技能范围
 		{'hpPercent', tonumber},	    -- 生命加成
 		{'attackPercent', tonumber},    -- 攻击加成
 		{'fasPercent', tonumber},       -- 法术加成
 		{'fafPercent', tonumber},       -- 法防加成
-		{'skillFrdly', tonumber},                 -- 阵营选择
+		{'range', tonumber},		    -- 技能范围
+		{'pos', tonumber},         -- 技能基准点
+		{'skillFrdly', tonumber},       -- 阵营选择
+	 	{'skillCond', tonumber},		-- 值条件(条件)
+	 	{'skillPCond', tonumber},    -- 百分比条件(条件)
+	 	{'skillProb', tonumber},         -- 几率(条件)
+	 	{'skillVal', tonumber},           -- 值(条件)
+	 	{'skillval_pct', tonumber},       -- 百分比(条件)
+	 	{'delay', tonumber},           -- 延迟时间
+		{'interval', tonumber},           -- 间隔时间
+		{'totalTime', tonumber},            -- 总时间
+		{'effect', tonumber},           -- 效果选择
+		{'spc', tonumber},           -- 作用属性
+		{'state', tonumber},           -- 效果状态
+		{'effectVal_pct', tonumber},            -- 百分比
+		{'baseDamage', tonumber},           -- 基础伤害
+		{'damageType', tonumber},        -- 技能伤害类型   
+		{'delayType', tonumber},           -- 延时类型
+		{'param1', tonumber},             -- 参数1
+		{'param2', tonumber},             -- 参数2
+		{'param3', tonumber},             -- 参数3
+		{'param4', tonumber},             -- 参数4
 	}
 
 	local count = 0
