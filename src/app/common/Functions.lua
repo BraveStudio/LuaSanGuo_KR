@@ -1453,6 +1453,9 @@ function Functions.initHeroName(target,id,heroClass,smallClass)
         cc.c3b(255,255,25),   --橙
         cc.c3b(255,63,37),     --红
         cc.c3b(255,63,37),     --红
+        cc.c3b(255,255,25),   --橙
+        cc.c3b(255,63,37),     --红
+        cc.c3b(255,63,37),     --红
     }
     target:setColor(colorValue[1])
     if smallClass ~= nil and smallClass > 0 then 
@@ -1581,7 +1584,7 @@ function Functions.openTabs( tabs ,tab)
 end
 
 --初始化标签页组件
---@param: param format: { widget = , listener = , firstName = , disTabDatas = }
+--@param: param format: { widget = , listener = , firstName = , disTabDatas =,isExe }
 function Functions.initTabComWithSimple(param)
     assert(param and type(param.widget) == "userdata" ,"param is error!")
 
@@ -1614,9 +1617,10 @@ function Functions.initTabComWithSimple(param)
             end
         end
     end
-
     openTabs(firstTab)
-    param.listener(param.firstName)
+    if param.isExe == nil then 
+        param.listener(param.firstName)
+    end
     for k, v in pairs(tabs) do
         local button = v
         -- local selected = button:getChildByName(1)
@@ -1940,11 +1944,12 @@ function Functions.getHeroCrad(widget,data)
     local country = heroCard:getChildByName("country")
     local countryResTable = {"card_shu.png","card_wu.png","card_wei.png","card_qun.png"}
     local frameResTable = {"card_bai.png","card_lv.png", "card_lan.png","card_zi.png", "card_cheng.png","card_hong.png", "card_cai.png"}
-    local sixStarFrameResTable = {"6xingcard_bai.png","6xingcard_lv.png", "6xingcard_lan.png","6xingcard_zi.png", "6xingcard_cheng.png","6xingcard_hong.png", "6xingcard_cai.png"}
-    local stageResTable = {"card_pu.png", "card_zhen.png", "card_gui.png", "card_shen.png", "card_sheng.png", "card_wang.png","card_huang.png"}
+    local sixStarFrameResTable = {"6xingcard_bai.png","6xingcard_lv.png", "6xingcard_lan.png","6xingcard_zi.png", "6xingcard_cheng.png","6xingcard_hong.png", "6xingcard_cai.png",
+                                    "6xingcard_dao.png","6xingcard_mo.png","6xingcard_mie.png"}
+    local stageResTable = {"card_pu.png", "card_zhen.png", "card_gui.png", "card_shen.png", "card_sheng.png", "card_wang.png","card_huang.png","card_dao.png","card_mo","card.mie"}
     -- local bgResTable = {"card_bg1.png","card_bg1.png","card_bg2.png","card_bg3.png","card_bg4.png"}
     -- Functions.loadImageWithWidget(bg, bgResTable[heroStar])
-    local bgResTable = {"card_bg1.png","card_bg2.png","card_bg3.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png"}
+    local bgResTable = {"card_bg1.png","card_bg2.png","card_bg3.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png"}
     Functions.loadImageWithSprite(bg, "tyj/ui_res/HeroCardUI/" .. bgResTable[bigClass])
     Functions.loadImageWithWidget(stage, "tyj/uiFonts_res/" .. stageResTable[bigClass])
     if heroStar >= 6 then
