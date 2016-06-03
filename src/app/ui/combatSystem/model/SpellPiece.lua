@@ -114,12 +114,38 @@ function SpellPiece:initPassiveSkillData_(skillInfo)
     passiveSkillData.m_id = skillInfo["id"]
     passiveSkillData.m_name = skillInfo["name"]
     passiveSkillData.m_describe = skillInfo["describe"]
-    passiveSkillData.m_spellRange = skillInfo["range"]
     passiveSkillData.m_addHp = skillInfo["hpPercent"]
     passiveSkillData.m_addAttack = skillInfo["attackPercent"]
     passiveSkillData.m_addFas = skillInfo["fasPercent"]
     passiveSkillData.m_addFaf = skillInfo["fafPercent"]
-    passiveSkillData.m_skillFrdly = skillInfo["skillFrdly"]
+
+    passiveSkillData.m_SkillRange = skillInfo["range"]
+    passiveSkillData.m_SkillPos = skillInfo["pos"]
+    passiveSkillData.m_SkillFrdly = skillInfo["skillFrdly"]
+    passiveSkillData.m_SkillCond = skillInfo["skillCond"]
+    passiveSkillData.m_SkillPCond = skillInfo["skillPCond"]
+    passiveSkillData.m_SkillProb = skillInfo["skillProb"]
+    passiveSkillData.m_SkillVal = skillInfo["skillVal"]
+    passiveSkillData.m_Skillval_pct = skillInfo["skillval_pct"]
+    passiveSkillData.m_SkillDelay = skillInfo["delay"]
+    if not passiveSkillData.m_SkillDelay or passiveSkillData.m_SkillDelay <= 0 then
+        passiveSkillData.m_SkillDelay = 1
+    end
+    passiveSkillData.m_SkillInterval = skillInfo["interval"]
+    passiveSkillData.m_SkillTotal_time = skillInfo["totalTime"]
+    passiveSkillData.m_SkillEffect = skillInfo["effect"]
+    passiveSkillData.m_SkillSpc = skillInfo["spc"]
+    passiveSkillData.m_SkillState = skillInfo["state"]
+    passiveSkillData.m_SkillEffectVal_pct = skillInfo["effectVal_pct"]
+    passiveSkillData.m_SkillBaseDamage = skillInfo["baseDamage"]
+    passiveSkillData.m_SkillDamageType = skillInfo["damageType"]
+    passiveSkillData.m_SkillDelayType = skillInfo["delayType"]
+    passiveSkillData.m_TriggerPoint = skillInfo['triggerPoint']
+    passiveSkillData.m_TriggerValue = skillInfo['triggerValue']
+    passiveSkillData.m_param1 = skillInfo["param1"]
+    passiveSkillData.m_param2 = skillInfo["param2"]
+    passiveSkillData.m_param3 = skillInfo["param3"]
+    passiveSkillData.m_param4 = skillInfo["param4"]
 
     return passiveSkillData
 end

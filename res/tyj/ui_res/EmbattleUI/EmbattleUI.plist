@@ -26,6 +26,17 @@
 				<key>sourceSize</key>
 				<string>{1136,70}</string>
 			</dict>
+			<key>tyj/ui_res/EmbattleUI/gou.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1142,2},{27,22}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{27,22}</string>
+			</dict>
 		</dict>
 		<key>metadata</key>
 		<dict>
@@ -36,12 +47,12 @@
 			<key>realTextureFileName</key>
 			<string>EmbattleUI.png</string>
 			<key>size</key>
-			<string>{1140,250}</string>
+			<string>{1171,250}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>1140</integer>
+			<integer>1171</integer>
 			<key>height</key>
 			<integer>250</integer>
 		</dict>

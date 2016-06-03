@@ -57,6 +57,7 @@ function EmbattleViewController:onDidLoadView()
 	self._cavarly_t = self.view_t.csbNode:getChildByName("main"):getChildByName("infView"):getChildByName("cavarly")
 	self._zhanLiChangText_t = self.view_t.csbNode:getChildByName("main"):getChildByName("zhanLiChangText")
 	self._zhanLiAn_t = self.view_t.csbNode:getChildByName("main"):getChildByName("zhanLiAn")
+	self._zhenXinTable_t = self.view_t.csbNode:getChildByName("main"):getChildByName("zhenXinTable")
 	
     --label list
     
@@ -103,7 +104,7 @@ function EmbattleViewController:onBackbtClick()
     if EmbattleData:isHaveUpdate() then
         local handler = function ( )
 
-            self:saveEmbattleInf(function()
+            self:saveEmbattleInf(self.currentEmabattlNum,function()
 --                scheduler.performWithDelayGlobal(function()
                         GameCtlManager:pop(self,{data = {jumpData = {isUpdate = self.isUpdate,embattleType = self.Itype}}})
 --                    end, 0)
@@ -147,7 +148,11 @@ end
 function EmbattleViewController:onPianjiangbtClick()
     Functions.printInfo(self.debug,"Pianjiangbt button is click!")
     -- GameCtlManager:goTo("app.ui.partHeroSystem.PartHeroViewController")
-    GameCtlManager:push("app.ui.partHeroSystem.PartHeroViewController",{data = {jumpType = JumpType.EmbattleToPartHero,jumpData = {embattleType = self.Itype}}})
+    if EmbattleData.EmbattleInf.MainHero[1] ~= nil and EmbattleData.EmbattleInf.MainHero[1].id > 0 then
+        GameCtlManager:push("app.ui.partHeroSystem.PartHeroViewController",{data = {jumpType = JumpType.EmbattleToPartHero,jumpData = {embattleType = self.Itype}}})
+    else
+        PromptManager:openTipPrompt(LanguageConfig.language_embattle_3)
+    end    
 end
 --@auto code Pianjiangbt btFunc end
 
@@ -169,7 +174,7 @@ end
 function EmbattleViewController:onSavebtClick()
     Functions.printInfo(self.debug,"Savebt button is click!")
     Functions.playSound("saveformation.mp3") 
-    self:saveEmbattleInf()
+    self:saveEmbattleInf(self.currentEmabattlNum)
 end
 --@auto code Savebt btFunc end
 
@@ -302,6 +307,10 @@ function EmbattleViewController:onDisplayView()
     self.soldierRes.soldier1 = nil
     self.soldierRes.soldier2 = nil
     self.soldierRes.soldier3 = nil
+    --当前显示的阵型
+    self.currentEmabattlNum = 1
+    --当前服务器阵型
+    self.currentServerEmabttleNum = 1
     --是否有保存布阵信息
     self.isUpdate = false
     self:bindEmbattleInf()
@@ -310,7 +319,7 @@ function EmbattleViewController:onDisplayView()
     --self:updateEmbattle()
 
     Functions.addCleanFuncWithNode(self.view_t, handler(self,self.removeAllModelRes))
-
+    
 end
 --@auto code view display func end
 
@@ -346,7 +355,41 @@ end
 --更新布阵信息
 function EmbattleViewController:updateEmbattle()
     EmbattleData:cleanAllEmbattleData()
-    EmbattleData:loadEmbattleData(self.Itype,handler(self,self.initDisplay))
+    EmbattleData:loadEmbattleData(self.Itype, function (event)
+            self.currentEmabattlNum = event.currentEmabattlNum
+            self.currentServerEmabttleNum = event.currentEmabattlNum
+            -- self.currentEmabattlNum = 1
+            EmbattleData:initHeroMark(self.Itype)
+            EmbattleData:writeEmbattleDatatoJson(self.currentEmabattlNum,self.Itype)
+            self:setServerEmbattleFlag(self.currentServerEmabttleNum)
+            local zhenXinTableListner = function (target) 
+            if target == "tb1" then
+               self.currentEmabattlNum = 1
+               EmbattleData:readEmbattleDatafromJson(self.currentEmabattlNum,self.Itype)
+               self:initDisplay()
+            elseif target == "tb2" then
+              self.currentEmabattlNum = 2
+              EmbattleData:readEmbattleDatafromJson(self.currentEmabattlNum,self.Itype)
+              self:initDisplay()
+            elseif target == "tb3" then
+              self.currentEmabattlNum = 3
+              EmbattleData:readEmbattleDatafromJson(self.currentEmabattlNum,self.Itype)
+              self:initDisplay()
+            end 
+        end
+        Functions.initTabComWithSimple({widget = self._zhenXinTable_t,listener = zhenXinTableListner,firstName = "tb" .. self.currentEmabattlNum,isExe = false})
+        EmbattleData:updateAtrrInf(self.Itype)
+        self:initDisplay()
+    end)
+end
+function EmbattleViewController:setServerEmbattleFlag(currentServerEmabttleNum)
+    for i = 1, 3 do
+        if i == currentServerEmabttleNum then 
+            self._zhenXinTable_t:getChildByName("tb" .. i):getChildByName("flag"):setVisible(true)
+        else
+            self._zhenXinTable_t:getChildByName("tb" .. i):getChildByName("flag"):setVisible(false)
+        end
+    end
 end
 --更新带兵数量
 function EmbattleViewController:updateLeadSoldierCout()
@@ -391,11 +434,7 @@ end
 --初始化布阵显示
 function EmbattleViewController:initDisplay(isInitMark)
     PromptManager:openHttpLinkPrompt()
-    --初始化布阵信息
-    if isInitMark or isInitMark == nil then
-        EmbattleData:initHeroMark(self.Itype)
-        EmbattleData:updateAtrrInf(self.Itype)
-    end
+
     self:updateLeadSoldierCout()
     self:cleanSoldierNum()
     if table.empty(self.soldierRes) then 
@@ -417,8 +456,8 @@ function EmbattleViewController:playZhanLiChangAnction( )
         self._zhanLiChangText_t:setFntFile("fonts/gongji.fnt")
         self._zhanLiChangText_t:setText("-" .. tostring(tempZhanLi - EmbattleData.eventAttr.zhanLi))
         self._zhanLiChangText_t:setVisible(true)
-
-
+        self._zhanLiChangText_t:stopAllActions()
+        self._zhanLiAn_t:stopAllActions()
         local fadeinUP = cc.FadeIn:create(0.1)--渐显
         local scaletoUP = cc.ScaleTo:create(0.2, 1) --缩放
         local MoveBy = cc.MoveBy:create(0.3, cc.p(0, -80))
@@ -477,11 +516,12 @@ function EmbattleViewController:initZxMode(mode)
     
     tabs[#tabs+1] =self._table_t:getChildByName("tb1")
     tabs[#tabs+1] =self._table_t:getChildByName("tb2")
+    
     local tableListener = function(target)
-        if target == "tb1" then
+        if target == "tb1" then        
             EmbattleData:regainAllHeroState(self.Itype)
             self.Itype = 1            
-            self:updateEmbattle()  
+            self:updateEmbattle()             
         elseif target == "tb2" then
            EmbattleData:regainAllHeroState(self.Itype)
            self.Itype = 2            
@@ -493,6 +533,7 @@ function EmbattleViewController:initZxMode(mode)
     elseif mode == 2 then
         Functions.initTabComWithSimple({widget = self._table_t ,listener = tableListener, firstName = "tb2"})
     end
+    
 end
 --初始化英雄布阵信息
 function EmbattleViewController:initZX(embattleInf)
@@ -593,15 +634,18 @@ function EmbattleViewController:setFastZxMap(zxData)
                     table.remove(EmbattleData.EmbattleInf.Soldiers,pos)
                     element:removeChild(temp)
                 end
+                --写入本地
+                EmbattleData:writeEmbattleDatatoJson(self.currentEmabattlNum,self.Itype)
             end
             touch:onTouch(Functions.createClickListener(touchClick, ""))
+            --写入本地
+            EmbattleData:writeEmbattleDatatoJson(self.currentEmabattlNum,self.Itype)
         end
         if i >= #zxData then 
             PromptManager:closeShieldLayer()
         end
     end
 end
-
 --根据阵型数据设置布阵地图
 function EmbattleViewController:setZxMap(zxData)
     self:cleanZxMap(0)
@@ -678,6 +722,8 @@ function EmbattleViewController:setZxMap(zxData)
                     table.remove(EmbattleData.EmbattleInf.Soldiers,pos)
                     element:removeChild(temp)
                 end
+                --写入本地
+                EmbattleData:writeEmbattleDatatoJson(self.currentEmabattlNum,self.Itype)
             end
             touch:onTouch(Functions.createClickListener(touchClick, ""))
         end
@@ -784,45 +830,13 @@ function EmbattleViewController:getSoldierTablePos(soldierTable,x,y)
 end
 
 --根据主英雄ID设置布阵
-function EmbattleViewController:setZxMapOfHeroId(id,fast)
-    local zxType = ConfigHandler:getHeroZxNameOfId(id)
-    if zxType == LanguageConfig.language_heyizhen then
-        if fast == nil then
-            self:setZxMap(ConfigHandler:loadZxInfoOfName("heyizhen.tmx"))
-        else
-            self:setFastZxMap(ConfigHandler:loadFastZxInfoOfName("heyizhen.tmx"))
-        end   
-    elseif zxType == LanguageConfig.language_zhuixingzhen then
-        if fast == nil then   
-            self:setZxMap(ConfigHandler:loadZxInfoOfName("zhuixingzhen.tmx"))
-        else
-            self:setFastZxMap(ConfigHandler:loadFastZxInfoOfName("zhuixingzhen.tmx"))
-        end      
-    elseif zxType == LanguageConfig.language_gouxingzhen then
-        if fast == nil then
-            self:setZxMap(ConfigHandler:loadZxInfoOfName("gouxingzhen.tmx"))
-        else
-            self:setFastZxMap(ConfigHandler:loadFastZxInfoOfName("gouxingzhen.tmx"))
-        end 
-    elseif zxType == LanguageConfig.language_changshezhen then
-        if fast == nil then
-            self:setZxMap(ConfigHandler:loadZxInfoOfName("changshezhen.tmx"))
-        else
-            self:setFastZxMap(ConfigHandler:loadFastZxInfoOfName("changshezhen.tmx"))
-        end 
-    elseif zxType == LanguageConfig.language_yuanxingzhen then
-        if fast == nil then
-            self:setZxMap(ConfigHandler:loadZxInfoOfName("yuanxingzhen.tmx"))
-        else
-            self:setFastZxMap(ConfigHandler:loadFastZxInfoOfName("yuanxingzhen.tmx"))
-        end   
-    elseif zxType == LanguageConfig.language_yanxingzhen then
-        if fast == nil then       
-            self:setZxMap(ConfigHandler:loadZxInfoOfName("yanxingzhen.tmx"))
-        else
-            self:setFastZxMap(ConfigHandler:loadFastZxInfoOfName("yanxingzhen.tmx"))
-        end 
-    end
+function EmbattleViewController:setZxMapOfHeroId(id,fast)   
+    local zhenXinData = EmbattleData:getZxData(id)
+    if fast == nil then
+        self:setZxMap(zhenXinData)
+    else
+        self:setFastZxMap(zhenXinData)
+    end   
 end
 function EmbattleViewController:loadHeroModelRes(embattleInf,callback)
     local proLoadHeroRes = {}
@@ -1109,11 +1123,12 @@ function EmbattleViewController:onReceivePopData(jump)
             EmbattleData.EmbattleInf.Soldiers = {} 
         end
     end
+    EmbattleData:writeEmbattleDatatoJson(self.currentEmabattlNum,self.Itype)
     self:initDisplay()
 end
 
 --保存布阵信息
-function EmbattleViewController:saveEmbattleInf(handler)
+function EmbattleViewController:saveEmbattleInf(currentEmabattlNum,handler)
     local onRequest = function(event)
         PromptManager:openTipPrompt(LanguageConfig.language_Teach16)
         EmbattleData:saveAllHeroState(self.Itype)
@@ -1121,7 +1136,10 @@ function EmbattleViewController:saveEmbattleInf(handler)
         GameEventCenter:dispatchEvent({ name = HeroCardData.CARDS_DATA_SORT_EVENT })--发送排序卡牌事件
         if handler ~= nil then 
             handler()
+        else
+            self:setServerEmbattleFlag(currentEmabattlNum)
         end
+
     end
     NetWork:addNetWorkListener({ 1, 3}, Functions.createNetworkListener(onRequest, true, "err"))
 
@@ -1154,9 +1172,9 @@ function EmbattleViewController:saveEmbattleInf(handler)
     local msg = {}
 
     if self.Itype == 1 then
-        msg = {idx = {1, 3},rtype = 1,data = { AttackFormation = { Soldiers = Soldiers,PartHero = PartHero,ViceHeros = ViceHeros,MainHero = MainHero} }}
+        msg = {idx = {1, 3},rtype = 1,data = { currentEmabattlNum = currentEmabattlNum ,AttackFormation = { Soldiers = Soldiers,PartHero = PartHero,ViceHeros = ViceHeros,MainHero = MainHero} }}
     elseif self.Itype == 2 then
-        msg = {idx = {1, 3},rtype = 1,data = { DefenseFormation = { Soldiers = Soldiers,PartHero = PartHero,ViceHeros = ViceHeros,MainHero = MainHero } }}
+        msg = {idx = {1, 3},rtype = 1,data = { currentEmabattlNum = currentEmabattlNum,DefenseFormation = { Soldiers = Soldiers,PartHero = PartHero,ViceHeros = ViceHeros,MainHero = MainHero } }}
     end
     NetWork:sendToServer(msg)
     -- body
@@ -1187,7 +1205,9 @@ function EmbattleViewController:onReceivePushData(jump)
         self.Itype = EmbattleData.EmbattleTypeEnum.attack
     end
 end
-function EmbattleViewController:onReceivePopData(jump) 
-    self:initDisplay(false)
-end
+
+-- function EmbattleViewController:onReceivePopData(jump) 
+--     self:initDisplay(false)
+-- end
+
 return EmbattleViewController
