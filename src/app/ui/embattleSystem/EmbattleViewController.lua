@@ -101,15 +101,13 @@ end
 --@auto code Backbt btFunc
 function EmbattleViewController:onBackbtClick()
     Functions.printInfo(self.debug,"Backbt button is click!")
-    if EmbattleData:isHaveUpdate() then
+    if EmbattleData:isHaveUpdate() and  EmbattleData.EmbattleInf.MainHero[1] ~= nil and EmbattleData.EmbattleInf.MainHero[1].id > 0 then
         local handler = function ( )
-
             self:saveEmbattleInf(self.currentEmabattlNum,function()
---                scheduler.performWithDelayGlobal(function()
-                        GameCtlManager:pop(self,{data = {jumpData = {isUpdate = self.isUpdate,embattleType = self.Itype}}})
---                    end, 0)
-            end)       
+                Functions.playSound("saveformation.mp3") 
+                GameCtlManager:pop(self,{data = {jumpData = {isUpdate = self.isUpdate,embattleType = self.Itype}}})
 
+            end)    
         end
         local handler1 = function ( )
             EmbattleData:regainAllHeroState(self.Itype)
@@ -173,8 +171,12 @@ end
 --@auto code Savebt btFunc
 function EmbattleViewController:onSavebtClick()
     Functions.printInfo(self.debug,"Savebt button is click!")
-    Functions.playSound("saveformation.mp3") 
-    self:saveEmbattleInf(self.currentEmabattlNum)
+    if EmbattleData.EmbattleInf.MainHero[1] ~= nil and EmbattleData.EmbattleInf.MainHero[1].id > 0 then
+        Functions.playSound("saveformation.mp3") 
+        self:saveEmbattleInf(self.currentEmabattlNum)
+    else
+        PromptManager:openTipPrompt(LanguageConfig.language_embattle_3)
+    end
 end
 --@auto code Savebt btFunc end
 

@@ -28,77 +28,77 @@ function EnhanceOnePopView:onInitUI()
 
     --output list
     self._Panel_add_crad_t = self.csbNode:getChildByName("Panel_add_crad")
-	self._ProjectNode_head_card1_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card1"):getChildByName("ProjectNode_head_card1")
-	self._Text_crad_level_text_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_level_text")
-	self._Text_crad_level_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_level")
-	self._LoadingBar_2_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Sprite_bar_bg"):getChildByName("LoadingBar_2")
-	self._LoadingBar_1_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Sprite_bar_bg"):getChildByName("LoadingBar_1")
-	self._Text_crad_up_level_text_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_up_level_text")
-	self._Text_crad_up_level_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_up_level")
-	self._Text_crad_up_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_up_num")
-	self._Text_crad_HP_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_HP_num")
-	self._Text_crad_ATK_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_ATK_num")
-	self._Text_crad_ling_bing_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_ling_bing_num")
-	self._Text_crad_chou_mou_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_chou_mou_num")
-	self._Sprite_card_add_2_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card2"):getChildByName("Sprite_card_add_2")
-	self._Sprite_card_add_3_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card3"):getChildByName("Sprite_card_add_3")
-	self._Sprite_card_add_4_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card4"):getChildByName("Sprite_card_add_4")
-	self._Sprite_card_add_5_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card5"):getChildByName("Sprite_card_add_5")
-	self._Sprite_card_add_6_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card6"):getChildByName("Sprite_card_add_6")
-	self._Sprite_card_add_7_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card7"):getChildByName("Sprite_card_add_7")
-	self._Text_get_EXP_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Sprite_get_EXP_1"):getChildByName("Text_get_EXP_num")
-	self._Text_cost_money_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Sprite_cost_money"):getChildByName("Text_cost_money_num")
-	self._Particle_li_zi_guang_t = self.csbNode:getChildByName("Particle_li_zi_guang")
-	self._Panel_Action_t = self.csbNode:getChildByName("Panel_Action")
-	
+    self._ProjectNode_head_card1_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card1"):getChildByName("ProjectNode_head_card1")
+    self._Text_crad_level_text_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_level_text")
+    self._Text_crad_level_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_level")
+    self._LoadingBar_2_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Sprite_bar_bg"):getChildByName("LoadingBar_2")
+    self._LoadingBar_1_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Sprite_bar_bg"):getChildByName("LoadingBar_1")
+    self._Text_crad_up_level_text_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_up_level_text")
+    self._Text_crad_up_level_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_up_level")
+    self._Text_crad_up_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_up_num")
+    self._Text_crad_HP_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_HP_num")
+    self._Text_crad_ATK_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_ATK_num")
+    self._Text_crad_ling_bing_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_ling_bing_num")
+    self._Text_crad_chou_mou_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_chou_mou_num")
+    self._Sprite_card_add_2_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card2"):getChildByName("Sprite_card_add_2")
+    self._Sprite_card_add_3_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card3"):getChildByName("Sprite_card_add_3")
+    self._Sprite_card_add_4_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card4"):getChildByName("Sprite_card_add_4")
+    self._Sprite_card_add_5_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card5"):getChildByName("Sprite_card_add_5")
+    self._Sprite_card_add_6_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card6"):getChildByName("Sprite_card_add_6")
+    self._Sprite_card_add_7_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card7"):getChildByName("Sprite_card_add_7")
+    self._Text_get_EXP_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Sprite_get_EXP_1"):getChildByName("Text_get_EXP_num")
+    self._Text_cost_money_num_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Sprite_cost_money"):getChildByName("Text_cost_money_num")
+    self._Particle_li_zi_guang_t = self.csbNode:getChildByName("Particle_li_zi_guang")
+    self._Panel_Action_t = self.csbNode:getChildByName("Panel_Action")
+    
     --label list
     self._Text_crad_name_1_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_name_1")
-	self._Text_crad_name_1_t:setString(LanguageConfig.ui_Enhance_1)
+    self._Text_crad_name_1_t:setString(LanguageConfig.ui_Enhance_1)
 
-	self._Text_crad_up_string_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_up_string")
-	self._Text_crad_up_string_t:setString(LanguageConfig.ui_Enhance_2)
+    self._Text_crad_up_string_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_up_string")
+    self._Text_crad_up_string_t:setString(LanguageConfig.ui_Enhance_2)
 
-	self._Text_crad_HP_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_HP")
-	self._Text_crad_HP_t:setString(LanguageConfig.lk_common_1)
+    self._Text_crad_HP_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_HP")
+    self._Text_crad_HP_t:setString(LanguageConfig.lk_common_1)
 
-	self._Text_crad_ATK_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_ATK")
-	self._Text_crad_ATK_t:setString(LanguageConfig.lk_common_2)
+    self._Text_crad_ATK_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_ATK")
+    self._Text_crad_ATK_t:setString(LanguageConfig.lk_common_2)
 
-	self._Text_crad_ling_bing_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_ling_bing")
-	self._Text_crad_ling_bing_t:setString(LanguageConfig.lk_common_3)
+    self._Text_crad_ling_bing_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_ling_bing")
+    self._Text_crad_ling_bing_t:setString(LanguageConfig.lk_common_3)
 
-	self._Text_crad_chou_mou_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_chou_mou")
-	self._Text_crad_chou_mou_t:setString(LanguageConfig.lk_common_4)
+    self._Text_crad_chou_mou_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Text_crad_chou_mou")
+    self._Text_crad_chou_mou_t:setString(LanguageConfig.lk_common_4)
     --button list
     self._Button_card1_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card1")
-	self._Button_card1_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card1Click), ""))
+    self._Button_card1_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card1Click), ""))
 
-	self._Button_auto_add_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_auto_add")
-	self._Button_auto_add_t:onTouch(Functions.createClickListener(handler(self, self.onButton_auto_addClick), "zoom"))
+    self._Button_auto_add_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_auto_add")
+    self._Button_auto_add_t:onTouch(Functions.createClickListener(handler(self, self.onButton_auto_addClick), "zoom"))
 
-	self._Button_up_level_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_up_level")
-	self._Button_up_level_t:onTouch(Functions.createClickListener(handler(self, self.onButton_up_levelClick), "zoom"))
+    self._Button_up_level_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_up_level")
+    self._Button_up_level_t:onTouch(Functions.createClickListener(handler(self, self.onButton_up_levelClick), "zoom"))
 
-	self._Button_card2_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card2")
-	self._Button_card2_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card2Click), ""))
+    self._Button_card2_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card2")
+    self._Button_card2_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card2Click), ""))
 
-	self._Button_card3_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card3")
-	self._Button_card3_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card3Click), ""))
+    self._Button_card3_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card3")
+    self._Button_card3_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card3Click), ""))
 
-	self._Button_card4_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card4")
-	self._Button_card4_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card4Click), ""))
+    self._Button_card4_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card4")
+    self._Button_card4_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card4Click), ""))
 
-	self._Button_card5_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card5")
-	self._Button_card5_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card5Click), ""))
+    self._Button_card5_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card5")
+    self._Button_card5_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card5Click), ""))
 
-	self._Button_card6_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card6")
-	self._Button_card6_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card6Click), ""))
+    self._Button_card6_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card6")
+    self._Button_card6_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card6Click), ""))
 
-	self._Button_card7_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card7")
-	self._Button_card7_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card7Click), ""))
+    self._Button_card7_t = self.csbNode:getChildByName("Panel_add_crad"):getChildByName("Button_card7")
+    self._Button_card7_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card7Click), ""))
 
-	self._Button_sheng_ji_close_t = self.csbNode:getChildByName("Button_sheng_ji_close")
-	self._Button_sheng_ji_close_t:onTouch(Functions.createClickListener(handler(self, self.onButton_sheng_ji_closeClick), "zoom"))
+    self._Button_sheng_ji_close_t = self.csbNode:getChildByName("Button_sheng_ji_close")
+    self._Button_sheng_ji_close_t:onTouch(Functions.createClickListener(handler(self, self.onButton_sheng_ji_closeClick), "zoom"))
 end
 --@auto code uiInit end
 
@@ -177,7 +177,15 @@ function EnhanceOnePopView:onButton_up_levelClick()
         return true
     end
     
-    self:sendCardUPLevel()
+    local met = EnhanceData.DeputyData
+    local metMark = {}
+    for k, v in pairs(met) do
+        metMark[#metMark+1] = v.m_mark
+    end
+    
+    EmbattleData:removeHeroBeforeToCheck(metMark,handler(self,self.sendCardUPLevel))
+    
+    --self:sendCardUPLevel()
 end
 --@auto code Button_up_level btFunc end
 
@@ -254,12 +262,12 @@ end
 
 --@auto code output func
 function EnhanceOnePopView:getPopAction()
-	Functions.printInfo(self.debug,"pop actionFunc is call")
+    Functions.printInfo(self.debug,"pop actionFunc is call")
 end
 
 function EnhanceOnePopView:onDisplayView(...)
-	Functions.printInfo(self.debug,"pop action finish ")
-	--停止粒子
+    Functions.printInfo(self.debug,"pop action finish ")
+    --停止粒子
     self._Particle_li_zi_guang_t:stopSystem()
     self._Text_crad_name_1_t:setColor(cc.c3b(255,165,0))
     local data = {...}
@@ -297,7 +305,7 @@ function EnhanceOnePopView:onDisplayView(...)
 end
 
 function EnhanceOnePopView:onCreate()
-	Functions.printInfo(self.debug,"child class create call ")
+    Functions.printInfo(self.debug,"child class create call ")
 end
 --@auto code output func end
 
@@ -354,7 +362,7 @@ function EnhanceOnePopView:showCardInfo_level_fu()
     self._LoadingBar_1_t:setPercent(bar1)
     local bar2 = math.floor(self:getCardExp()+ EnhanceData.MasterData[1].m_exp) / math.floor(g_roleCardUp[EnhanceData.MasterData[1].m_level]) * 100
     if bar2 > 100 then
-    	bar2 = 100
+        bar2 = 100
     end
     self._LoadingBar_2_t:setPercent(bar2)
 
@@ -430,9 +438,9 @@ function EnhanceOnePopView:AutoAdd()
             --如果副卡里已经有它了，就不能重复添加
             local Choice = true
             for y, u  in pairs(EnhanceData.DeputyData) do
-            	if v.m_mark == u.m_mark then
-            	   Choice = false
-            	end 
+                if v.m_mark == u.m_mark then
+                   Choice = false
+                end 
             end
             if EnhanceData.MasterData[1].m_mark == v.m_mark then
                 Choice = false
@@ -539,7 +547,7 @@ function EnhanceOnePopView:allCardExp()
     local i_exp = EnhanceData.MasterData[1].m_exp    --当前主卡的经验和等级
     local lv = EnhanceData.MasterData[1].m_level
     if lv <= 0 then
-    	return false
+        return false
     end
     local Constant = 0
     local LVX = 0
@@ -552,7 +560,7 @@ function EnhanceOnePopView:allCardExp()
 --    for i = 1, 99 do
     --        if self:getCardExp() > g_roleCardUp[lv] then
     --        self:getCardExp() = self:getCardExp() - g_roleCardUp[lv]
---        	lv = lv + 1
+--          lv = lv + 1
 --        else
 --            lv = lv - 1
 --            return lv
@@ -578,7 +586,7 @@ end
 function EnhanceOnePopView:getCardExp()
     local card_fu = EnhanceData.DeputyData
 --    if card_fu == nil then
---    	return false
+--      return false
 --    end
     local allExp = 0
     for k, v in pairs(card_fu) do
