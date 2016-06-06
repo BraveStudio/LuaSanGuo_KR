@@ -261,9 +261,8 @@ function ConfigHandler:getPspellsOfId(id, class)
     local info = self:getHeroSkillId(id, class)
     local pspells = {}
     for i=1, 10 do
-        local attr = 'passiveSpellId' .. i
-        if info[attr] then
-            pspells[#pspells + 1] = info[attr]
+        if pspells['passiveSpellId' + i] then
+            pspells[#pspells + 1] = pspells['passiveSpellId' + i]
         else
             break
         end

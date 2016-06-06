@@ -1453,9 +1453,6 @@ function Functions.initHeroName(target,id,heroClass,smallClass)
         cc.c3b(255,255,25),   --橙
         cc.c3b(255,63,37),     --红
         cc.c3b(255,63,37),     --红
-        cc.c3b(255,255,25),   --橙
-        cc.c3b(255,63,37),     --红
-        cc.c3b(255,63,37),     --红
     }
     target:setColor(colorValue[1])
     if smallClass ~= nil and smallClass > 0 then 
