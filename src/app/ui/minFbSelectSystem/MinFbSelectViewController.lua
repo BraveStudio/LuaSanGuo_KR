@@ -734,7 +734,7 @@ function MinFbSelectViewController:fightBeginRuleCheck_()
     end
 
     --检查武将是否已满
-    if #HeroCardData:getAllHeroData() >= HeroCardData:getBagBaseSize() then
+    if BiographyData:checkBgIsFull(1) then
         PromptManager:openTipPrompt(ConfigHandler:getServerErrorCode(66))
         return false
     end

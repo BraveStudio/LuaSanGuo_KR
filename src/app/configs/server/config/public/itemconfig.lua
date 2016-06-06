@@ -763,6 +763,11 @@ local ReadPassiveSpellConfig = function()
 		{'baseDamage', tonumber},           -- 基础伤害
 		{'damageType', tonumber},        -- 技能伤害类型   
 		{'delayType', tonumber},           -- 延时类型
+		{'triggerPoint', tonumber},       -- 触发点
+		{'triggerValue', tonumber},       -- 触发值
+		{'skillAnima',tostring},          -- 技能片动画
+		{'buffName', tostring},           -- 效果描述
+		{'soundName', tostring},          -- 技能声音
 		{'param1', tonumber},             -- 参数1
 		{'param2', tonumber},             -- 参数2
 		{'param3', tonumber},             -- 参数3

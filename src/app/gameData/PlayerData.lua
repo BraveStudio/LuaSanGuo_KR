@@ -82,6 +82,12 @@ function PlayerData:init()
         self.eventAttr.m_energyTime = event.ttime
     end
     NetWork:addNetWorkListener({ 2, 20 }, onPlayerPowerhf)
+
+    --精英副本倍率
+    local onEliteRate = function(event)
+        GameState.eliteRate = event.data.eliteRate
+    end
+    NetWork:addNetWorkListener({ 2, 25 }, onEliteRate)
     
 end
 

@@ -640,5 +640,16 @@ function BiographyData:excuteFightSpeak(gkId, dialogueType, callback)
     
 end
 
+function BiographyData:checkBgIsFull(count)
+    local heroMaxTemp = 0
+    if self.eventAttr.curFbType == CombatCenter.CombatType.RB_ElitePVE then
+        heroMaxTemp = HeroCardData:getBagBaseSize() - GameState.eliteRate*count
+    else
+        heroMaxTemp = HeroCardData:getBagBaseSize() - count
+    end
+
+    return #HeroCardData:getAllHeroData() > heroMaxTemp
+end
+
 
 return BiographyData

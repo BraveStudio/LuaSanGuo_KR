@@ -318,8 +318,8 @@ function BaseCreatureView:onSkillEffectStart(event)
         self.effectLists[event.data.id] = effectData
         
         --获取技能特效动画
-        local effectAnimaName = ConfigHandler:getSkillResOfId(event.data.id)
-        local effectScale     = ConfigHandler:getSkillEffScaleOfId(event.data.id)
+        local effectAnimaName = ConfigHandler:getSkillResOfId(event.data.id, event.data.isPt)
+        local effectScale     = ConfigHandler:getSkillEffScaleOfId(event.data.id, event.data.isPt)
         if not effectScale then effectScale = 1 end
 
         if effectAnimaName then
@@ -336,7 +336,7 @@ function BaseCreatureView:onSkillEffectStart(event)
             end
 
             --判断是否冰冻技能
-            local buffType = ConfigHandler:getSkillBuffTypeOfId(event.data.id)
+            local buffType = ConfigHandler:getSkillBuffTypeOfId(event.data.id, event.data.isPt)
             if buffType == 5 then
                 -- self:pause()
                 self:skillAnimaPause()
@@ -344,7 +344,7 @@ function BaseCreatureView:onSkillEffectStart(event)
         end
 
         --获取技能buff文字
-        local buffNames = ConfigHandler:getSkillBuffName(event.data.id)
+        local buffNames = ConfigHandler:getSkillBuffName(event.data.id, event.data.isPt)
         if buffNames then
             for i=1, #buffNames do
                 local lab = Functions.createSprite({ spriteName = buffNames[i] ,pos = { x = Functions.getPosOfIndex(i, #buffNames, 80, 0), y = 30 }})
@@ -356,7 +356,7 @@ function BaseCreatureView:onSkillEffectStart(event)
         end
         
         --获取技能音效
-        local sound = ConfigHandler:getSkillSoundName(event.data.id)
+        local sound = ConfigHandler:getSkillSoundName(event.data.id, event.data.isPt)
         if sound then
             Audio.playSoundWithCount(sound)
             -- Audio.playSound(sound)
@@ -390,7 +390,7 @@ function BaseCreatureView:onSkillEffectEnd(event)
                 end
     
                 --判断是否冰冻技能
-                local buffType = ConfigHandler:getSkillBuffTypeOfId(event.data.id)
+                local buffType = ConfigHandler:getSkillBuffTypeOfId(event.data.id, event.data.isPt)
                 if buffType == 5 then
                     -- self:resume()
                     self:skillAnimaResume()
