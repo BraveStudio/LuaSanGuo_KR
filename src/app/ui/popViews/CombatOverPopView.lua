@@ -475,7 +475,7 @@ function CombatOverPopView:displayCombatResult_(event)
     or  self.currentType == CombatCenter.CombatType.RB_HeroTrial then --血战不需要消耗体力
         PlayerData:setPlayerPower(event.energy)
     end
-
+    
     if self.combatResult == 1 then
     
         if self.currentType == CombatCenter.CombatType.RB_PVPPlayerData and event.err ~= 1 then

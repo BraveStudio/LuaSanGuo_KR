@@ -36,6 +36,7 @@ GameState.storeAttr.isCloseSystemSpeaker_b = false
 
 function GameState:init()
     self.super.init(self)
+    self.eliteRate = 1
 end
 
 --四种登陆方式
