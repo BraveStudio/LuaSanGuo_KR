@@ -91,15 +91,17 @@ function SweepCompletePopView:onDisplayView(data)
             Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("prizePanel"):getChildByName("tipsLabel"),widget:getChildByName("rewardPanel"):getChildByName("prizePanel"):getChildByName("tipsLabel"))
             if not table.empty(data.prize) then
 				local tips = widget:getChildByName("rewardPanel"):getChildByName("prizePanel"):getChildByName("tipsLabel"):setVisible(false)
-                local prizePanel = widget:getChildByName("rewardPanel"):getChildByName("prizePanel")                
-			    for i=1, #data.prize do			    	
+                local prizePanel = widget:getChildByName("rewardPanel"):getChildByName("prizePanel")  
+
+                local itmes = Functions.rewardDataHandler(data.prize)              
+			    for i=1, #itmes do			    	
 			    	   --初始化掉落物显示相关参数
                     local prizeNode = prizePanel:getChildByName("prizeNode")
                     local prizeNode1 = prizePanel:getChildByName("prizeNode1")
 					local awardItemDistance = prizeNode1:getPositionX() - prizeNode:getPositionX()
 					local awardFirstPos = { x = prizeNode:getPositionX(), y = prizeNode:getPositionY() }
 					local awardItemScale = prizeNode:getScale()
-			        local disNode = Functions.createPartNode({ nodeId = data.prize[i][1], nodeType = data.prize[i][2],count = data.prize[i][3]})
+			        local disNode = Functions.createPartNode({ nodeId = itmes[i].id, nodeType = itmes[i].type,count = itmes[i].count })
 			        disNode:setTag(i)  
 			        disNode:setVisible(false)
 			        if disNode ~= nil then			            

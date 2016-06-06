@@ -120,7 +120,12 @@ function SweepPopView:onSaodangbtClick()
     	-- local sweepCompleteView = require("app.ui.popViews.SweepCompletePopView"):new()--cs
         self:getController():openChildView("app.ui.popViews.SweepCompletePopView", { isRemove = false, data = { prizeTabel = prizeTabel, lvlCh = data.levelChange, upLevelAward = data.allgoods} })
     end
-   	BiographyData:getSweepData(self.curNum, callBack)
+
+    if BiographyData:checkBgIsFull(self.curNum) then
+        PromptManager:openTipPrompt(ConfigHandler:getServerErrorCode(66))
+    else
+   	    BiographyData:getSweepData(self.curNum, callBack)
+    end
 --	    else
 --	    	PromptManager:openTipPrompt(LanguageConfig.language_sweep_4)
 --	    end
