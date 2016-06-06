@@ -1,6 +1,6 @@
 
 cc.FileUtils:getInstance():addSearchPath("src")
-cc.FileUtils:getInstance():addSearchPath("res")
+cc.FileUtils:getInstance():addSearchPath("res")  
 
 --添加update更新路径
 require("cocos.init")
