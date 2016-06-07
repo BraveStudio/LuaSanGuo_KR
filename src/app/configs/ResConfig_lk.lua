@@ -6,7 +6,7 @@ ResConfig.spriteFrameRes = {
 headPilistRes =
 {
     plistPath = "lk/spriteFrameRes/HeadPlist.plist",
-    imagePath = "lk/spriteFrameRes/HeadPlist.pvr.ccz"
+    imagePath = "lk/spriteFrameRes/HeadPlist.png"
 },
   
 Ani_AwardCard_bai =

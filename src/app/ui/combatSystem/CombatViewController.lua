@@ -1107,6 +1107,15 @@ function CombatViewController:loadCombatRes(heroInfo, models, backCall)
                 self.skillAnimaNames[#self.skillAnimaNames + 1] = animaName
             end
         end
+
+        local passiveSkillDatas = v.m_spells.passiveSkillDatas
+        for k, v in pairs(passiveSkillDatas) do
+            local animaName = v.m_SkillAnima
+            if animaName and animaName ~= "" and animaName ~= 0 and not table.hasValue(self.skillAnimaNames, animaName) then
+                self.skillAnimaNames[#self.skillAnimaNames + 1] = animaName
+            end
+        end
+
 	end
 
     --加载收集模型资源

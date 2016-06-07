@@ -116,6 +116,9 @@ function ZhenRongViewController:displayHeroInf(target,heroInf,pos,embattleType)
             cc.c3b(255,195,25),   --橙
             cc.c3b(145,15,0),     --红
             cc.c3b(0,0,0),     --黑
+            cc.c3b(0,255,0),     
+            cc.c3b(255,0,0),          
+            cc.c3b(255,0,210),  
         }
 
         nameView:setColor(colorValue[bigClass])
