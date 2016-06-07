@@ -111,7 +111,7 @@ function ChaDuiPopView:onDisplayView(data)
     self.type = 1                   --发送的类型（查询列表为1，插队为2）
     
     if self.isApply then
-    	self._Button_cha_dui_t:setVisible(true)
+    	--self._Button_cha_dui_t:setVisible(true)
         self._Panel_3_t:setVisible(true)
     end
     

@@ -70,72 +70,36 @@ end
 function SignRewardPopView:initPrizeList(prizePanel,prizeData,prizeStateData)
  
     for i = 1,#prizeData do
-        local prizeBox = prizePanel:getChildByTag(i)        
-        local prize1 = prizeBox:getChildByName("prize1")
-        local prize2 = prizeBox:getChildByName("prize2")
-        local prize3 = prizeBox:getChildByName("prize3")
-        prize1:ignoreContentAdaptWithSize(true)
-        prize2:ignoreContentAdaptWithSize(true)
-        prize3:ignoreContentAdaptWithSize(true)
-        local prize1Cnt = prizeBox:getChildByName("prize1Cnt")
-        local prize2Cnt = prizeBox:getChildByName("prize2Cnt")
-        local prize3Cnt = prizeBox:getChildByName("prize3Cnt")
-        prize1Cnt:setString("x" .. tostring(prizeData[i][1][3]))
-        prize2Cnt:setString("x" .. tostring(prizeData[i][2][3]))
-        prize3Cnt:setString("x" .. tostring(prizeData[i][3][3]))
-        
+        local prizeBox = prizePanel:getChildByTag(i)   
+
+        for j=1,4 do
+             local prize = prizeBox:getChildByName("prize" .. tostring(j))
+             prize:ignoreContentAdaptWithSize(true)
+             local prizeCnt = prizeBox:getChildByName("prize" .. tostring(j) .. "Cnt")
+             prizeCnt:setString("x" .. tostring(prizeData[i][j][3]))
+
+            if prizeData[i][j][2] == 1 then
+                local heroHeadImg = ConfigHandler:getHeroHeadImageOfId(prizeData[i][j][1]) 
+                Functions.loadImageWithWidget(prize, heroHeadImg)
+            elseif prizeData[i][j][2] == 4 and prizeData[i][j][1] > 0 then
+                local propImg = ConfigHandler:getPropImageOfId(prizeData[i][j][1]) 
+                Functions.loadImageWithWidget(prize, propImg)
+            elseif prizeData[i][j][1] == -3 then
+                Functions.loadImageWithWidget(prize, "property_money.png")
+            elseif prizeData[i][j][1] == -2 then
+                Functions.loadImageWithWidget(prize, "property_gold.png")
+            elseif prizeData[i][j][1] == -5 then
+                Functions.loadImageWithWidget(prize, "soul80.png")
+            elseif prizeData[i][j][1] == -6 then    
+                Functions.loadImageWithWidget(prize, "property_soulCrystal.png")
+            end
+        end
+
+   
         local mask = prizeBox:getChildByName("mask")
         local done = prizeBox:getChildByName("done")
         local choose = prizeBox:getChildByName("choose")
         local prize = prizeBox:getChildByName("bg")
-
-        if prizeData[i][1][2] == 1 then
-            local heroHeadImg = ConfigHandler:getHeroHeadImageOfId(prizeData[i][1][1]) 
-            Functions.loadImageWithWidget(prize1, heroHeadImg)
-        elseif prizeData[i][1][2] == 4 and prizeData[i][1][1] > 0 then
-            local propImg = ConfigHandler:getPropImageOfId(prizeData[i][1][1]) 
-            Functions.loadImageWithWidget(prize1, propImg)
-        elseif prizeData[i][1][1] == -3 then
-            Functions.loadImageWithWidget(prize1, "property_money.png")
-        elseif prizeData[i][1][1] == -2 then
-            Functions.loadImageWithWidget(prize1, "property_gold.png")
-        elseif prizeData[i][1][1] == -5 then
-            Functions.loadImageWithWidget(prize1, "soul80.png")
-        elseif prizeData[i][1][1] == -6 then    
-            Functions.loadImageWithWidget(prize1, "property_soulCrystal.png")
-        end
-        
-        if prizeData[i][2][2] == 1 then
-            local heroHeadImg = ConfigHandler:getHeroHeadImageOfId(prizeData[i][1][1]) 
-            Functions.loadImageWithWidget(prize2, heroHeadImg)
-        elseif prizeData[i][2][2] == 4 and prizeData[i][2][1] > 0 then
-            local propImg = ConfigHandler:getPropImageOfId(prizeData[i][2][1]) 
-            Functions.loadImageWithWidget(prize2, propImg)
-        elseif prizeData[i][2][1] == -3 then
-            Functions.loadImageWithWidget(prize2, "property_money.png")
-        elseif prizeData[i][2][1] == -2 then
-            Functions.loadImageWithWidget(prize2, "property_gold.png")
-        elseif prizeData[i][2][1] == -5 then
-            Functions.loadImageWithWidget(prize2, "soul80.png")
-        elseif prizeData[i][2][1] == -6 then    
-            Functions.loadImageWithWidget(prize2, "property_soulCrystal.png")
-        end
-        
-        if prizeData[i][3][2] == 1 then
-            local heroHeadImg = ConfigHandler:getHeroHeadImageOfId(prizeData[i][3][1]) 
-            Functions.loadImageWithWidget(prize3, heroHeadImg)
-        elseif prizeData[i][3][2] == 4 and prizeData[i][3][1] > 0 then
-            local propImg = ConfigHandler:getPropImageOfId(prizeData[i][3][1]) 
-            Functions.loadImageWithWidget(prize3, propImg)
-        elseif prizeData[i][3][1] == -3 then
-            Functions.loadImageWithWidget(prize3, "property_money.png")
-        elseif prizeData[i][3][1] == -2 then
-            Functions.loadImageWithWidget(prize3, "property_gold.png")
-        elseif prizeData[i][3][1] == -5 then
-            Functions.loadImageWithWidget(prize3, "soul80.png")
-        elseif prizeData[i][3][1] == -6 then    
-            Functions.loadImageWithWidget(prize3, "property_soulCrystal.png")
-        end
 
         if i == prizeStateData.m_keepLoginDay and  prizeStateData.m_loginReward == 1 then
             mask:setVisible(true)
@@ -164,6 +128,7 @@ function SignRewardPopView:initPrizeList(prizePanel,prizeData,prizeStateData)
                 Functions:addItemResources({id = prizeData[i][1][1],type = prizeData[i][1][2],count = prizeData[i][1][3],slot = event.rettbl[1]})
                 Functions:addItemResources({id = prizeData[i][2][1],type = prizeData[i][2][2],count = prizeData[i][2][3],slot = event.rettbl[2]})
                 Functions:addItemResources({id = prizeData[i][3][1],type = prizeData[i][3][2],count = prizeData[i][3][3],slot = event.rettbl[3]})
+                Functions:addItemResources({id = prizeData[i][4][1],type = prizeData[i][4][2],count = prizeData[i][4][3],slot = event.rettbl[4]})
                 RewardStateData.eventAttr.signRewardFlag = 0   --签到领奖：是否有奖可领 1/0
             end
             RewardData:RequestSignReward(handler)

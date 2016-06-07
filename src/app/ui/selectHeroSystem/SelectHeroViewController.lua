@@ -476,226 +476,44 @@ function SelectHeroViewController:shangZhengHero(heroType)
             -- end
         elseif self.jumpType == JumpType.PartHeroToSelectHero then
             -- if self:isShangzhen(self.heroId) then
-            if heroType == HeroType.PartHero1 then
-                local shangzhenType = self:getShangzhenType(self.heroId)
-                if shangzhenType ~= 1 then                    
-                    if shangzhenType > 0 then
-                        NoticeManager:openTips(self, {title = self:getTipsOfShangzhenType(shangzhenType),handler = function()
+            for i =1,6 do 
+               if heroType == HeroType["PartHero" .. i] then
+                    local shangzhenType = self:getShangzhenType(self.heroId)
+                    if shangzhenType ~= 1 then                    
+                        if shangzhenType > 0 then
+                            NoticeManager:openTips(self, {title = self:getTipsOfShangzhenType(shangzhenType),handler = function()
+                                self:clearShangzhenHero(shangzhenType)
+                                if EmbattleData.EmbattleInf.PartHero[i] ~= nil then
+                                    self:setHeroState(EmbattleData.PartHeroMark[i],0,self.jumpData.embattleType)
+                                    EmbattleData.EmbattleInf.PartHero[i].id = self.heroId
+                                    EmbattleData.PartHeroMark[i] = self.heroMark
+                                else
+                                    EmbattleData.EmbattleInf.PartHero[i] = {id = self.heroId} 
+                                    EmbattleData.PartHeroMark[i] = self.heroMark
+                                end
+                                self:setHeroState(EmbattleData.PartHeroMark[i],3+i,self.jumpData.embattleType)
+                                GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
+                                Functions.playSound("changeHeroes.mp3") 
+                            end})   
+                        else    
                             self:clearShangzhenHero(shangzhenType)
-                            if EmbattleData.EmbattleInf.PartHero[1] ~= nil then
-                                self:setHeroState(EmbattleData.PartHeroMark[1],0,self.jumpData.embattleType)
-                                EmbattleData.EmbattleInf.PartHero[1].id = self.heroId
-                                EmbattleData.PartHeroMark[1] = self.heroMark
+                            if EmbattleData.EmbattleInf.PartHero[i] ~= nil then
+                                self:setHeroState(EmbattleData.PartHeroMark[i],0,self.jumpData.embattleType)
+                                EmbattleData.EmbattleInf.PartHero[i].id = self.heroId
+                                EmbattleData.PartHeroMark[i] = self.heroMark
                             else
-                                EmbattleData.EmbattleInf.PartHero[1] = {id = self.heroId} 
-                                EmbattleData.PartHeroMark[1] = self.heroMark
+                                EmbattleData.EmbattleInf.PartHero[i] = {id = self.heroId} 
+                                EmbattleData.PartHeroMark[i] = self.heroMark
                             end
-                            self:setHeroState(EmbattleData.PartHeroMark[1],4,self.jumpData.embattleType)
+                            self:setHeroState(EmbattleData.PartHeroMark[i],3+i,self.jumpData.embattleType)
                             GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
                             Functions.playSound("changeHeroes.mp3") 
-                        end})   
-                    else    
-                        self:clearShangzhenHero(shangzhenType)
-                        if EmbattleData.EmbattleInf.PartHero[1] ~= nil then
-                            self:setHeroState(EmbattleData.PartHeroMark[1],0,self.jumpData.embattleType)
-                            EmbattleData.EmbattleInf.PartHero[1].id = self.heroId
-                            EmbattleData.PartHeroMark[1] = self.heroMark
-                        else
-                            EmbattleData.EmbattleInf.PartHero[1] = {id = self.heroId} 
-                            EmbattleData.PartHeroMark[1] = self.heroMark
                         end
-                        self:setHeroState(EmbattleData.PartHeroMark[1],4,self.jumpData.embattleType)
-                        GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                        Functions.playSound("changeHeroes.mp3") 
+                    else
+                        PromptManager:openTipPrompt(self:getTipsOfShangzhenType(shangzhenType))
                     end
-                else
-                    PromptManager:openTipPrompt(self:getTipsOfShangzhenType(shangzhenType))
                 end
-
-            elseif heroType == HeroType.PartHero2 then
-                local shangzhenType = self:getShangzhenType(self.heroId)
-                if shangzhenType ~= 1 then                    
-                    if shangzhenType > 0 then
-                        NoticeManager:openTips(self, {title = self:getTipsOfShangzhenType(shangzhenType),handler = function()
-                            self:clearShangzhenHero(shangzhenType)
-                            if EmbattleData.EmbattleInf.PartHero[2] ~= nil then
-                                self:setHeroState(EmbattleData.PartHeroMark[2],0,self.jumpData.embattleType)
-                                EmbattleData.EmbattleInf.PartHero[2].id = self.heroId
-                                EmbattleData.PartHeroMark[2] = self.heroMark
-                            else
-                                EmbattleData.EmbattleInf.PartHero[2] = {id = self.heroId} 
-                                EmbattleData.PartHeroMark[2] = self.heroMark
-                            end
-                            self:setHeroState(EmbattleData.PartHeroMark[2],5,self.jumpData.embattleType)
-                            GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                            Functions.playSound("changeHeroes.mp3") 
-                        end})   
-                    else   
-                        self:clearShangzhenHero(shangzhenType) 
-                        if EmbattleData.EmbattleInf.PartHero[2] ~= nil then
-                            self:setHeroState(EmbattleData.PartHeroMark[2],0,self.jumpData.embattleType)
-                            EmbattleData.EmbattleInf.PartHero[2].id = self.heroId
-                            EmbattleData.PartHeroMark[2] = self.heroMark
-                        else
-                            EmbattleData.EmbattleInf.PartHero[2] = {id = self.heroId} 
-                            EmbattleData.PartHeroMark[2] = self.heroMark
-                        end
-                        self:setHeroState(EmbattleData.PartHeroMark[2],5,self.jumpData.embattleType)
-                        GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                        Functions.playSound("changeHeroes.mp3") 
-                    end
-                else
-                    PromptManager:openTipPrompt(self:getTipsOfShangzhenType(shangzhenType))
-                end
-
-            elseif heroType == HeroType.PartHero3 then
-                local shangzhenType = self:getShangzhenType(self.heroId)
-                if shangzhenType ~= 1 then                    
-                    if shangzhenType > 0 then
-                        NoticeManager:openTips(self, {title = self:getTipsOfShangzhenType(shangzhenType),handler = function()
-                            self:clearShangzhenHero(shangzhenType)
-                            if EmbattleData.EmbattleInf.PartHero[3] ~= nil then
-                                self:setHeroState(EmbattleData.PartHeroMark[3],0,self.jumpData.embattleType)
-                                EmbattleData.EmbattleInf.PartHero[3].id = self.heroId
-                                EmbattleData.PartHeroMark[3] = self.heroMark
-                            else
-                                EmbattleData.EmbattleInf.PartHero[3] = {id = self.heroId} 
-                                EmbattleData.PartHeroMark[3] = self.heroMark
-                            end
-                            self:setHeroState(EmbattleData.PartHeroMark[3],6,self.jumpData.embattleType)
-                            GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                            Functions.playSound("changeHeroes.mp3") 
-                        end})   
-                    else    
-                        self:clearShangzhenHero(shangzhenType)
-                        if EmbattleData.EmbattleInf.PartHero[3] ~= nil then
-                            self:setHeroState(EmbattleData.PartHeroMark[3],0,self.jumpData.embattleType)
-                            EmbattleData.EmbattleInf.PartHero[3].id = self.heroId
-                            EmbattleData.PartHeroMark[3] = self.heroMark
-                        else
-                            EmbattleData.EmbattleInf.PartHero[3] = {id = self.heroId} 
-                            EmbattleData.PartHeroMark[3] = self.heroMark
-                        end
-                        self:setHeroState(EmbattleData.PartHeroMark[3],6,self.jumpData.embattleType)
-                        GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                        Functions.playSound("changeHeroes.mp3") 
-                    end
-                else
-                    PromptManager:openTipPrompt(self:getTipsOfShangzhenType(shangzhenType))
-                end
-
-            elseif heroType == HeroType.PartHero4 then
-                local shangzhenType = self:getShangzhenType(self.heroId)
-                if shangzhenType ~= 1 then
-
-                    if shangzhenType > 0 then
-                        NoticeManager:openTips(self, {title = self:getTipsOfShangzhenType(shangzhenType),handler = function()
-                            self:clearShangzhenHero(shangzhenType)
-                            if EmbattleData.EmbattleInf.PartHero[4] ~= nil then
-                                self:setHeroState(EmbattleData.PartHeroMark[4],0,self.jumpData.embattleType)
-                                EmbattleData.EmbattleInf.PartHero[4].id = self.heroId
-                                EmbattleData.PartHeroMark[4] = self.heroMark
-                            else
-                                EmbattleData.EmbattleInf.PartHero[4] = {id = self.heroId} 
-                                EmbattleData.PartHeroMark[4] = self.heroMark
-                            end
-                            self:setHeroState(EmbattleData.PartHeroMark[4],7,self.jumpData.embattleType)
-                            GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                        end})   
-                    else    
-                        self:clearShangzhenHero(shangzhenType)
-                        if EmbattleData.EmbattleInf.PartHero[4] ~= nil then
-                            self:setHeroState(EmbattleData.PartHeroMark[4],0,self.jumpData.embattleType)
-                            EmbattleData.EmbattleInf.PartHero[4].id = self.heroId
-                            EmbattleData.PartHeroMark[4] = self.heroMark
-                        else
-                            EmbattleData.EmbattleInf.PartHero[4] = {id = self.heroId} 
-                            EmbattleData.PartHeroMark[4] = self.heroMark
-                        end
-                        self:setHeroState(EmbattleData.PartHeroMark[4],7,self.jumpData.embattleType)
-                        GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                        Functions.playSound("changeHeroes.mp3") 
-                    end
-                else
-                    PromptManager:openTipPrompt(self:getTipsOfShangzhenType(shangzhenType))
-                end
-
-            elseif heroType == HeroType.PartHero5 then
-                local shangzhenType = self:getShangzhenType(self.heroId)
-                if shangzhenType ~= 1 then
-
-                    if shangzhenType > 0 then
-                        NoticeManager:openTips(self, {title = self:getTipsOfShangzhenType(shangzhenType),handler = function() 
-                            self:clearShangzhenHero(shangzhenType)
-                            if EmbattleData.EmbattleInf.PartHero[5] ~= nil then
-                                self:setHeroState(EmbattleData.PartHeroMark[5],0,self.jumpData.embattleType)
-                                EmbattleData.EmbattleInf.PartHero[5].id = self.heroId
-                                EmbattleData.PartHeroMark[5] = self.heroMark
-                            else
-                                EmbattleData.EmbattleInf.PartHero[5] = {id = self.heroId} 
-                                EmbattleData.PartHeroMark[5] = self.heroMark
-                            end
-                            self:setHeroState(EmbattleData.PartHeroMark[5],8,self.jumpData.embattleType)
-                            GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                            Functions.playSound("changeHeroes.mp3") 
-                        end})   
-                    else    
-                        self:clearShangzhenHero(shangzhenType)
-                        if EmbattleData.EmbattleInf.PartHero[5] ~= nil then
-                            self:setHeroState(EmbattleData.PartHeroMark[5],0,self.jumpData.embattleType)
-                            EmbattleData.EmbattleInf.PartHero[5].id = self.heroId
-                            EmbattleData.PartHeroMark[5] = self.heroMark
-                        else
-                            EmbattleData.EmbattleInf.PartHero[5] = {id = self.heroId} 
-                            EmbattleData.PartHeroMark[5] = self.heroMark
-                        end
-                        self:setHeroState(EmbattleData.PartHeroMark[5],8,self.jumpData.embattleType)
-                        GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                        Functions.playSound("changeHeroes.mp3") 
-                    end
-                else
-                    PromptManager:openTipPrompt(self:getTipsOfShangzhenType(shangzhenType))
-                end
-
-            elseif heroType == HeroType.PartHero6 then
-                local shangzhenType = self:getShangzhenType(self.heroId)
-                if shangzhenType ~= 1 then
-
-                    if shangzhenType > 0 then
-                        NoticeManager:openTips(self, {title = self:getTipsOfShangzhenType(shangzhenType),handler = function()
-                            self:clearShangzhenHero(shangzhenType)--清除选中武将的上阵标示
-                            if EmbattleData.EmbattleInf.PartHero[6] ~= nil then
-                                self:setHeroState(EmbattleData.PartHeroMark[6],0,self.jumpData.embattleType)--设置将要被替换武将的标志
-                                EmbattleData.EmbattleInf.PartHero[6].id = self.heroId
-                                EmbattleData.PartHeroMark[6] = self.heroMark
-                            else
-                                EmbattleData.EmbattleInf.PartHero[6] = {id = self.heroId} 
-                                EmbattleData.PartHeroMark[6] = self.heroMark
-                            end
-                            self:setHeroState(EmbattleData.PartHeroMark[6],9,self.jumpData.embattleType) 
-                            GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                            Functions.playSound("changeHeroes.mp3") 
-                        end})   
-                    else    
-                        self:clearShangzhenHero(shangzhenType)--清除选中武将的上阵标示
-                        if EmbattleData.EmbattleInf.PartHero[6] ~= nil then
-                            self:setHeroState(EmbattleData.PartHeroMark[6],0,self.jumpData.embattleType)
-                            EmbattleData.EmbattleInf.PartHero[6].id = self.heroId
-                            EmbattleData.PartHeroMark[6] = self.heroMark
-                        else
-                            EmbattleData.EmbattleInf.PartHero[6] = {id = self.heroId} 
-                            EmbattleData.PartHeroMark[6] = self.heroMark
-                        end
-                        self:setHeroState(EmbattleData.PartHeroMark[6],9,self.jumpData.embattleType)
-                        GameCtlManager:pop(self,{data = {jumpType = self.jumpType,jumpData = self.jumpData}})
-                        Functions.playSound("changeHeroes.mp3") 
-                    end
-                else
-                    PromptManager:openTipPrompt(self:getTipsOfShangzhenType(shangzhenType))
-                end
-
-            end 
-            -- end        
+            end
         end
     else
         PromptManager:openTipPrompt(LanguageConfig.language_selectHero_9)
