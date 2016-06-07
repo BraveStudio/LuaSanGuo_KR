@@ -612,6 +612,15 @@ function EnhanceOnePopView:sendCardUPLevel()
     
     --发送升级
     local onSendChat = function(event)
+    
+        local met = EnhanceData.DeputyData
+        local metMark = {}
+        for k, v in pairs(met) do
+            metMark[#metMark+1] = v.m_mark
+        end
+        
+        EmbattleData:removeHeroMarksFromJson(metMark)
+        
         local _lv = event.amount
         local _exp = event.newExp
         local _mark = event.slot

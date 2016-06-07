@@ -291,9 +291,9 @@ function EmbattleViewController:onDisplayView()
     self.heroModelRes.vice1 = nil
     self.heroModelRes.vice2 = nil
     self.selctedSoldierFlag = 1 -- 1 步兵，2，骑兵 ,3 步兵
-    self.mainHeroHeadId = 0
-    self.vice1HeroHeadId = 0
-    self.vice2HeroHeadId = 0
+    self.mainHeroHeadMark = 0
+    self.vice1HeroHeadMark = 0
+    self.vice2HeroHeadMark = 0
     --士兵类型
     self.soldier1Type = 1101    
     self.soldier2Type = 2101
@@ -315,6 +315,11 @@ function EmbattleViewController:onDisplayView()
     self.currentServerEmabttleNum = 1
     --是否有保存布阵信息
     self.isUpdate = false
+    --战斗力变化相关箭头坐标
+    self.zhanLiAnPosY = self._zhanLiAn_t:getPositionY()
+    self.zhanLiTextPosY = self._zhanLiChangText_t:getPositionY()
+
+
     self:bindEmbattleInf()
     --------------------------------------
     self:initZxMode(self.Itype)
@@ -450,6 +455,8 @@ function EmbattleViewController:initDisplay(isInitMark)
 end
 
 function EmbattleViewController:playZhanLiChangAnction( )
+    self._zhanLiAn_t:setPositionY(self.zhanLiAnPosY)
+    self._zhanLiChangText_t:setPositionY(self.zhanLiTextPosY)  
     local tempZhanLi =EmbattleData.eventAttr.zhanLi 
     EmbattleData:updateAtrrInf(self.Itype)
     if tempZhanLi > EmbattleData.eventAttr.zhanLi then
@@ -463,10 +470,9 @@ function EmbattleViewController:playZhanLiChangAnction( )
         local fadeinUP = cc.FadeIn:create(0.1)--渐显
         local scaletoUP = cc.ScaleTo:create(0.2, 1) --缩放
         local MoveBy = cc.MoveBy:create(0.3, cc.p(0, -80))
-        local fadeOutUP = cc.FadeOut:create(1)--渐隐
-        local zhanLiTextPosY = self._zhanLiChangText_t:getPositionY()
+        local fadeOutUP = cc.FadeOut:create(0.8)--渐隐
         local seqUP = cc.Sequence:create(fadeinUP, MoveBy,cc.DelayTime:create(0.5),fadeOutUP,cc.CallFunc:create(function()
-                self._zhanLiChangText_t:setPositionY(zhanLiTextPosY)
+                self._zhanLiChangText_t:setPositionY(self.zhanLiAnPosY)
         end))
         self._zhanLiChangText_t:runAction(seqUP)
 
@@ -474,10 +480,9 @@ function EmbattleViewController:playZhanLiChangAnction( )
         local fadeinUP1 = cc.FadeIn:create(0.1)--渐显
         local scaletoUP1 = cc.ScaleTo:create(0.2, 1) --缩放
         local MoveBy1 = cc.MoveBy:create(0.3, cc.p(0, -80))
-        local fadeOutUP1 = cc.FadeOut:create(1)--渐隐
-        local zhanLiAnPosY = self._zhanLiAn_t:getPositionY()
+        local fadeOutUP1 = cc.FadeOut:create(0.8)--渐隐
         local seqUP1 = cc.Sequence:create(fadeinUP1, MoveBy1,cc.DelayTime:create(0.5),fadeOutUP1,cc.CallFunc:create(function()
-                self._zhanLiAn_t:setPositionY(zhanLiAnPosY)
+                self._zhanLiAn_t:setPositionY(self.zhanLiAnPosY)
         end))
         self._zhanLiAn_t:runAction(seqUP1)
 
@@ -492,9 +497,8 @@ function EmbattleViewController:playZhanLiChangAnction( )
         local scaletoUP = cc.ScaleTo:create(0.2, 1) --缩放
         local MoveBy = cc.MoveBy:create(0.3, cc.p(0, 80))
         local fadeOutUP = cc.FadeOut:create(1)--渐隐
-        local zhanLiTextPosY = self._zhanLiChangText_t:getPositionY()
         local seqUP = cc.Sequence:create(fadeinUP, MoveBy,cc.DelayTime:create(0.5),fadeOutUP,cc.CallFunc:create(function()
-                self._zhanLiChangText_t:setPositionY(zhanLiTextPosY)
+                self._zhanLiChangText_t:setPositionY(self.zhanLiTextPosY)
         end))
         self._zhanLiChangText_t:runAction(seqUP)
 
@@ -503,9 +507,8 @@ function EmbattleViewController:playZhanLiChangAnction( )
         local scaletoUP1 = cc.ScaleTo:create(0.2, 1) --缩放
         local MoveBy1 = cc.MoveBy:create(0.3, cc.p(0, 80))
         local fadeOutUP1 = cc.FadeOut:create(1)--渐隐
-        local zhanLiAnPosY = self._zhanLiAn_t:getPositionY()
         local seqUP1 = cc.Sequence:create(fadeinUP1, MoveBy1,cc.DelayTime:create(0.5),fadeOutUP1,cc.CallFunc:create(function()
-                self._zhanLiAn_t:setPositionY(zhanLiAnPosY)
+                self._zhanLiAn_t:setPositionY(self.zhanLiAnPosY)
         end))
         self._zhanLiAn_t:runAction(seqUP1)
     end
@@ -844,8 +847,8 @@ function EmbattleViewController:loadHeroModelRes(embattleInf,callback)
     local proLoadHeroRes = {}
     local proRemoveHeroRes= {}
     if embattleInf.MainHero[1] ~= nil and embattleInf.MainHero[1].id ~= 0  then
-        if self.mainHeroHeadId ~= embattleInf.MainHero[1].id then
-            self.mainHeroHeadId = embattleInf.MainHero[1].id 
+        if self.mainHeroHeadMark ~= EmbattleData.MainHeroMark then
+            self.mainHeroHeadMark = EmbattleData.MainHeroMark
             Functions.getHeroHead(self._mainHero_t,{mark = EmbattleData.MainHeroMark})
         end
         local heroAnimaName = Functions.getHeroAnimaOfid(embattleInf.MainHero[1].id)        
@@ -857,12 +860,12 @@ function EmbattleViewController:loadHeroModelRes(embattleInf,callback)
             proLoadHeroRes[#proLoadHeroRes+1] = self.heroModelRes.main 
         end
     else
-        self.mainHeroHeadId = 0 
+        self.mainHeroHeadMark = 0 
         Functions.cleanHeroHead(self._mainHero_t)
     end
     if embattleInf.ViceHeros[1] ~= nil and embattleInf.ViceHeros[1].id ~= 0 then
-        if self.vice1HeroHeadId ~= embattleInf.ViceHeros[1].id then
-            self.vice1HeroHeadId = embattleInf.ViceHeros[1].id 
+        if self.vice1HeroHeadMark ~= EmbattleData.ViceHero1Mark then
+            self.vice1HeroHeadMark = EmbattleData.ViceHero1Mark 
             Functions.getHeroHead(self._viceHero1_t,{mark = EmbattleData.ViceHero1Mark})
         end
         local heroAnimaName = Functions.getHeroAnimaOfid(embattleInf.ViceHeros[1].id)
@@ -874,13 +877,13 @@ function EmbattleViewController:loadHeroModelRes(embattleInf,callback)
             proLoadHeroRes[#proLoadHeroRes+1] = self.heroModelRes.vice1 
         end
     else
-        self.vice1HeroHeadId = 0 
+        self.vice1HeroHeadMark = 0 
         Functions.cleanHeroHead(self._viceHero1_t)
     end
 
     if embattleInf.ViceHeros[2] ~= nil and embattleInf.ViceHeros[2].id ~= 0 then
-        if self.vice2HeroHeadId ~= embattleInf.ViceHeros[2].id then
-            self.vice2HeroHeadId = embattleInf.ViceHeros[2].id 
+        if self.vice2HeroHeadMark ~= EmbattleData.ViceHero2Mark then
+            self.vice2HeroHeadMark = EmbattleData.ViceHero2Mark 
             Functions.getHeroHead(self._viceHero2_t,{mark = EmbattleData.ViceHero2Mark})
         end
         local heroAnimaName = Functions.getHeroAnimaOfid(embattleInf.ViceHeros[2].id)
@@ -892,7 +895,7 @@ function EmbattleViewController:loadHeroModelRes(embattleInf,callback)
             proLoadHeroRes[#proLoadHeroRes+1] = self.heroModelRes.vice2 
         end
     else
-        self.vice2HeroHeadId = 0 
+        self.vice2HeroHeadMark = 0 
         Functions.cleanHeroHead(self._viceHero2_t)
     end
     ResManager:removeAnimations(proRemoveHeroRes)

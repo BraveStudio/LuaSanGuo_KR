@@ -370,6 +370,12 @@ function HeroViewController:sendSellCard()
 
     --同步数据
     local onSellCard = function(event)
+    
+        local sellMark = {}
+        for k, v in pairs(self.sellTable) do
+            sellMark[#sellMark+1] = v.m_mark
+        end
+        EmbattleData:removeHeroMarksFromJson(sellMark)
         local data = event.data
         PlayerData.eventAttr.m_hunjing = event.hunjing
         local soulNum = 0

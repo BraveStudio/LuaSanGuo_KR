@@ -166,6 +166,13 @@ end
 function EnhanceTwoPopView:send_up_ladderClick()
     --发送进阶
     local onSendChat = function(event)
+    
+        local met = EnhanceData.DeputyData
+        local metMark = {}
+        for k, v in pairs(met) do
+            metMark[#metMark+1] = v.m_mark
+        end
+        EmbattleData:removeHeroMarksFromJson(metMark)
 
         local _stype = event.stype --类型用来判断,1是进阶，其他是进化
         local _class = event.class --当前阶强化等级，如果为进化，则为0

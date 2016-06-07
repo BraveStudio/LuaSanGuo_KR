@@ -1,6 +1,7 @@
 local languageConfig_ch = 
 {
 ["language_novice_104"]="진영정비",
+["language_9_80"] = "선택하신 무장은 예비진형에 저장되어 있습니다, 계속 하시겠습니까?",
 ["language_Teach42"] = "경험치 증가 성공!",
 ["language_Compound_1"]="던전ID",
 ["language_tianTi_5"]="표기장군",

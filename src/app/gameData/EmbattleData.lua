@@ -279,12 +279,7 @@ function EmbattleData:removeHeroBeforeToCheck(heroMarks,handler)
         end
     end
     if isHaveMarkInJson then 
-        NoticeManager:openTips(GameCtlManager.currentController_t, {title = "有武将已存在于备用阵型中，此操作可能导致相应备用阵型数据丢失，是否继续？",handler = function()
-            -- for k,v in pairs(heroMarks) do
-            --     if self:isHaveHeroMarkInJsonStr(v) then 
-            --         self:removeHeroMarkFromJson(v)
-            --     end
-            -- end
+        NoticeManager:openTips(GameCtlManager.currentController_t, {title = LanguageConfig.language_9_80,handler = function()
             if handler ~= nil then 
                 handler()
             end
