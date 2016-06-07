@@ -128,6 +128,7 @@ function SignRewardPopView:initPrizeList(prizePanel,prizeData,prizeStateData)
                 Functions:addItemResources({id = prizeData[i][1][1],type = prizeData[i][1][2],count = prizeData[i][1][3],slot = event.rettbl[1]})
                 Functions:addItemResources({id = prizeData[i][2][1],type = prizeData[i][2][2],count = prizeData[i][2][3],slot = event.rettbl[2]})
                 Functions:addItemResources({id = prizeData[i][3][1],type = prizeData[i][3][2],count = prizeData[i][3][3],slot = event.rettbl[3]})
+                Functions:addItemResources({id = prizeData[i][4][1],type = prizeData[i][4][2],count = prizeData[i][4][3],slot = event.rettbl[4]})
                 RewardStateData.eventAttr.signRewardFlag = 0   --签到领奖：是否有奖可领 1/0
             end
             RewardData:RequestSignReward(handler)

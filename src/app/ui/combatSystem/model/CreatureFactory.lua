@@ -82,7 +82,7 @@ function CreatureFactory:createHero(heroInfo, partHeros, equipInfos, campType, v
                                 zxId           = heroZxID,
                                 enemyZxId      = ConfigHandler:getStrikeZxOfId(heroZxID),
                                 spells         = clone(skills.mSpellId),
-                                passiveSkills  = ConfigHandler:getPspellsOfId(heroInfo.id, heroInfo.class),
+                                passiveSkills  = { skills.passiveSpellId1, skills.passiveSpellId2, skills.passiveSpellId3},
                                 skillAnimaName = heroData.effectRes,
                                 heroSound      = heroData.heroSound
                             })

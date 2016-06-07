@@ -251,11 +251,9 @@ function EmbattleData:readEmbattleDatafromJson(embattleNum,embattleType)
             self.ViceHero1Mark = data["ViceHero1Mark"] or 0
             self:setHeroState( self.ViceHero1Mark ,2,embattleType)
 
---            self:setHeroState( self.ViceHero2Mark ,0,embattleType)
             self.ViceHero2Mark = data["ViceHero2Mark"] or 0
             self:setHeroState( self.ViceHero2Mark ,3,embattleType)
             for i = 1, 6 do 
---                self:setHeroState( self.PartHeroMark[i] ,0,embattleType)
                 self.PartHeroMark[i] = data["PartHeroMark"][i] or 0
                 self:setHeroState( self.PartHeroMark[i] ,3+i,embattleType)
             end
@@ -269,6 +267,114 @@ function EmbattleData:readEmbattleDatafromJson(embattleNum,embattleType)
         self.EmbattleInf.Soldiers = {}
     end
     self:updateEmbattleInf()
+end
+
+--
+function EmbattleData:removeHeroBeforeToCheck(heroMarks,handler)
+    local isHaveMarkInJson = false
+    for k,v in pairs(heroMarks) do
+        if self:isHaveHeroMarkInJsonStr(v) then 
+            isHaveMarkInJson = true
+            break
+        end
+    end
+    if isHaveMarkInJson then 
+        NoticeManager:openTips(GameCtlManager.currentController_t, {title = LanguageConfig.language_9_80,handler = function()
+            if handler ~= nil then 
+                handler()
+            end
+        end})
+    else
+        if handler ~= nil then 
+            handler()
+        end
+    end
+end
+--将一组英雄从备用阵型中移除
+function EmbattleData:removeHeroMarksFromJson(heroMarks)
+    for k,v in pairs(heroMarks) do
+        if self:isHaveHeroMarkInJsonStr(v) then 
+            self:removeHeroMarkFromJson(v)
+        end
+    end
+end
+--将一个英雄从备用阵型移除
+function EmbattleData:removeHeroMarkFromJson(heroMark)
+    self:removeHeroMarkFromJson_(heroMark,GameState.storeAttr.attackEmbattleSelectData_s,1)
+    self:removeHeroMarkFromJson_(heroMark,GameState.storeAttr.defenseEmbattleSelectData_s,2)
+end
+function EmbattleData:removeHeroMarkFromJson_(heroMark,jsonStr,embattleType)
+    local embattleData = {}
+    if jsonStr ~= "" then 
+        embattleData = json.decode(jsonStr)
+        if embattleData[tostring(PlayerData.eventAttr.m_uid)] ~= nil then 
+            for i = 1,3 do 
+                if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i] ~= nil then 
+                    if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["MainHeroMark"] == heroMark then 
+                        embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["MainHeroMark"] = 0
+                        embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["ViceHero1Mark"] = 0
+                        embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["ViceHero2Mark"] = 0
+                        embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["PartHeroMark"] = {0,0,0,0,0,0}
+                        self.EmbattleInf.Soldiers = {}
+                    end  
+                    if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["ViceHero1Mark"] == heroMark then 
+                        embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["ViceHero1Mark"] = 0
+                    end 
+                    if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["ViceHero2Mark"] == heroMark then 
+                       embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["ViceHero2Mark"] = 0
+                    end  
+                    for j = 1, 6 do 
+                        if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["PartHeroMark"][j] == heroMark then 
+                            embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["PartHeroMark"][j] = 0
+                        end
+                    end  
+                end
+            end
+        end
+        local storeJsonStr = json.encode(embattleData)
+        if embattleType == 1 then 
+           GameState.storeAttr.attackEmbattleSelectData_s = storeJsonStr
+        else
+           GameState.storeAttr.defenseEmbattleSelectData_s = storeJsonStr
+        end        
+    end   
+end
+--判断一个英雄是否存在于备用阵型中。
+function EmbattleData:isHaveHeroMarkInJsonStr(heroMark)
+    local isHaveMarkForAttack = false
+    local isHaveMarkForDefense = false
+    isHaveMarkForAttack = self:isHaveHeroMarkInJsonStr_(heroMark,GameState.storeAttr.attackEmbattleSelectData_s)
+    isHaveMarkForDefense = self:isHaveHeroMarkInJsonStr_(heroMark,GameState.storeAttr.defenseEmbattleSelectData_s)
+    return isHaveMarkForAttack or isHaveMarkForDefense
+end
+function EmbattleData:isHaveHeroMarkInJsonStr_(heroMark,jsonStr)
+    local embattleData = {}
+    if jsonStr ~= "" then 
+        embattleData = json.decode(jsonStr)
+    else
+        return false
+    end
+    if embattleData[tostring(PlayerData.eventAttr.m_uid)] ~= nil then 
+        for i = 1,3 do 
+            if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i] ~= nil then 
+                if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["MainHeroMark"] == heroMark then 
+                    return true
+                end  
+                if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["ViceHero1Mark"] == heroMark then 
+                    return true
+                end 
+                if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["ViceHero2Mark"] == heroMark then 
+                    return true
+                end  
+                for j = 1, 6 do 
+                    if embattleData[tostring(PlayerData.eventAttr.m_uid)]["embattle" .. i]["PartHeroMark"][j] == heroMark then 
+                        return true
+                    end
+                end  
+            end
+        end
+        return false
+    end
 end
 --获得阵型数据
 function EmbattleData:getZxData(heroId)
