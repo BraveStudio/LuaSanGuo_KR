@@ -261,8 +261,9 @@ function ConfigHandler:getPspellsOfId(id, class)
     local info = self:getHeroSkillId(id, class)
     local pspells = {}
     for i=1, 10 do
-        if pspells['passiveSpellId' + i] then
-            pspells[#pspells + 1] = pspells['passiveSpellId' + i]
+        local attr = 'passiveSpellId' .. i
+        if info[attr] then
+            pspells[#pspells + 1] = info[attr]
         else
             break
         end
@@ -293,21 +294,6 @@ function ConfigHandler:getHeroBaseInf(id)
     heroBaseInf.class = 1
     
     return heroBaseInf
-end
-
---获取被动技能
-function ConfigHandler:getPassiveSkillId(id)
-    return g_PassiveSpellConfig[tonumber(id)]
-end
-
-function ConfigHandler:getPassiveSkillNameId(id)
-    local PassiveSkillInfos = self:getPassiveSkillId(tonumber(id))
-    return PassiveSkillInfos.name
-end
-
-function ConfigHandler:getPassiveSkillTextId(id)
-    local PassiveSkillInfos = self:getPassiveSkillId(tonumber(id))
-    return PassiveSkillInfos.describe
 end
 
 --获取道具资源
@@ -537,6 +523,21 @@ function ConfigHandler:getTalkPosOfId(id)
     return posID
 end
 
+--获取被动技能
+function ConfigHandler:getPassiveSkillId(id)
+    return g_PassiveSpellConfig[tonumber(id)]
+end
+
+function ConfigHandler:getPassiveSkillNameId(id)
+    local PassiveSkillInfos = self:getPassiveSkillId(tonumber(id))
+    return PassiveSkillInfos.name
+end
+
+function ConfigHandler:getPassiveSkillTextId(id)
+    local PassiveSkillInfos = self:getPassiveSkillId(tonumber(id))
+    return PassiveSkillInfos.describe
+end
+
 
 --获取技能资源
 function ConfigHandler:getSkillInfos(skillId)
@@ -545,28 +546,45 @@ function ConfigHandler:getSkillInfos(skillId)
 end
 
 --获取技能描述
-function ConfigHandler:getSkillDescribeOfId(skillId)
-    local skillInfos = self:getSkillInfos(skillId)
-    return skillInfos["技能描述"]
+function ConfigHandler:getSkillDescribeOfId(skillId, isPt)
+    if not (isPt == 1) then 
+        local skillInfos = self:getSkillInfos(skillId)
+        return skillInfos["技能描述"]
+    end
 end
 
-function ConfigHandler:getSkillResOfId(skillId)
-    local skillInfos = self:getSkillInfos(skillId)
-    return skillInfos["技能片特效"]
+function ConfigHandler:getSkillResOfId(skillId, isPt)
+    if not (isPt == 1) then 
+        local skillInfos = self:getSkillInfos(skillId)
+        return skillInfos["技能片特效"]
+    else
+        local skillInfos = g_PassiveSpellConfig[tonumber(skillId)]
+        return skillInfos.skillAnima
+    end
 end
 
-function ConfigHandler:getSkillEffScaleOfId(skillId)
-    local skillInfos = self:getSkillInfos(skillId)
-    return skillInfos["技能片缩放比例"]
+function ConfigHandler:getSkillEffScaleOfId(skillId, isPt)
+    if not (isPt == 1) then 
+        local skillInfos = self:getSkillInfos(skillId)
+        return skillInfos["技能片缩放比例"]
+    else
+        return 1
+    end
 end
 
-function ConfigHandler:getSkillBuffName(skillId)
-    local skillInfos = self:getSkillInfos(skillId)
-    
-    local buffId = skillInfos["效果描述"]
+function ConfigHandler:getSkillBuffName(skillId, isPt)
+
+    local buffId = nil
+    if not (isPt == 1) then
+        local skillInfos = self:getSkillInfos(skillId)
+        buffId = skillInfos["效果描述"]
+    else
+        local skillInfos = g_PassiveSpellConfig[tonumber(skillId)]
+        buffId = skillInfos.buffName
+    end
     
     local buffImagePath = nil
-    if buffId then
+    if buffId and buffId ~= "" and tonumber(buffId) ~= 0 then
 
         local buffIds = Functions.strSplit(tostring(buffId), ",")
         if not self.buffData then
@@ -581,14 +599,25 @@ function ConfigHandler:getSkillBuffName(skillId)
     return buffImagePath
 end
 
-function ConfigHandler:getSkillSoundName(skillId)
-    local skillInfos = self:getSkillInfos(skillId)
-    return skillInfos["技能声效"]
+function ConfigHandler:getSkillSoundName(skillId, isPt)
+
+    if not (isPt == 1) then
+        local skillInfos = self:getSkillInfos(skillId)
+        return skillInfos["技能声效"]
+    else
+        local skillInfos = g_PassiveSpellConfig[tonumber(skillId)]
+        return skillInfos.soundName
+    end
 end
 
-function ConfigHandler:getSkillBuffTypeOfId(skillId)
-    local skillInfos = self:getSkillInfos(skillId)
-    return skillInfos["效果选择"]
+function ConfigHandler:getSkillBuffTypeOfId(skillId, isPt)
+    if not (isPt == 1) then
+        local skillInfos = self:getSkillInfos(skillId)
+        return skillInfos["效果选择"]
+    else
+        local skillInfos = g_PassiveSpellConfig[tonumber(skillId)]
+        return skillInfos.state
+    end
 end
 
 function ConfigHandler:loadFBInfo(fbID)

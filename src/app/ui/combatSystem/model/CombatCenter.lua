@@ -915,7 +915,8 @@ function CombatCenter:onHeroEffectStart_(param)
     local skillId = param[3]
     local isLoop  = param[4]
     local msgId   = param[5]
-    self.fightCreatures[heroId]:onEffectStart_(skillId, isLoop, msgId)
+    local isPt    = param[6]
+    self.fightCreatures[heroId]:onEffectStart_(skillId, isLoop, msgId, isPt)
 end
 
 function CombatCenter:onHeroEffectEnd_(param)
@@ -924,7 +925,8 @@ function CombatCenter:onHeroEffectEnd_(param)
     local heroId  = param[2]
     local skillId = param[3]
     local msgId   = param[4]
-    self.fightCreatures[heroId]:onEffectEnd_(skillId, msgId)
+    local isPt    = param[5]
+    self.fightCreatures[heroId]:onEffectEnd_(skillId, msgId, isPt)
 end
 
 function CombatCenter:gameOver_(param)

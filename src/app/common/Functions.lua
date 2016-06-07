@@ -1218,6 +1218,14 @@ function table.hasValue(t, value)
     return false
 end
 
+function table.findOfFunc(t, ruleCb)
+    for k, v in pairs(t) do
+        if ruleCb(v) then
+            return v
+        end
+    end
+end
+
 function table.removeOfValue(t, value)
     local rms = {}
     for k, v in pairs(t) do
@@ -3575,19 +3583,47 @@ end
 function Functions.rewardDataHandler(datas)
     local items = {}
     for i=1, #datas do
-        local item = {}
-        item.id = datas[i][1]
-        item.type = datas[i][2]
-        item.count = datas[i][3]
-        item.mark_id = datas[i][4]
-        items[#items+1] = item
+        if datas[i][2] ~= 1 then
+            local item = {}
+            item.id = datas[i][1]
+            item.type = datas[i][2]
+            item.count = datas[i][3]
+            item.mark_id = datas[i][4]
+            items[#items+1] = item
+        else
+            local src = table.findOfFunc(items, function(data)
+                if data.id == datas[i][1] then
+                    return true
+                else
+                    return false
+                end
+            end)
+
+            if src then
+                src.count = datas[i][3] + src.count
+                src.mark_id[#src.mark_id + 1] = datas[i][4]
+            else
+                local item = {}
+                item.id = datas[i][1]
+                item.type = datas[i][2]
+                item.count = datas[i][3]
+                item.mark_id = { datas[i][4] }
+                items[#items+1] = item
+            end
+        end
     end
     return items
 end
 
 function Functions.addItemsToData(items)
     for k, v in ipairs(items) do
-        Functions:addItemResources( { id = v.id, type = v.type, count = v.count, slot = v.mark_id } )
+        if v.type ~= 1 then
+            Functions:addItemResources( { id = v.id, type = v.type, count = v.count, slot = v.mark_id } )
+        else
+            for m, n in ipairs(v.mark_id) do
+                Functions:addItemResources( { id = v.id, type = v.type, slot = n } )
+            end
+        end
     end
 end
 

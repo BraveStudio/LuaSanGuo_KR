@@ -36,38 +36,38 @@ function HeroViewController:onDidLoadView()
 
     --output list
     self._Text_hero_num_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_left"):getChildByName("Text_hero_num")
-    self._resNode_t = self.view_t.csbNode:getChildByName("main"):getChildByName("resNode")
-    self._Image_sell_1_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_sell"):getChildByName("Image_sell_1")
-    self._Image_sell_2_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_sell"):getChildByName("Image_sell_2")
-    self._Panel_sell_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell")
-    self._Text_money_sell_num_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell"):getChildByName("Image_money_sell"):getChildByName("Text_money_sell_num")
-    self._Panel_all_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_all")
-    self._Panel_li_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_li")
-    self._Panel_mou_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_mou")
-    self._Panel_shu_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_shu")
-    self._Panel_yi_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_yi")
-    self._Panel_hero_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_hero")
-    
+	self._resNode_t = self.view_t.csbNode:getChildByName("main"):getChildByName("resNode")
+	self._Image_sell_1_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_sell"):getChildByName("Image_sell_1")
+	self._Image_sell_2_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_sell"):getChildByName("Image_sell_2")
+	self._Panel_sell_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell")
+	self._Text_money_sell_num_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell"):getChildByName("Image_money_sell"):getChildByName("Text_money_sell_num")
+	self._Panel_all_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_all")
+	self._Panel_li_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_li")
+	self._Panel_mou_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_mou")
+	self._Panel_shu_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_shu")
+	self._Panel_yi_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_yi")
+	self._Panel_hero_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_hero")
+	
     --label list
     
     --button list
     self._Button_back_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_left"):getChildByName("Button_back")
-    self._Button_back_t:onTouch(Functions.createClickListener(handler(self, self.onButton_backClick), "zoom"))
+	self._Button_back_t:onTouch(Functions.createClickListener(handler(self, self.onButton_backClick), "zoom"))
 
-    self._Button_help_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_left"):getChildByName("Button_help")
-    self._Button_help_t:onTouch(Functions.createClickListener(handler(self, self.onButton_helpClick), "zoom"))
+	self._Button_help_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_left"):getChildByName("Button_help")
+	self._Button_help_t:onTouch(Functions.createClickListener(handler(self, self.onButton_helpClick), "zoom"))
 
-    self._Button_sell_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_sell")
-    self._Button_sell_t:onTouch(Functions.createClickListener(handler(self, self.onButton_sellClick), "zoom"))
+	self._Button_sell_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_sell")
+	self._Button_sell_t:onTouch(Functions.createClickListener(handler(self, self.onButton_sellClick), "zoom"))
 
-    self._Button_Pokedex_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_Pokedex")
-    self._Button_Pokedex_t:onTouch(Functions.createClickListener(handler(self, self.onButton_pokedexClick), "zoom"))
+	self._Button_Pokedex_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_Pokedex")
+	self._Button_Pokedex_t:onTouch(Functions.createClickListener(handler(self, self.onButton_pokedexClick), "zoom"))
 
-    self._Button_Selected_1_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell"):getChildByName("Button_Selected_1")
-    self._Button_Selected_1_t:onTouch(Functions.createClickListener(handler(self, self.onButton_selected_1Click), "zoom"))
+	self._Button_Selected_1_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell"):getChildByName("Button_Selected_1")
+	self._Button_Selected_1_t:onTouch(Functions.createClickListener(handler(self, self.onButton_selected_1Click), "zoom"))
 
-    self._Button_ok_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell"):getChildByName("Button_ok")
-    self._Button_ok_t:onTouch(Functions.createClickListener(handler(self, self.onButton_okClick), "zoom"))
+	self._Button_ok_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell"):getChildByName("Button_ok")
+	self._Button_ok_t:onTouch(Functions.createClickListener(handler(self, self.onButton_okClick), "zoom"))
 
 end
 --@auto code uiInit end
@@ -233,10 +233,10 @@ function HeroViewController:onCreate()
 end
 
 function HeroViewController:onDisplayView()
-    Functions.printInfo(self.debug_b," HeroViewController view enter display!")
+	Functions.printInfo(self.debug_b," HeroViewController view enter display!")
     Functions.setPopupKey("hero")
     Functions.initResNodeUI(self._resNode_t,{ "hunjin"})
-    --显示武将
+	--显示武将
     --self._Text_money_num_t:setText(tostring(PlayerData.eventAttr.m_hunjing))
     self._Text_hero_num_t:setText(tostring(#(HeroCardData:getAllHeroData()).."/"..tostring(HeroCardData:getBagBaseSize())))
 
@@ -294,17 +294,17 @@ function HeroViewController:onDisplayView()
     --当前选择武将类型(1为全部，2为力，3为谋，4为术，5为医)
     self.cardState = 1
 
-    local onPanel1 = function()
-        print("panel 1 click")
-       if self.cardState ~= 1 then
+	local onPanel1 = function()
+		print("panel 1 click")
+	   if self.cardState ~= 1 then
             self.sellMoney = 0
             self.sellSoul = 0
             self._Text_money_sell_num_t:setText(tostring(self.sellMoney))
             self.cardState = 1
             self:sellShow()
-        end
-    end
-    
+		end
+	end
+	
     local onPanel2 = function()
         print("panel 2 click")
         if self.cardState ~= 2 then
@@ -468,7 +468,7 @@ function HeroViewController:showCard(show_Card)
             
             if EnhanceData.HeroShowType == 2 or EnhanceData.HeroShowType == 0 then
                 if EnhanceData.HeroShowType == 2 then
-                    self.sellState = true
+                	self.sellState = true
                 end
                 if self.sellState == true then
                     if selected == false then
@@ -670,7 +670,7 @@ function HeroViewController:Show_upCard()
                 end
                 if _task and v.m_atkFormFlag == 0 and v.m_defFormFlag == 0  then
                     test[#test+1] = v
-                end
+            	end
             elseif EnhanceData.HeroShowType == 3 then
                 local _test = {}
                 _test = HeroCardData:getAllHeroData()

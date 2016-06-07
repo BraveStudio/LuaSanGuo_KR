@@ -255,7 +255,7 @@ function CreatureModel:updateAttrExOfZx(combatType, zxId, campType)
         local _, doubleBuffName = Functions.getTianTiBuffZX()
         local isDouble =  doubleBuffName == "language_" .. ConfigHandler:getZxNameOfId(zxId)
         if campType and combatType == CombatCenter.CombatType.RB_PVPPlayerData and isDouble then
-            zxValue = zxValue * 2
+            zxValue = zxValue * 2.5
         end
 
         if zxType == 1 then
@@ -312,21 +312,21 @@ function CreatureModel:onSpellTargetChanged_()
     
 end
 
-function CreatureModel:onEffectStart_(skillId, isLoop, msgId)
+function CreatureModel:onEffectStart_(skillId, isLoop, msgId, isPt)
 	Functions.printInfo(self.debug, "onEffectStart_ is call")
 	
     local CombatCenter = require("app.ui.combatSystem.model.CombatCenter")
     if CombatCenter.FrameTimeCount >  20 then
-        self:dispatchEvent({ name =  CreatureModel.SKILL_EFFECT_START_EVENT, data = { id = skillId, isLoop = isLoop, msgId = msgId }})
+        self:dispatchEvent({ name =  CreatureModel.SKILL_EFFECT_START_EVENT, data = { id = skillId, isLoop = isLoop, msgId = msgId, isPt = isPt}})
     end
 end
 
-function CreatureModel:onEffectEnd_(skillId, msgId)
+function CreatureModel:onEffectEnd_(skillId, msgId, isPt)
 	Functions.printInfo(self.debug, "onEffectEnd is call")
 	
     local CombatCenter = require("app.ui.combatSystem.model.CombatCenter")
     if CombatCenter.FrameTimeCount >  20 then
-        self:dispatchEvent({ name =  CreatureModel.SKILL_EFFECT_END_EVENT, data = { id = skillId , msgId = msgId} })
+        self:dispatchEvent({ name =  CreatureModel.SKILL_EFFECT_END_EVENT, data = { id = skillId , msgId = msgId, isPt = isPt } })
     end
 end
 

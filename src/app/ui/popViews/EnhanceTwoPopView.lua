@@ -28,69 +28,69 @@ function EnhanceTwoPopView:onInitUI()
 
     --output list
     self._ProjectNode_head_crad8_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card8"):getChildByName("ProjectNode_head_crad8")
-    self._Text_crad8_level_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_level")
-    self._Text_introduce_ladder_2_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_introduce_ladder_2")
-    self._ProjectNode_9_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card9"):getChildByName("ProjectNode_9")
-    self._Text_up_class_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card9"):getChildByName("ProjectNode_9"):getChildByName("Text_up_class_num")
-    self._ProjectNode_head_crad10_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("ProjectNode_head_crad10")
-    self._Text_crad10_level_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_level")
-    self._Text_crad10_HP_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_HP_num")
-    self._Text_crad10_ATK_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_ATK_num")
-    self._Text_crad10_ling_bing_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_ling_bing_num")
-    self._Text_crad10_chou_mou_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_chou_mou_num")
-    self._Text_crad8_HP_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_HP_num")
-    self._Text_crad8_ATK_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_ATK_num")
-    self._Text_crad8_ling_bing_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_ling_bing_num")
-    self._Text_crad8_chou_mou_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_chou_mou_num")
-    self._Text_introduce_ladder_1_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_introduce_ladder_1")
-    self._Text_introduce_ladder_3_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_introduce_ladder_3")
-    self._Text_Two_cost_money_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_Two_cost_money")
-    self._Text_Two_cost_money_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_Two_cost_money"):getChildByName("Text_Two_cost_money_num")
-    self._Text_Two_cost_soul_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_Two_cost_soul")
-    self._Text_Two_soul_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_Two_cost_soul"):getChildByName("Text_Two_soul_num")
-    
+	self._Text_crad8_level_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_level")
+	self._Text_introduce_ladder_2_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_introduce_ladder_2")
+	self._ProjectNode_9_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card9"):getChildByName("ProjectNode_9")
+	self._Text_up_class_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card9"):getChildByName("ProjectNode_9"):getChildByName("Text_up_class_num")
+	self._ProjectNode_head_crad10_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("ProjectNode_head_crad10")
+	self._Text_crad10_level_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_level")
+	self._Text_crad10_HP_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_HP_num")
+	self._Text_crad10_ATK_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_ATK_num")
+	self._Text_crad10_ling_bing_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_ling_bing_num")
+	self._Text_crad10_chou_mou_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_chou_mou_num")
+	self._Text_crad8_HP_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_HP_num")
+	self._Text_crad8_ATK_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_ATK_num")
+	self._Text_crad8_ling_bing_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_ling_bing_num")
+	self._Text_crad8_chou_mou_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_chou_mou_num")
+	self._Text_introduce_ladder_1_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_introduce_ladder_1")
+	self._Text_introduce_ladder_3_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_introduce_ladder_3")
+	self._Text_Two_cost_money_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_Two_cost_money")
+	self._Text_Two_cost_money_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_Two_cost_money"):getChildByName("Text_Two_cost_money_num")
+	self._Text_Two_cost_soul_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_Two_cost_soul")
+	self._Text_Two_soul_num_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_Two_cost_soul"):getChildByName("Text_Two_soul_num")
+	
     --label list
     self._Text_crad8_name_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_name")
-    self._Text_crad8_name_t:setString(LanguageConfig.ui_Enhance_1)
+	self._Text_crad8_name_t:setString(LanguageConfig.ui_Enhance_1)
 
-    self._Text_crad8_HP_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_HP")
-    self._Text_crad8_HP_t:setString(LanguageConfig.lk_common_1)
+	self._Text_crad8_HP_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_HP")
+	self._Text_crad8_HP_t:setString(LanguageConfig.lk_common_1)
 
-    self._Text_crad8_ATK_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_ATK")
-    self._Text_crad8_ATK_t:setString(LanguageConfig.lk_common_2)
+	self._Text_crad8_ATK_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_ATK")
+	self._Text_crad8_ATK_t:setString(LanguageConfig.lk_common_2)
 
-    self._Text_crad8_ling_bing_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_ling_bing")
-    self._Text_crad8_ling_bing_t:setString(LanguageConfig.lk_common_3)
+	self._Text_crad8_ling_bing_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_ling_bing")
+	self._Text_crad8_ling_bing_t:setString(LanguageConfig.lk_common_3)
 
-    self._Text_crad8_chou_mou_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_chou_mou")
-    self._Text_crad8_chou_mou_t:setString(LanguageConfig.lk_common_4)
+	self._Text_crad8_chou_mou_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Text_crad8_chou_mou")
+	self._Text_crad8_chou_mou_t:setString(LanguageConfig.lk_common_4)
 
-    self._Text_crad10_name_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_name")
-    self._Text_crad10_name_t:setString(LanguageConfig.ui_Enhance_1)
+	self._Text_crad10_name_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_name")
+	self._Text_crad10_name_t:setString(LanguageConfig.ui_Enhance_1)
 
-    self._Text_crad10_HP_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_HP")
-    self._Text_crad10_HP_t:setString(LanguageConfig.lk_common_1)
+	self._Text_crad10_HP_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_HP")
+	self._Text_crad10_HP_t:setString(LanguageConfig.lk_common_1)
 
-    self._Text_crad10_ATK_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_ATK")
-    self._Text_crad10_ATK_t:setString(LanguageConfig.lk_common_2)
+	self._Text_crad10_ATK_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_ATK")
+	self._Text_crad10_ATK_t:setString(LanguageConfig.lk_common_2)
 
-    self._Text_crad10_ling_bing_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_ling_bing")
-    self._Text_crad10_ling_bing_t:setString(LanguageConfig.lk_common_3)
+	self._Text_crad10_ling_bing_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_ling_bing")
+	self._Text_crad10_ling_bing_t:setString(LanguageConfig.lk_common_3)
 
-    self._Text_crad10_chou_mou_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_chou_mou")
-    self._Text_crad10_chou_mou_t:setString(LanguageConfig.lk_common_4)
+	self._Text_crad10_chou_mou_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card10"):getChildByName("Text_crad10_chou_mou")
+	self._Text_crad10_chou_mou_t:setString(LanguageConfig.lk_common_4)
     --button list
     self._Button_card8_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card8")
-    self._Button_card8_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card8Click), ""))
+	self._Button_card8_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card8Click), ""))
 
-    self._Button_up_ladder_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_up_ladder")
-    self._Button_up_ladder_t:onTouch(Functions.createClickListener(handler(self, self.onButton_up_ladderClick), ""))
+	self._Button_up_ladder_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_up_ladder")
+	self._Button_up_ladder_t:onTouch(Functions.createClickListener(handler(self, self.onButton_up_ladderClick), ""))
 
-    self._Button_card9_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card9")
-    self._Button_card9_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card9Click), ""))
+	self._Button_card9_t = self.csbNode:getChildByName("Panel_jinjie"):getChildByName("Button_card9")
+	self._Button_card9_t:onTouch(Functions.createClickListener(handler(self, self.onButton_card9Click), ""))
 
-    self._Button_up_close_t = self.csbNode:getChildByName("Button_up_close")
-    self._Button_up_close_t:onTouch(Functions.createClickListener(handler(self, self.onButton_up_closeClick), "zoom"))
+	self._Button_up_close_t = self.csbNode:getChildByName("Button_up_close")
+	self._Button_up_close_t:onTouch(Functions.createClickListener(handler(self, self.onButton_up_closeClick), "zoom"))
 end
 --@auto code uiInit end
 
@@ -120,7 +120,7 @@ function EnhanceTwoPopView:onButton_card9Click()
 --    if #EnhanceData.MasterData <= 0 then
 --        --弹出报错信息
 --        PromptManager:openTipPrompt("请先添加需要进阶的卡")
---      return false
+--    	return false
 --    end
 --    
 --    EnhanceData.HeroShowType = 4
@@ -134,12 +134,12 @@ function EnhanceTwoPopView:onButton_up_ladderClick()
     if #EnhanceData.MasterData == 0 then
         --弹出报错信息
         PromptManager:openTipPrompt(LanguageConfig.language_Enhance_11)
-        return false
+    	return false
     end
     local iiii = g_csBaseCfg.upLevel[EnhanceData.MasterData[1].m_class]
     local var = EnhanceData.MasterData[1].m_level
     if EnhanceData.MasterData[1].m_class > #g_csBaseCfg.upCardCount then
-        return false
+    	return false
     end
     local iiop = EnhanceData.MasterData[1].m_class
     local kkkkk = EnhanceData.MasterData[1].m_level
@@ -288,14 +288,14 @@ end
 
 --@auto code output func
 function EnhanceTwoPopView:getPopAction()
-    Functions.printInfo(self.debug,"pop actionFunc is call")
+	Functions.printInfo(self.debug,"pop actionFunc is call")
 end
 
 function EnhanceTwoPopView:onDisplayView(...)
-    Functions.printInfo(self.debug,"pop action finish ")
+	Functions.printInfo(self.debug,"pop action finish ")
     self._Text_introduce_ladder_2_t:setVisible(false)
     self._Text_introduce_ladder_1_t:setVisible(false)
-    local data = {...}
+	local data = {...}
     self.type = data[1].type
     --等于1为升级，等于2为进阶
     if self.type == 2 then
@@ -310,7 +310,7 @@ function EnhanceTwoPopView:onDisplayView(...)
     local onJinJie_zhu = function(event)
     
         if #EnhanceData.MasterData <= 0 then
-            return false
+        	return false
         end
         self:showCardInfo_up_one()
     end
@@ -331,7 +331,7 @@ function EnhanceTwoPopView:onDisplayView(...)
 end
 
 function EnhanceTwoPopView:onCreate()
-    Functions.printInfo(self.debug,"child class create call ")
+	Functions.printInfo(self.debug,"child class create call ")
 end
 --@auto code output func end
 
@@ -455,9 +455,9 @@ function EnhanceTwoPopView:showCardInfo_up_one()
             local _task = true
             for q,w in pairs(taskHreo) do
                 if v.m_mark == w then
-                    _task = fasle
-                    break
-                end
+            		_task = fasle
+            		break
+            	end
             end
             if _task and v.m_id == EnhanceData.MasterData[1].m_id and v.m_atkFormFlag == 0 and v.m_defFormFlag == 0 and v.m_mark ~= EnhanceData.MasterData[1].m_mark then
                 
