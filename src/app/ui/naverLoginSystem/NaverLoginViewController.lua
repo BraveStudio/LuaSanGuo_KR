@@ -33,8 +33,11 @@ function NaverLoginViewController:onDidLoadView()
     --label list
     
     --button list
-    self._loginBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("loginPanle"):getChildByName("loginBt")
-	self._loginBt_t:onTouch(Functions.createClickListener(handler(self, self.onLoginbtClick), ""))
+    self._loginForNstoreBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("loginPanle"):getChildByName("loginForNstoreBt")
+	self._loginForNstoreBt_t:onTouch(Functions.createClickListener(handler(self, self.onLoginfornstorebtClick), ""))
+
+	self._loginForTstoreBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("loginPanle"):getChildByName("loginForTstoreBt")
+	self._loginForTstoreBt_t:onTouch(Functions.createClickListener(handler(self, self.onLoginfortstorebtClick), ""))
 
 end
 --@auto code uiInit end
@@ -42,14 +45,25 @@ end
 
 --@auto button backcall begin
 
---@auto code Loginbt btFunc
-function NaverLoginViewController:onLoginbtClick()
-    Functions.printInfo(self.debug,"Loginbt button is click!")
+--@auto code Loginfornstorebt btFunc
+function NaverLoginViewController:onLoginfornstorebtClick()
+    Functions.printInfo(self.debug,"Loginfornstorebt button is click!")
     Functions.callJavaFuc(function()
         NativeUtil:sdkLogin()
-    end)    
+        GameState.storeAttr.NstoreOrTstore_f = 1
+    end)
 end
---@auto code Loginbt btFunc end
+--@auto code Loginfornstorebt btFunc end
+
+--@auto code Loginfortstorebt btFunc
+function NaverLoginViewController:onLoginfortstorebtClick()
+    Functions.printInfo(self.debug,"Loginfortstorebt button is click!")
+    Functions.callJavaFuc(function()
+        NativeUtil:sdkLogin()
+        GameState.storeAttr.NstoreOrTstore_f = 2
+    end)
+end
+--@auto code Loginfortstorebt btFunc end
 
 --@auto button backcall end
 
