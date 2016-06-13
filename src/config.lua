@@ -40,7 +40,7 @@ G_IsUseSDK = false
 G_SDKType = 3
 
 -- NetWork 是否连接内网，true: 连接内网，false: 连接外网
-G_IsLinkLoaclIp = true
+G_IsLinkLoaclIp = false
 
 
 --外网服务器id
@@ -71,8 +71,8 @@ G_IsHaveLanchImage = false
 
 --当前版本
 CurrentBigVersion = 3
-CurrentMidVersion = 3
-CurrentMinVersion = 2
+CurrentMidVersion = 4
+CurrentMinVersion = 1
 
 --输出内存信息
 DEBUG_MEM = false
