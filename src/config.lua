@@ -40,7 +40,7 @@ G_IsUseSDK = false
 G_SDKType = 3
 
 -- NetWork 是否连接内网，true: 连接内网，false: 连接外网
-G_IsLinkLoaclIp = true
+G_IsLinkLoaclIp = false
 
 
 --外网服务器id
