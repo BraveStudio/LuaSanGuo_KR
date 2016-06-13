@@ -71,8 +71,8 @@ G_IsHaveLanchImage = false
 
 --当前版本
 CurrentBigVersion = 3
-CurrentMidVersion = 3
-CurrentMinVersion = 2
+CurrentMidVersion = 4
+CurrentMinVersion = 1
 
 --输出内存信息
 DEBUG_MEM = false

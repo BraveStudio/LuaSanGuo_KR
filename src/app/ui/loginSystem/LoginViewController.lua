@@ -104,9 +104,15 @@ function LoginViewController:onTest_buttonClick()
         PromptManager:openTipPrompt(LanguageConfig.language_0_8)
         return
     end
+<<<<<<< HEAD
 -- -- --
 --     userName = "NaverSdk_116301090"
 --     password = "NaverSdk_116301090"
+=======
+-- --
+    -- userName = "NaverSdk_14602374"
+    -- password = "NaverSdk_14602374"
+>>>>>>> hotfix/3.4.2
 
 
     --开始登陆

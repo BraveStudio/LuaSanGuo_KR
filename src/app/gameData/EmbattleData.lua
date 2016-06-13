@@ -184,7 +184,20 @@ function EmbattleData:initHeroMark(embattleModel)
 end
 --打包HeroMark adn Soldiers
 function EmbattleData:getCurrentEmbattleInf()
+    self:updateSoldiers()
     return {MainHeroMark = self.MainHeroMark,ViceHero1Mark = self.ViceHero1Mark,ViceHero2Mark = self.ViceHero2Mark,PartHeroMark = self.PartHeroMark,Soldiers = self.EmbattleInf.Soldiers}
+end
+
+function EmbattleData:updateSoldiers()
+    for k, v in pairs(self.EmbattleInf.Soldiers) do
+        if Functions.subIntOfNum(v.id /1000) == 1 then 
+            v.id = self.soldierId[1]
+        elseif Functions.subIntOfNum(v.id /1000) == 2 then
+             v.id = self.soldierId[2]
+        elseif Functions.subIntOfNum(v.id /1000) == 3 then
+             v.id = self.soldierId[3]
+        end 
+    end
 end
 --存储阵型信息到json字符串
 function EmbattleData:writeEmbattleDatatoJson(embattleNum,embattleType)
@@ -266,6 +279,7 @@ function EmbattleData:readEmbattleDatafromJson(embattleNum,embattleType)
         self:cleanHeroMark(embattleType)
         self.EmbattleInf.Soldiers = {}
     end
+    self:updateSoldiers()
     self:updateEmbattleInf()
 end
 
