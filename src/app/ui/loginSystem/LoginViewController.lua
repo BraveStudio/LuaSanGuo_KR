@@ -104,9 +104,9 @@ function LoginViewController:onTest_buttonClick()
         PromptManager:openTipPrompt(LanguageConfig.language_0_8)
         return
     end
--- --
     -- userName = "NaverSdk_14602374"
     -- password = "NaverSdk_14602374"
+
 
 
     --开始登陆
