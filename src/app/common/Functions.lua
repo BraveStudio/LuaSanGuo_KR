@@ -430,6 +430,7 @@ end
 function Functions.playAnimaOfUI(target, animaName, delayTime, isHide)
 
     assert(type(target) == "userdata" and type(animaName) == "string", "param is error")
+    print("animaName: " .. animaName)
     local action = cc.Animate:create(display.getAnimationCache(animaName))
     return Functions.playActionOfUI(target, action, delayTime, isHide)
 
@@ -1410,7 +1411,7 @@ end
 --根据传入class显示武将强化等级
 function Functions.initHeroClass(target,classNum)
     if classNum > 0 then
-        Functions.loadImageWithWidget(target,"head_" .. tostring(classNum) ..".png")
+        Functions.loadImageWithWidget(target,"tyj/dynamicUI_res/head_" .. tostring(classNum) ..".png")
         target:setVisible(true)
     else
         target:setVisible(false)
@@ -1430,6 +1431,9 @@ function Functions.initheroHeadFrame(target,id,classNum)
         "head_cheng_card.png",
         "head_red_card.png",
         "head_cai_card.png",
+        "head_dao_card.png",
+        "head_mo_card.png",
+        "head_mie_card.png",
     }
     Functions.loadImageWithWidget(target,frameTable[classNum])
     target:setVisible(true)
@@ -1461,6 +1465,9 @@ function Functions.initHeroName(target,id,heroClass,smallClass)
         cc.c3b(255,255,25),   --橙
         cc.c3b(255,63,37),     --红
         cc.c3b(255,63,37),     --红
+        cc.c3b(0,255,0),     
+        cc.c3b(255,0,0),          
+        cc.c3b(255,0,210),    
     }
     target:setColor(colorValue[1])
     if smallClass ~= nil and smallClass > 0 then 
@@ -1589,7 +1596,7 @@ function Functions.openTabs( tabs ,tab)
 end
 
 --初始化标签页组件
---@param: param format: { widget = , listener = , firstName = , disTabDatas = }
+--@param: param format: { widget = , listener = , firstName = , disTabDatas =,isExe }
 function Functions.initTabComWithSimple(param)
     assert(param and type(param.widget) == "userdata" ,"param is error!")
 
@@ -1622,9 +1629,10 @@ function Functions.initTabComWithSimple(param)
             end
         end
     end
-
     openTabs(firstTab)
-    param.listener(param.firstName)
+    if param.isExe == nil then 
+        param.listener(param.firstName)
+    end
     for k, v in pairs(tabs) do
         local button = v
         -- local selected = button:getChildByName(1)
@@ -1948,13 +1956,15 @@ function Functions.getHeroCrad(widget,data)
     local country = heroCard:getChildByName("country")
     local countryResTable = {"card_shu.png","card_wu.png","card_wei.png","card_qun.png"}
     local frameResTable = {"card_bai.png","card_lv.png", "card_lan.png","card_zi.png", "card_cheng.png","card_hong.png", "card_cai.png"}
-    local sixStarFrameResTable = {"6xingcard_bai.png","6xingcard_lv.png", "6xingcard_lan.png","6xingcard_zi.png", "6xingcard_cheng.png","6xingcard_hong.png", "6xingcard_cai.png"}
-    local stageResTable = {"card_pu.png", "card_zhen.png", "card_gui.png", "card_shen.png", "card_sheng.png", "card_wang.png","card_huang.png"}
+    local sixStarFrameResTable = {"6xingcard_bai.png","6xingcard_lv.png", "6xingcard_lan.png","6xingcard_zi.png", "6xingcard_cheng.png","6xingcard_hong.png", "6xingcard_cai.png",
+                                    "6xingcard_dao.png","6xingcard_mo.png","6xingcard_mie.png"}
+    local stageResTable = {"card_pu.png", "card_zhen.png", "card_gui.png", "card_shen.png", "card_sheng.png", "card_wang.png","card_huang.png","card_dao.png","card_mo.png","card_mie.png"}
     -- local bgResTable = {"card_bg1.png","card_bg1.png","card_bg2.png","card_bg3.png","card_bg4.png"}
     -- Functions.loadImageWithWidget(bg, bgResTable[heroStar])
-    local bgResTable = {"card_bg1.png","card_bg2.png","card_bg3.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png"}
+    local bgResTable = {"card_bg1.png","card_bg2.png","card_bg3.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png","card_bg4.png"}
     Functions.loadImageWithSprite(bg, "tyj/ui_res/HeroCardUI/" .. bgResTable[bigClass])
     Functions.loadImageWithWidget(stage, "tyj/uiFonts_res/" .. stageResTable[bigClass])
+    frame:ignoreContentAdaptWithSize(true)
     if heroStar >= 6 then
         Functions.loadImageWithWidget(frame, "tyj/ui_res/HeroCardUI/" .. sixStarFrameResTable[bigClass])  
     else  

@@ -361,6 +361,7 @@ local languageConfig_ch =
         language_9_77 = "是否花费%d元宝购买%d钱币？",
         language_9_78 = "您已都领取今天的在线奖励.",
         language_9_79 = "您已取消本次支付！",
+        language_9_80 = "有武将已存在于备用阵型中，此操作可能导致相应备用阵型数据丢失，是否继续？",
 
         language_1000_15 = "等级达到最高",
         language_1000_16 = "缺少元宝",

@@ -7,7 +7,7 @@
 			<key>commonUI/res/tyj/EmbattleUI/buz.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{223,34},{73,43}}</string>
+				<string>{{329,274},{73,43}}</string>
 				<key>offset</key>
 				<string>{-1,0}</string>
 				<key>rotated</key>
@@ -18,7 +18,7 @@
 			<key>commonUI/res/tyj/EmbattleUI/bzpj.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{223,1},{104,31}}</string>
+				<string>{{223,274},{104,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -29,7 +29,7 @@
 			<key>commonUI/res/tyj/EmbattleUI/chejun.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{223,79},{55,31}}</string>
+				<string>{{330,241},{55,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -51,7 +51,7 @@
 			<key>commonUI/res/tyj/EmbattleUI/yjbz.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{172,326},{105,31}}</string>
+				<string>{{223,241},{105,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -62,7 +62,7 @@
 			<key>commonUI/res/tyj/EmbattleUI/baoc.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{223,112},{55,31}}</string>
+				<string>{{339,1},{55,31}}</string>
 				<key>offset</key>
 				<string>{0,1}</string>
 				<key>rotated</key>
@@ -81,6 +81,72 @@
 				<key>sourceSize</key>
 				<string>{169,52}</string>
 			</dict>
+			<key>commonUI/res/tyj/EmbattleUI/zx1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{172,326},{114,46}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{114,46}</string>
+			</dict>
+			<key>commonUI/res/tyj/EmbattleUI/zx1_0.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{223,1},{114,46}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{114,46}</string>
+			</dict>
+			<key>commonUI/res/tyj/EmbattleUI/zx2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{223,49},{114,46}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{114,46}</string>
+			</dict>
+			<key>commonUI/res/tyj/EmbattleUI/zx2_0.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{223,97},{114,46}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{114,46}</string>
+			</dict>
+			<key>commonUI/res/tyj/EmbattleUI/zx3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{223,145},{114,46}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{114,46}</string>
+			</dict>
+			<key>commonUI/res/tyj/EmbattleUI/zx3_0.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{223,193},{114,46}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{114,46}</string>
+			</dict>
 		</dict>
 		<key>metadata</key>
 		<dict>
@@ -91,12 +157,12 @@
 			<key>realTextureFileName</key>
 			<string>EmbattleUI_Text.png</string>
 			<key>size</key>
-			<string>{328,379}</string>
+			<string>{403,379}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>328</integer>
+			<integer>403</integer>
 			<key>height</key>
 			<integer>379</integer>
 		</dict>

@@ -31,6 +31,8 @@ GameState.storeAttr.curNonce_s = ""
 GameState.storeAttr.paymentSeq_s = ""
 GameState.storeAttr.curProductCode_s = ""
 GameState.storeAttr.forceUpdate_b = false
+GameState.storeAttr.attackEmbattleSelectData_s = "" --json字符串存储
+GameState.storeAttr.defenseEmbattleSelectData_s = ""
 -- GameState.storeAttr.isExtractExpansionFile_b = false
 GameState.storeAttr.isCloseSystemSpeaker_b = false
 

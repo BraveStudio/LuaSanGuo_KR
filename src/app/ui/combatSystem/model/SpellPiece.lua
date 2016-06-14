@@ -142,6 +142,7 @@ function SpellPiece:initPassiveSkillData_(skillInfo)
     passiveSkillData.m_SkillDelayType = skillInfo["delayType"]
     passiveSkillData.m_TriggerPoint = skillInfo['triggerPoint']
     passiveSkillData.m_TriggerValue = skillInfo['triggerValue']
+    passiveSkillData.m_SkillAnima = skillInfo['skillAnima']
     passiveSkillData.m_param1 = skillInfo["param1"]
     passiveSkillData.m_param2 = skillInfo["param2"]
     passiveSkillData.m_param3 = skillInfo["param3"]

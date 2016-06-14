@@ -198,41 +198,13 @@ end
 function HeroViewController:onButton_okClick()
     Functions.printInfo(self.debug,"Button_ok button is click!")
     
-
-    --同步数据
-    local onSellCard = function(event)
-        local data = event.data
-        PlayerData.eventAttr.m_hunjing = event.hunjing
-        local soulNum = 0
-        soulNum = event.soul - PlayerData.eventAttr.m_soul
-        if soulNum > 0 then
-            local buff = string.format( LanguageConfig.language_Hero_5, soulNum )
-            NoticeManager:openTips(self, { type = 5, title = buff })
-        end
-
-        PlayerData.eventAttr.m_soul = event.soul
-        
-        self:sellData()
-        HeroCardData:getSellHeroData(self.sellTable)
-        --显示卡
-        self:showCard(self.sell_Card)
-
-        --出售完了要清空
-        self.sellTable = {}
-        --self._Text_money_num_t:setText(tostring(PlayerData.eventAttr.m_hunjing))
-        self._Text_hero_num_t:setText(tostring(#(HeroCardData:getAllHeroData()).."/"..tostring(HeroCardData:getBagBaseSize())))
-        self.sellMoney = 0
-        self.sellSoul = 0
-        self._Text_money_sell_num_t:setText(tostring(self.sellMoney))
-    end
-    
     local sellMark = {}
     for k, v in pairs(self.sellTable) do
-    	sellMark[#sellMark+1] = v.m_mark
+        sellMark[#sellMark+1] = v.m_mark
     end
 
-    NetWork:addNetWorkListener({ 13, 1 }, Functions.createNetworkListener(onSellCard,true,"ret"))
-    NetWork:sendToServer({ idx = { 13, 1 }, slots = sellMark })
+    EmbattleData:removeHeroBeforeToCheck(sellMark,handler(self,self.sendSellCard))
+
 end
 --@auto code Button_ok btFunc end
 
@@ -393,6 +365,50 @@ function HeroViewController:onDisplayView()
     Functions.bindEventListener(self.view_t, GameEventCenter, HeroCardData.CARDS_ENHANCE, onCardInfo)
 end
 --@auto code view display func end
+
+function HeroViewController:sendSellCard()
+
+    --同步数据
+    local onSellCard = function(event)
+    
+        local sellMark = {}
+        for k, v in pairs(self.sellTable) do
+            sellMark[#sellMark+1] = v.m_mark
+        end
+        EmbattleData:removeHeroMarksFromJson(sellMark)
+        local data = event.data
+        PlayerData.eventAttr.m_hunjing = event.hunjing
+        local soulNum = 0
+        soulNum = event.soul - PlayerData.eventAttr.m_soul
+        if soulNum > 0 then
+            local buff = string.format( LanguageConfig.language_Hero_5, soulNum )
+            NoticeManager:openTips(self, { type = 5, title = buff })
+        end
+
+        PlayerData.eventAttr.m_soul = event.soul
+
+        self:sellData()
+        HeroCardData:getSellHeroData(self.sellTable)
+        --显示卡
+        self:showCard(self.sell_Card)
+
+        --出售完了要清空
+        self.sellTable = {}
+        --self._Text_money_num_t:setText(tostring(PlayerData.eventAttr.m_hunjing))
+        self._Text_hero_num_t:setText(tostring(#(HeroCardData:getAllHeroData()).."/"..tostring(HeroCardData:getBagBaseSize())))
+        self.sellMoney = 0
+        self.sellSoul = 0
+        self._Text_money_sell_num_t:setText(tostring(self.sellMoney))
+    end
+
+    local sellMark = {}
+    for k, v in pairs(self.sellTable) do
+        sellMark[#sellMark+1] = v.m_mark
+    end
+
+    NetWork:addNetWorkListener({ 13, 1 }, Functions.createNetworkListener(onSellCard,true,"ret"))
+    NetWork:sendToServer({ idx = { 13, 1 }, slots = sellMark })
+end
 
 function HeroViewController:showCard(show_Card)
     Functions.printInfo(self.debug_b,"showCard")

@@ -27,6 +27,12 @@ NetWork.WebErrCode =
     User_Inhibited = 8, --用户限制
 }
 
+if not GetNetConfig then
+    GetNetConfig = function()
+        return NetWork.NetWorkType.Socket
+    end
+end
+
 NetWork.ServerStatusCode =
 {
     online = 1,
@@ -35,6 +41,14 @@ NetWork.ServerStatusCode =
     maintain = 4,
     wait = 5,
 }
+
+NetWork.NetWorkType = 
+{
+    Socket = 0,
+    Pomelo = 1
+}
+
+local cjson = cjson.new()
 
 function NetWork:init()
 
@@ -124,9 +138,15 @@ end
 --数据派发函数
 function NetWork._onDispatchLuaMsg(netData)
 
+
     local dispatchFun = function()
         --    printInfo("数据派发开始")
         -- dump(netData, "server return data", 10)
+
+        if GetNetConfig() == NetWork.NetWorkType.Pomelo then
+            netData = cjson.decode(data)
+        end
+        
         if NetWork._currentNoAsnyMsg_t and NetWork._currentNoAsnyMsg_t.idx and NetWork._currentNoAsnyMsg_t.idx[1] == netData.idx[1] and
             NetWork._currentNoAsnyMsg_t.idx[2] == netData.idx[2] then
             NetWork:finishSend()
@@ -169,9 +189,14 @@ function NetWork:logoutServer()
 end
 
 --网络交互
-function NetWork:setServerInfo(serverIp, serverId)
-    self.serverId = serverId
-    SetServerIp(serverIp, serverId)
+function NetWork:setServerInfo(serverIp, serverId, port)
+    if GetNetConfig() == NetWork.NetWorkType.Socket then
+        self.serverId = serverId
+        SetServerIp(serverIp, serverId)
+    else
+        self.serverId = serverId
+        SetServerIp(serverIp, port, serverId)
+    end
 end
 
 --登陆逻辑服务器

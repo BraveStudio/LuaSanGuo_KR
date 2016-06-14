@@ -616,7 +616,7 @@ function ConfigHandler:getSkillBuffTypeOfId(skillId, isPt)
         return skillInfos["效果选择"]
     else
         local skillInfos = g_PassiveSpellConfig[tonumber(skillId)]
-        return skillInfos.state
+        return skillInfos.effect
     end
 end
 

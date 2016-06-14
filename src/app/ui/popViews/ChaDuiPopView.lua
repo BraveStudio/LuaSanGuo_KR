@@ -133,6 +133,9 @@ function ChaDuiPopView:showChaDui()
     
     local datas = self:getChaDuiDatas()
     local ppp = self.rank
+    if self.rank <= 0 then
+    	self._Panel_3_t:setVisible(false)
+    end
     Functions.initLabelOfString(self._Text_Distribution_2_t, tostring(self.ItemCount), self._Text_Distribution_3_t, self:getChaDuiTime(self.time), 
         self._Text_Distribution_6_t, tostring(self.rank), self._Text_2_t, g_guildCompensate, self._Text_4_t, g_guildChaDuiGold * (self.rank-1))
         

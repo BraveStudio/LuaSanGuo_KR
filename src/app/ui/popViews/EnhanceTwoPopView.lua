@@ -152,8 +152,27 @@ function EnhanceTwoPopView:onButton_up_ladderClick()
         PromptManager:openTipPrompt(str)
         return false
     end
+
+    local met = EnhanceData.DeputyData
+    local metMark = {}
+    for k, v in pairs(met) do
+        metMark[#metMark+1] = v.m_mark
+    end
+    EmbattleData:removeHeroBeforeToCheck(metMark, handler(self,self.send_up_ladderClick))
+    
+end
+--@auto code Button_up_ladder btFunc end
+
+function EnhanceTwoPopView:send_up_ladderClick()
     --发送进阶
     local onSendChat = function(event)
+    
+        local met = EnhanceData.DeputyData
+        local metMark = {}
+        for k, v in pairs(met) do
+            metMark[#metMark+1] = v.m_mark
+        end
+        EmbattleData:removeHeroMarksFromJson(metMark)
 
         local _stype = event.stype --类型用来判断,1是进阶，其他是进化
         local _class = event.class --当前阶强化等级，如果为进化，则为0
@@ -164,28 +183,28 @@ function EnhanceTwoPopView:onButton_up_ladderClick()
 
         PlayerData.eventAttr.m_money = event.m_money
         PlayerData.eventAttr.m_soul = m_soul
-        
+
         local allCard = HeroCardData:getAllHeroData()
         local deputyCard = EnhanceData.DeputyData
-        
+
         --删除绘制UI的副卡
         local calss = EnhanceData.MasterData[1].m_class
         if EnhanceData.MasterData[1].m_class > 2 then
-        	HeroCardData:getSellHeroData(deputyCard)
+            HeroCardData:getSellHeroData(deputyCard)
         end
-        
+
         --给卡包主数据赋值
         for k, v in pairs(allCard) do
             if v.m_mark == EnhanceData.MasterData[1].m_mark then
                 if 1 == _stype then
                     v.m_class = _class
-                    
+
                     local oooooo = v.m_hp
-                        
+
                     --card base data
                     local param = {heroInfo = { id = v.m_id, level = v.m_level, class = v.m_class, attackEx = v.m_attackEx,
                         hpEx = v.m_hpEx, fasEx = v.m_fasEx, fafEx = v.m_fafEx }}
-                        
+
                     v.m_baseCombat  = math.floor(cs_GetCardFightValue(param)) --卡牌战斗力
                     v.m_baseAttack  = math.floor(pm_GetCardAttack(param)) --卡牌攻击力
                     v.m_baseHp      = math.floor(pm_GetCardHp(param)) -- 卡牌血量
@@ -195,36 +214,36 @@ function EnhanceTwoPopView:onButton_up_ladderClick()
                     --进阶后改变主卡数据
                     EnhanceData:MasterCardData(param)
                 elseif 2 == _stype then --进化要改变id
---                        v.m_class = _class
---                        v.m_id = _id
---                        
---                        --card base data
---                        local param = { id = v.m_id, level = v.m_level, class = v.m_class, soldier = v.m_soldier, attack = v.m_attack,
---                            mp = v.m_mp, hp = v.m_hp }
---                        v.m_baseCombat  = Functions.getCardFightValue(param) --卡牌战斗力
---                        v.m_baseAttack  = Functions.getCardAttackValue(param) --卡牌攻击力
---                        v.m_baseHp      = Functions.getCardHp(param) -- 卡牌血量
---                        v.m_baseMp      = Functions.getCardMp(param) -- 卡牌筹谋
---                        v.m_baseSoldier = Functions.getCardLeadSoldierNum(param) -- 卡牌领兵
---                        
---                        --进阶后改变主卡数据
---                        EnhanceData:MasterCardData(param)
+                --                        v.m_class = _class
+                --                        v.m_id = _id
+                --                        
+                --                        --card base data
+                --                        local param = { id = v.m_id, level = v.m_level, class = v.m_class, soldier = v.m_soldier, attack = v.m_attack,
+                --                            mp = v.m_mp, hp = v.m_hp }
+                --                        v.m_baseCombat  = Functions.getCardFightValue(param) --卡牌战斗力
+                --                        v.m_baseAttack  = Functions.getCardAttackValue(param) --卡牌攻击力
+                --                        v.m_baseHp      = Functions.getCardHp(param) -- 卡牌血量
+                --                        v.m_baseMp      = Functions.getCardMp(param) -- 卡牌筹谋
+                --                        v.m_baseSoldier = Functions.getCardLeadSoldierNum(param) -- 卡牌领兵
+                --                        
+                --                        --进阶后改变主卡数据
+                --                        EnhanceData:MasterCardData(param)
                 end
                 allCard.m_exp = _exp
             end
         end
-        
+
         Functions.getHeroCrad(self._ProjectNode_head_crad8_t, {mark = EnhanceData.MasterData[1].m_mark})
 
         self._Button_card9_t:getChildByName("ProjectNode_9"):setVisible(false)
         EnhanceData.DeputyData = {}
-        
+
         self:showCardInfo_up_one()
-        
+
         --打开进阶动画
         Functions.playSound("upgradeEffect.mp3")
         self._controller_t:openChildView("app.ui.popViews.EnhanceActionPopView")
-        
+
         --卡包数据变动监听
         HeroCardData:cardsDataChange(EnhanceData.MasterData[1].m_mark)
     end
@@ -238,12 +257,12 @@ function EnhanceTwoPopView:onButton_up_ladderClick()
     local m_class = EnhanceData.MasterData[1].m_class
     local m_mark = EnhanceData.MasterData[1].m_mark
     local ooo = EnhanceData.MasterData[1].m_mark
-    
-    
+
+
     NetWork:addNetWorkListener({ 5, 30 }, Functions.createNetworkListener(onSendChat,true,"ret"))
     NetWork:sendToServer({ idx = { 5, 30 }, slot = EnhanceData.MasterData[1].m_mark, metSlot = metMark, type = _type }) --type (1为进阶)
+
 end
---@auto code Button_up_ladder btFunc end
 
 --@auto code Button_up_close btFunc
 function EnhanceTwoPopView:onButton_up_closeClick()
@@ -328,7 +347,9 @@ function EnhanceTwoPopView:showCardInfo_up_one()
     --进阶后的卡片
     self._ProjectNode_head_crad10_t:setVisible(true)
     --展示卡片
-    if EnhanceData.MasterData[1].m_class < #g_csBaseCfg.upCardCount+1 then
+    local stars = ConfigHandler:getHeroStarOfId(EnhanceData.MasterData[1].m_id) 
+    --6星以下的武将最高只能进阶到32阶。
+    if (stars <= 5 and EnhanceData.MasterData[1].m_class < 32) or (stars == 6 and  EnhanceData.MasterData[1].m_class < #g_csBaseCfg.upCardCount+1) then
         Functions.getHeroCrad(self._ProjectNode_head_crad10_t, {heroInf = {id = EnhanceData.MasterData[1].m_id,level = EnhanceData.MasterData[1].m_level,
             class = EnhanceData.MasterData[1].m_class+1, soldier = EnhanceData.MasterData[1].m_fafEx,attack =  EnhanceData.MasterData[1].m_attackEx, 
             mp =  EnhanceData.MasterData[1].m_fasEx, hp = EnhanceData.MasterData[1].m_hpEx}})
@@ -348,9 +369,9 @@ function EnhanceTwoPopView:showCardInfo_up_one()
         
     --第二张展示卡牌
     local param = {}
-    local ooo = data.m_class
-    local   pppppp = #g_csBaseCfg.upLevel
-    if data.m_class >= #g_csBaseCfg.upLevel + 1 then   --进化数为最高说明是皇（已到最高阶，已不能进阶
+    --6星以下的武将最高只能进阶到32阶。
+    local stars = ConfigHandler:getHeroStarOfId(data.m_id) 
+    if (stars <= 5 and data.m_class >= 32) or (stars == 6 and data.m_class >= #g_csBaseCfg.upLevel + 1) then   --进化数为最高说明已到最高阶，已不能进阶
     
         Functions.initLabelOfString(self._Text_crad8_level_t, "lv"..tostring(data.m_level), self._Text_crad8_name_t, str,
             self._Text_crad8_HP_num_t, math.floor(data.m_baseHp), self._Text_crad8_ATK_num_t, math.floor(data.m_baseAttack), 
@@ -386,6 +407,7 @@ function EnhanceTwoPopView:showCardInfo_up_one()
     else
         self._Text_Two_cost_money_t:setVisible(true)
         self._Text_Two_cost_soul_t:setVisible(true)
+        Functions.setEnabledBt(self._Button_up_ladder_t,true)
 
         self._Text_introduce_ladder_1_t:setVisible(true)
         self._Text_introduce_ladder_2_t:setVisible(true)
@@ -416,6 +438,9 @@ function EnhanceTwoPopView:showCardInfo_up_one()
     local info = HeroCardData:getHeroInfo(EnhanceData.MasterData[1].m_mark)
     local _money = cs_GetRoleJinJie(info.m_class,info.m_class,ConfigHandler:getHeroStarOfId(info.m_id))
     local idx = EnhanceData.MasterData[1].m_class
+    local iiimoney = g_csBaseCfg.upMoney[idx]
+    local iiisoul = g_csBaseCfg.upSoul[idx]
+    
     Functions.initLabelOfString( self._Text_Two_cost_money_num_t,  g_csBaseCfg.upMoney[idx], self._Text_Two_soul_num_t, g_csBaseCfg.upSoul[idx] )
     
     

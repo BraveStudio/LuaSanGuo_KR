@@ -201,6 +201,9 @@ local function ReadRoleCardConfig()
 		{'heroCard5', tostring},   		-- 卡牌5
 		{'heroCard6', tostring},   		-- 卡牌6
 		{'heroCard7', tostring},   		-- 卡牌7
+		{'heroCard8', tostring},   		-- 卡牌8
+		{'heroCard9', tostring},   		-- 卡牌9
+		{'heroCard10', tostring},   	-- 卡牌10
 		{'dialogueHead', tostring},     -- 战场对话头像
 		{'heroSound', tostring},		-- 声效【服务器不需要】
 		{'pjAddEx', tonumber}           --偏将加成

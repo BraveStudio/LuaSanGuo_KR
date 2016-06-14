@@ -133,10 +133,11 @@ function CombatBeforePopView:initHeroDis(infoView, info, isfrdly)
 
             local headHead     = infoView:getChildByName("headNode" .. tostring(i))
             local id           = tonumber(info.heros[i])
+            local class        = tonumber(info.classSet[i])
 
             if id and id > 0 then
                 headHead:setVisible(true)
-                Functions.getHeroHead(headHead, { id = id }, 2)
+                Functions.getHeroHead(headHead, { id = id, class = class }, 2)
             else
                 headHead:setVisible(false)
             end
