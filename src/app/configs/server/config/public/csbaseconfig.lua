@@ -1628,8 +1628,7 @@ StartAttrCfg =
 
 g_OnLineConReward = 
 {
-	Time = {10,10,10,10,10,10},
-	--Time = {60,300,600,1200,1800,3600},
+	Time = {60,300,600,1200,1800,3600},
 	Rewards ={
 				{items = {{43,4,5},{30,4,1},{1,1,1}}},
 				{items = {{44,4,5},{37,4,1},{1,1,1}}},
@@ -1689,7 +1688,7 @@ g_appendReward = {
 -- 充值活动送神将
 g_payActcfg = 
 {
-	startTime = {year = 2016,month = 6,day=2,hour=10,min=30,sec=0},
+	startTime = {year = 2016,month = 6,day=8,hour=10,min=5,sec=0},
 	endTime = {year = 2016,month = 6,day=9,hour=10,min=0,sec=0},
 	payCount = {500,1000,2000,5000,10000},
 	reward = {
@@ -1707,7 +1706,7 @@ g_payActcfg =
 --每日充值
 g_everyFirstPaycfg = 
 {
-	startTime = {year = 2016,month = 6,day=2,hour=10,min=30,sec=0},
+	startTime = {year = 2016,month = 6,day=8,hour=10,min=5,sec=0},
 	endTime = {year = 2016,month = 6,day=9,hour=10,min=0,sec=0},
 	-- payCount = {10,30,50,100},						--充值的人民币
 	payCount = {3000,6000,15000,35000},				    --充值的韩元
@@ -1726,7 +1725,7 @@ g_everyFirstPaycfg =
 --活动累计消费
 g_allConsumecfg = 
 {
-	startTime = {year = 2016,month = 6,day=2,hour=10,min=30,sec=0},
+	startTime = {year = 2016,month = 6,day=8,hour=10,min=5,sec=0},
 	endTime = {year = 2016,month = 6,day=9,hour=10,min=0,sec=0},
 	consumeCount = {500,1000,2000,5000,10000,30000},						--消费的
 	reward = {
@@ -1745,7 +1744,7 @@ g_allConsumecfg =
 --活动天梯争霸
 g_tiantizhengba = 
 {
-	startTime = {year = 2016,month = 6,day=2,hour=10,min=30,sec=0},
+	startTime = {year = 2016,month = 6,day=8,hour=10,min=5,sec=0},
 	endTime = {year = 2016,month = 6,day=9,hour=10,min=0,sec=0},
 	rank = {1,2,3,10,50,100,200,500},									--排名
 	reward = {															--排名对应讲理
