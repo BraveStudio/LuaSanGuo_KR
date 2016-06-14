@@ -92,6 +92,50 @@
 				<key>sourceSize</key>
 				<string>{578,114}</string>
 			</dict>
+			<key>tyj/ui_res/NaverLoginUI/NaverLogin_Green_N.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1209,233},{646,94}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{646,94}</string>
+			</dict>
+			<key>tyj/ui_res/NaverLoginUI/NaverLogin_Green_O.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1209,329},{646,94}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{646,94}</string>
+			</dict>
+			<key>tyj/ui_res/NaverLoginUI/NaverLogin_White_N.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1,337},{646,94}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{646,94}</string>
+			</dict>
+			<key>tyj/ui_res/NaverLoginUI/NaverLogin_White_O.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{649,425},{646,94}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{646,94}</string>
+			</dict>
 		</dict>
 		<key>metadata</key>
 		<dict>
@@ -102,14 +146,14 @@
 			<key>realTextureFileName</key>
 			<string>NaverLoginUI.png</string>
 			<key>size</key>
-			<string>{1740,336}</string>
+			<string>{1856,520}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>1740</integer>
+			<integer>1856</integer>
 			<key>height</key>
-			<integer>336</integer>
+			<integer>520</integer>
 		</dict>
 	</dict>
 </plist>

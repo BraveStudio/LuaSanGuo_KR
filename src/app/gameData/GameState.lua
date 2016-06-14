@@ -33,6 +33,7 @@ GameState.storeAttr.curProductCode_s = ""
 GameState.storeAttr.forceUpdate_b = false
 GameState.storeAttr.attackEmbattleSelectData_s = "" --json字符串存储
 GameState.storeAttr.defenseEmbattleSelectData_s = ""
+GameState.storeAttr.NstoreOrTstore_f = 0   -- 0 nothing 1 NstroeLogin  2 TstoreLogin
 -- GameState.storeAttr.isExtractExpansionFile_b = false
 GameState.storeAttr.isCloseSystemSpeaker_b = false
 

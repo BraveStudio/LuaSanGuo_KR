@@ -3147,7 +3147,11 @@ function Functions.sdkLoginHandler(userId)
 
     --添加平台区分
     if tonumber(G_SDKType) ~= 1 then
-        userId = userId .. "_" .. G_SDKType
+        if GameState.storeAttr.NstoreOrTstore_f == 0 then 
+            userId = userId .. "_" .. G_SDKType
+        elseif GameState.storeAttr.NstoreOrTstore_f == 2 then 
+             userId = userId .. "_" .. GameState.storeAttr.NstoreOrTstore_f
+        end
     end
     
     --开始登陆
