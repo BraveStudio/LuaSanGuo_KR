@@ -48,42 +48,42 @@ function CombatViewController:onDidLoadView()
 
     --output list
     self._main_t = self.view_t.csbNode:getChildByName("main")
-	self._combatPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel")
-	self._combatBg_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel"):getChildByName("combatBg")
-	self._colorPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel"):getChildByName("colorPanel")
-	self._time_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_1"):getChildByName("time")
-	self._control_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel")
-	self._right_down_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_down_panel")
-	self._video_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("video_panel")
-	self._left_top_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_top_panel")
-	self._right_top_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel")
-	self._fbinfo_Panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel")
-	self._fbInfo_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel"):getChildByName("fbInfo")
-	self._shield_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("shield_panel")
-	
+    self._combatPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel")
+    self._combatBg_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel"):getChildByName("combatBg")
+    self._colorPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel"):getChildByName("colorPanel")
+    self._time_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_1"):getChildByName("time")
+    self._control_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel")
+    self._right_down_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_down_panel")
+    self._video_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("video_panel")
+    self._left_top_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_top_panel")
+    self._right_top_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel")
+    self._fbinfo_Panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel")
+    self._fbInfo_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel"):getChildByName("fbInfo")
+    self._shield_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("shield_panel")
+    
     --label list
     
     --button list
     self._handleFightBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("handleFightBt")
-	self._handleFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onHandlefightbtClick), ""))
+    self._handleFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onHandlefightbtClick), ""))
 
-	self._autoFightBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("autoFightBt")
-	self._autoFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onAutofightbtClick), ""))
+    self._autoFightBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("autoFightBt")
+    self._autoFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onAutofightbtClick), ""))
 
-	self._speed2Bt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("speed2Bt")
-	self._speed2Bt_t:onTouch(Functions.createClickListener(handler(self, self.onSpeed2btClick), ""))
+    self._speed2Bt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("speed2Bt")
+    self._speed2Bt_t:onTouch(Functions.createClickListener(handler(self, self.onSpeed2btClick), ""))
 
-	self._speed1Bt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("speed1Bt")
-	self._speed1Bt_t:onTouch(Functions.createClickListener(handler(self, self.onSpeed1btClick), ""))
+    self._speed1Bt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("speed1Bt")
+    self._speed1Bt_t:onTouch(Functions.createClickListener(handler(self, self.onSpeed1btClick), ""))
 
-	self._combatSkipBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("video_panel"):getChildByName("combatSkipBt")
-	self._combatSkipBt_t:onTouch(Functions.createClickListener(handler(self, self.onCombatskipbtClick), ""))
+    self._combatSkipBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("video_panel"):getChildByName("combatSkipBt")
+    self._combatSkipBt_t:onTouch(Functions.createClickListener(handler(self, self.onCombatskipbtClick), ""))
 
-	self._resumeBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_down_panel"):getChildByName("resumeBt")
-	self._resumeBt_t:onTouch(Functions.createClickListener(handler(self, self.onResumebtClick), ""))
+    self._resumeBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_down_panel"):getChildByName("resumeBt")
+    self._resumeBt_t:onTouch(Functions.createClickListener(handler(self, self.onResumebtClick), ""))
 
-	self._pauseBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_down_panel"):getChildByName("pauseBt")
-	self._pauseBt_t:onTouch(Functions.createClickListener(handler(self, self.onPausebtClick), ""))
+    self._pauseBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_down_panel"):getChildByName("pauseBt")
+    self._pauseBt_t:onTouch(Functions.createClickListener(handler(self, self.onPausebtClick), ""))
 
 end
 --@auto code uiInit end
@@ -205,8 +205,8 @@ function CombatViewController:openBgMusic()
 end
 
 function CombatViewController:onDisplayView()
-	Functions.printInfo(self.debug_b," CombatViewController view enter display!")
-	
+    Functions.printInfo(self.debug_b," CombatViewController view enter display!")
+    
     --战斗加速
     -- self._speed1Bt_t:setVisible(true)
     
@@ -227,7 +227,7 @@ function CombatViewController:onDisplayView()
 
     --战斗地图下移
     self._combatPanel_t:setPosition({ x = self._combatPanel_t:getPositionX() + 80, y = self._combatPanel_t:getPositionY() - 50})
-	--初始化黑色遮挡层
+    --初始化黑色遮挡层
     self._colorPanel_t:setLocalZOrder(CombatViewController.Skill_Color_Zorder)
     self:setColorLayer(false)
 
@@ -407,7 +407,7 @@ function CombatViewController:recoverySpeed()
 end
 
 function CombatViewController:onEliteFbPveCombat(data)
-	self:onFbPveCombat(data, CombatCenter.CombatType.RB_ElitePVE)
+    self:onFbPveCombat(data, CombatCenter.CombatType.RB_ElitePVE)
 end
 
 function CombatViewController:onTanduiFbCombat(data)
@@ -526,7 +526,7 @@ function CombatViewController:onPVPPlayerData(data)
 end
 
 function CombatViewController:combatBeginRequire()
-	local onFightCall= function()
+    local onFightCall= function()
 
             local onHeroTrialBegin = function(event)
                 CombatCenter:setRand(event.seed)
@@ -581,13 +581,16 @@ function CombatViewController:onPVPHistoryData(data)
     
     local onPVPHistoryDataBegin = function(event)
                                 CombatCenter:setRand(event.data.seed)
-                                CombatCenter:setReload()
-                                
+
+                                self.curEvtList = event.data.evt_list
                                 --添加事件
                                 CombatCenter:addAiEvent(event.data.evt_list)
                                 
                                 self.heroCombatInfo  = CombatCenter:getCombatHeroInfos(event.data.sform)
                                 self.enemyCombatInfo = CombatCenter:getCombatHeroInfos(event.data.tform)
+
+                                self.heroAutoFight = false
+                                self.enemyAutoFight = false
 
                                 self:combatResLoad()
                             end
@@ -645,6 +648,12 @@ function CombatViewController:combatResLoad()
     
     CombatCenter:initCombat(self.heroCombatInfo, self.enemyCombatInfo, self.combatInfo.combatType)
 
+    if self.combatInfo.combatType == CombatCenter.CombatType.RB_PVPHistoryData then
+        CombatCenter:setReload()
+        if self.curEvtList then
+            CombatCenter:addAiEvent(self.curEvtList)
+        end
+    end
     --设置自动战斗
     CombatCenter:setHeroAuto(self.heroAutoFight)
     CombatCenter:setEnemyAuto(self.enemyAutoFight)
@@ -710,9 +719,9 @@ function CombatViewController:startFight()
 end
 
 function CombatViewController:initCombatUI()
-	
-	--初始化英雄组件
-	for i=1, 3 do
+    
+    --初始化英雄组件
+    for i=1, 3 do
         local heroCom = self._right_down_panel_t:getChildByName("combatHead" .. tostring(i))
         local model = self.heroInfos.heroInfo.heros[i] 
         if model then
@@ -720,7 +729,7 @@ function CombatViewController:initCombatUI()
             heroCom:setVisible(true)
             self.spellControllers[#self.spellControllers+1] = Factory:createSpellCtl({ view = heroCom, model = model, parentCtl = self })
         end
-	end
+    end
 
     local onSpellAttack = function()
         for k,v in ipairs(self.spellControllers) do
@@ -728,17 +737,17 @@ function CombatViewController:initCombatUI()
         end
     end
     Functions.bindEventListener(self.view_t, GameEventCenter, CreatureModel.SI_FANG_SPELL_EVENT, onSpellAttack)
-	
-	--初始化本方显示
+    
+    --初始化本方显示
     self:initCombatDisHeroCom_(self._left_top_panel_t, self.heroInfos.heroInfo, self.heroCombatBeforInfo)
-	
-	--初始化敌方显示
-	self:initCombatDisHeroCom_(self._right_top_panel_t, self.heroInfos.enemyInfo, self.enemyCombatBeforInfo)
-	
+    
+    --初始化敌方显示
+    self:initCombatDisHeroCom_(self._right_top_panel_t, self.heroInfos.enemyInfo, self.enemyCombatBeforInfo)
+    
     self.timeSprite = Functions.createSprite()
     self.view_t:addChild(self.timeSprite)
 
-	--初始化时间
+    --初始化时间
     self.curTime = g_Combat_Time
     Functions.initLabelOfString(self._time_t, g_Combat_Time)
     
@@ -783,10 +792,10 @@ end
  
 
 function CombatViewController:initCombatDisHeroCom_(comView, combatHeros, combatInfo)
-	
-	local name = comView:getChildByName("name_panel"):getChildByName("heroName")
+    
+    local name = comView:getChildByName("name_panel"):getChildByName("heroName")
     name:setString(combatInfo.name)
-	
+    
     local level = comView:getChildByName("heroLevel"):getChildByName("level")
     level:setString(combatInfo.level)
     
@@ -827,9 +836,9 @@ function CombatViewController:initCombatDisHeroCom_(comView, combatHeros, combat
 end
 
 function CombatViewController:initCombatHeroCom_(comView, model)
-	
-	--初始化英雄头像
-	local heroHead = comView:getChildByName("headCom")
+    
+    --初始化英雄头像
+    local heroHead = comView:getChildByName("headCom")
     Functions.initHeadComOfId(heroHead, model.m_pid, model.m_class)
     Functions.getHeroHead(heroHead, { id = model.m_pid , class = model.m_class})
     
@@ -843,8 +852,8 @@ function CombatViewController:initCombatHeroCom_(comView, model)
     local bigClass,minClass = Functions.formatHeroClass(model.m_class)
     heroName:setString(ConfigHandler:getHeroNameOfId(model.m_pid, bigClass))
 
-	--绑定血条
-	local hp = comView:getChildByName("hp")
+    --绑定血条
+    local hp = comView:getChildByName("hp")
     local onHpChange = function(event)
         if model.m_raw_hp < event.data then  --防止血量超过上限，进度条无显示
             model.m_raw_hp = event.data
@@ -854,8 +863,8 @@ function CombatViewController:initCombatHeroCom_(comView, model)
             print("hero is death!")
         end
     end
-	Functions.bindUiWithModelAttr(hp, model, "m_hp", onHpChange)
-	
+    Functions.bindUiWithModelAttr(hp, model, "m_hp", onHpChange)
+    
 end
 
 function CombatViewController:onScrollCombat(event)
@@ -1006,12 +1015,12 @@ function CombatViewController:skillPause(heroView)
     --打开黑色遮挡
     self:setColorLayer(true)
     
-	CombatCenter:combatPause()
-	for _,v in pairs(self.viewInfos) do
+    CombatCenter:combatPause()
+    for _,v in pairs(self.viewInfos) do
         if not v.isDeath and v.target ~= heroView then
             v.target:luaPause()
         end
-	end
+    end
 end
 
 --技能释放，继续
@@ -1020,26 +1029,26 @@ function CombatViewController:skillResume(heroView)
     --关闭黑色遮挡
     self:setColorLayer(false)
 
-	CombatCenter:combatResume()
-	for _,v in pairs(self.viewInfos) do
-	   if not v.isDeath and v.target ~= heroView then
+    CombatCenter:combatResume()
+    for _,v in pairs(self.viewInfos) do
+       if not v.isDeath and v.target ~= heroView then
             v.target:luaResume()
-	   end
-	end
+       end
+    end
 end
 
 --打开技能释放，黑色遮挡
 function CombatViewController:setColorLayer(isShow)
-	self._colorPanel_t:setVisible(isShow)
+    self._colorPanel_t:setVisible(isShow)
     self._shield_panel_t:setVisible(isShow)
     -- self._colorPanel_t:setEnabled(isShow)
 end
 
 --战斗开始，统一更新视图动画
 function CombatViewController:updateViewAnima()
-	for i=1, #self.viewInfos do
-	   self.viewInfos[i].target:updateAnimas()
-	end
+    for i=1, #self.viewInfos do
+       self.viewInfos[i].target:updateAnimas()
+    end
 end
 
 function CombatViewController:updateViewMoveAnima()
@@ -1078,7 +1087,7 @@ end
 
 --移除子弹
 function CombatViewController:removeBullet(bullet)
-	bullet:removeSelf()
+    bullet:removeSelf()
     table.removeOfValue(self.bulletViews, bullet)
 end
 
@@ -1088,7 +1097,7 @@ function CombatViewController:loadCombatRes(heroInfo, models, backCall)
     assert(heroInfo.enemyInfo and heroInfo.enemyInfo.heros, "not hero data!")
     
     --收集战场技能特效
-	self.skillAnimaNames = {}
+    self.skillAnimaNames = {}
     local heros = {}
     table.insertto(heros, heroInfo.heroInfo.heros)
     table.insertto(heros, heroInfo.enemyInfo.heros)
@@ -1107,7 +1116,16 @@ function CombatViewController:loadCombatRes(heroInfo, models, backCall)
                 self.skillAnimaNames[#self.skillAnimaNames + 1] = animaName
             end
         end
-	end
+
+        local passiveSkillDatas = v.m_spells.passiveSkillDatas
+        for k, v in pairs(passiveSkillDatas) do
+            local animaName = v.m_SkillAnima
+            if animaName and animaName ~= "" and animaName ~= 0 and not table.hasValue(self.skillAnimaNames, animaName) then
+                self.skillAnimaNames[#self.skillAnimaNames + 1] = animaName
+            end
+        end
+
+    end
 
     --加载收集模型资源
     for k, v in pairs(models) do
@@ -1116,18 +1134,18 @@ function CombatViewController:loadCombatRes(heroInfo, models, backCall)
             self.skillAnimaNames[#self.skillAnimaNames + 1] = temp
         end
     end
-	
-	--加载技能特效动画资源
-	if #self.skillAnimaNames > 0 then
-	   local onAnimaLoad = function(data)
-	       if data == 1 then
-	           backCall()
-	       end
-	   end
-	   ResManager:loadAnimations(self.skillAnimaNames, onAnimaLoad)
-	else
-	   backCall()
-	end
+    
+    --加载技能特效动画资源
+    if #self.skillAnimaNames > 0 then
+       local onAnimaLoad = function(data)
+           if data == 1 then
+               backCall()
+           end
+       end
+       ResManager:loadAnimations(self.skillAnimaNames, onAnimaLoad)
+    else
+       backCall()
+    end
 
 end
 
@@ -1140,8 +1158,8 @@ function CombatViewController:clearFightRes()
         end
     end
 
-	if self.skillAnimaNames and #self.skillAnimaNames > 0 then
-	   ResManager:removeAnimations(self.skillAnimaNames)
+    if self.skillAnimaNames and #self.skillAnimaNames > 0 then
+       ResManager:removeAnimations(self.skillAnimaNames)
     end
 end
 

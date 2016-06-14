@@ -82,14 +82,14 @@ function CreatureFactory:createHero(heroInfo, partHeros, equipInfos, campType, v
                                 zxId           = heroZxID,
                                 enemyZxId      = ConfigHandler:getStrikeZxOfId(heroZxID),
                                 spells         = clone(skills.mSpellId),
-                                passiveSkills  = { skills.passiveSpellId1, skills.passiveSpellId2, skills.passiveSpellId3},
+                                passiveSkills  = ConfigHandler:getPspellsOfId(heroInfo.id, heroInfo.class),
                                 skillAnimaName = heroData.effectRes,
                                 heroSound      = heroData.heroSound
                             })
     creature:updateAttrExOfZx(combatType, heroZxID, campType)
 
     -- 天梯战斗中，放大基础血量倍数
-    if combatType == CombatCenter.CombatType.RB_PVPPlayerData then
+    if combatType == CombatCenter.CombatType.RB_PVPPlayerData or combatType == CombatCenter.CombatType.RB_PVPHistoryData then
         creature:setHp(creature:getHp() + g_pvpFightHpScale*pm_GetCardHp({ heroInfo = { id = heroInfo.id,
             level = heroInfo.level, class = heroInfo.class }}))
     end
