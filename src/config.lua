@@ -44,7 +44,7 @@ G_IsLinkLoaclIp = false
 
 
 --外网服务器id
-G_ServerId = 4
+G_ServerId = 2
 
 --是否自动获取当前链接的服务器和更新地址
 G_IsAutoGetUrl = false
