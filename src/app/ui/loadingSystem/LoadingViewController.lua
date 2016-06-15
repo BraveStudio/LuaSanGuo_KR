@@ -266,7 +266,7 @@ function LoadingViewController:sdkUpdateCall()
                 NativeUtil:startDrmCheck(handler(self,self.startUpdate))
             end, 0.1)
         elseif G_SDKType == 4 then
-            if Functions.file_exists(cc.FileUtils:getInstance():getWritablePath() .. "/up/res/heroCard/13860.png") == nil then
+            if not Functions.file_exists(cc.FileUtils:getInstance():getWritablePath() .. "/up/res/heroCard/13860.png") then
                 scheduler.performWithDelayGlobal(function ( )
                      NativeUtil:startCheckExpansionFile(function( )
                        Functions.getCurVersion() 

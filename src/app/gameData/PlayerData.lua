@@ -53,7 +53,7 @@ function PlayerData:init()
             PlayerData.eventAttr.m_buyEnergyCount = data.m_actRechargeFlag[1]
             
             for k, v in pairs(data) do
-            	self.eventAttr[k] = v
+                self.eventAttr[k] = v
             end
 
             GuideManager.guideLevel = PlayerData.eventAttr.m_level 
@@ -87,7 +87,7 @@ function PlayerData:init()
     local onEliteRate = function(event)
         GameState.eliteRate = event.data.eliteRate
     end
-    NetWork:addNetWorkListener({ 2, 25 }, onEliteRate)
+    NetWork:addNetWorkListener({ 2, 27 }, onEliteRate)
     
 end
 
