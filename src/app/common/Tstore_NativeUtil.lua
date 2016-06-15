@@ -20,9 +20,9 @@ function NativeUtil:init()
                 if PlayerData.eventAttr.m_guideStageId == 0 then
                    -- for i = 1,#SDKConfig.popUpKey do 
                     self:javaCallHanler({command = "openPopUp",popUpKey = "lobby"})
-                    if not GameState.storeAttr.isOpenedCafe_b then 
+                    if G_isFirstStartApp then 
                         self:javaCallHanler({command = "openCafeHome"})
-                        GameState.storeAttr.isOpenedCafe_b = true
+                        G_isFirstStartApp = false
                     end 
                    -- end
                end
