@@ -114,12 +114,12 @@ function SpellPiece:initPassiveSkillData_(skillInfo)
     passiveSkillData.m_id = skillInfo["id"]
     passiveSkillData.m_name = skillInfo["name"]
     passiveSkillData.m_describe = skillInfo["describe"]
-    passiveSkillData.m_spellRange = skillInfo["range"]
+    passiveSkillData.m_SkillRange = skillInfo["range"]
     passiveSkillData.m_addHp = skillInfo["hpPercent"]
     passiveSkillData.m_addAttack = skillInfo["attackPercent"]
     passiveSkillData.m_addFas = skillInfo["fasPercent"]
     passiveSkillData.m_addFaf = skillInfo["fafPercent"]
-    passiveSkillData.m_skillFrdly = skillInfo["skillFrdly"]
+    passiveSkillData.m_SkillFrdly = skillInfo["skillFrdly"]
 
     return passiveSkillData
 end

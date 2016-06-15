@@ -105,8 +105,8 @@ function LoginViewController:onTest_buttonClick()
         return
     end
 -- --
-    -- userName = "NaverSdk_14602374"
-    -- password = "NaverSdk_14602374"
+--    userName = "NaverSdk_40677623"
+--    password = "NaverSdk_40677623"
 
 
     --开始登陆

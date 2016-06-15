@@ -2560,8 +2560,8 @@ function Functions.checkTime(checkedTime,startTime,endTime)
     end
 end
 --获得天梯当天添加Buff的阵型名称
-function Functions.getTianTiBuffZX()
-    local time = TimerManager:getCurrentSecond()
+function Functions.getTianTiBuffZX(oldTime)
+    local time = oldTime or TimerManager:getCurrentSecond()
     local date = os.date("*t",time)
     if date ~= nil then
         return LanguageConfig[g_tiantibuf[date.wday].formationName], g_tiantibuf[date.wday].formationName

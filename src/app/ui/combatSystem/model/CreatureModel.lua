@@ -254,7 +254,8 @@ function CreatureModel:updateAttrExOfZx(combatType, zxId, campType)
 
         local _, doubleBuffName = Functions.getTianTiBuffZX()
         local isDouble =  doubleBuffName == "language_" .. ConfigHandler:getZxNameOfId(zxId)
-        if campType and combatType == CombatCenter.CombatType.RB_PVPPlayerData and isDouble then
+        if campType and (combatType == CombatCenter.CombatType.RB_PVPPlayerData or 
+            combatType == CombatCenter.CombatType.RB_PVPHistoryData) and isDouble then
             zxValue = zxValue * 2.5
         end
 
