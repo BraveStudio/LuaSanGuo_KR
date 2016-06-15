@@ -546,6 +546,14 @@ function cs_SellCard( quality, level, class)
 	return money
 end
 
+function cs_SellCard_GetSoul(class)
+	local sum = 0
+	for k = 1, class - 1 do
+		sum = sum + g_csBaseCfg.upSoul[k]
+	end
+	return math.floor(sum * 0.6)
+end
+
 -- 3-5星卡牌提供经验=常数*等级N+[（1+进阶数*0.1）*进化数]*参数
 local g_killcardchangshu = 100
 local g_killcardSpe1 = 2000

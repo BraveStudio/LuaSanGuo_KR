@@ -581,13 +581,16 @@ function CombatViewController:onPVPHistoryData(data)
     
     local onPVPHistoryDataBegin = function(event)
                                 CombatCenter:setRand(event.data.seed)
-                                CombatCenter:setReload()
-                                
+
+                                self.curEvtList = event.data.evt_list
                                 --添加事件
                                 CombatCenter:addAiEvent(event.data.evt_list)
                                 
                                 self.heroCombatInfo  = CombatCenter:getCombatHeroInfos(event.data.sform)
                                 self.enemyCombatInfo = CombatCenter:getCombatHeroInfos(event.data.tform)
+
+                                self.heroAutoFight = false
+                                self.enemyAutoFight = false
 
                                 self:combatResLoad()
                             end
@@ -645,6 +648,12 @@ function CombatViewController:combatResLoad()
     
     CombatCenter:initCombat(self.heroCombatInfo, self.enemyCombatInfo, self.combatInfo.combatType)
 
+    if self.combatInfo.combatType == CombatCenter.CombatType.RB_PVPHistoryData then
+        CombatCenter:setReload()
+        if self.curEvtList then
+            CombatCenter:addAiEvent(self.curEvtList)
+        end
+    end
     --设置自动战斗
     CombatCenter:setHeroAuto(self.heroAutoFight)
     CombatCenter:setEnemyAuto(self.enemyAutoFight)

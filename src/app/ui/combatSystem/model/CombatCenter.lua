@@ -263,6 +263,7 @@ function CombatCenter:getCombatBeforeHeroInfos(heroInfos)
     heroBeforeInfos.level     = PlayerData.eventAttr.m_level
     heroBeforeInfos.headId    = PlayerData.eventAttr.m_imgID
     heroBeforeInfos.heros     = {}
+    heroBeforeInfos.classSet  = {}
     heroBeforeInfos.power     = 0
 
     --添加装备信息
@@ -270,12 +271,14 @@ function CombatCenter:getCombatBeforeHeroInfos(heroInfos)
 
     --添加主英雄
     heroBeforeInfos.heros[#heroBeforeInfos.heros+1] = heroInfos.MainHero[1].id
+    heroBeforeInfos.classSet[#heroBeforeInfos.classSet+1] = Functions.formatHeroClass(heroInfos.MainHero[1].class)
     heroBeforeInfos.power = heroBeforeInfos.power + cs_GetCardFightValue({ heroInfo = heroInfos.MainHero[1],
                         partHeros = heroInfos.PartHero, equipInfos = equipInfos[1]})
     
     --添加副将
     for k, v in pairs(heroInfos.ViceHeros) do
         heroBeforeInfos.heros[#heroBeforeInfos.heros+1] = v.id
+        heroBeforeInfos.classSet[#heroBeforeInfos.classSet+1] = Functions.formatHeroClass(v.class)
         heroBeforeInfos.power = heroBeforeInfos.power + cs_GetCardFightValue({ heroInfo = v,
                         partHeros = heroInfos.PartHero, equipInfos = equipInfos[k+1]})
     end
@@ -295,6 +298,7 @@ function CombatCenter:getFbCombatInfosOfId( majorHurdles, littleLevels, preHps, 
     local enemyBeforeInfos = {}
     
     enemyBeforeInfos.heros = {}
+    enemyBeforeInfos.classSet = {}
     enemyBeforeInfos.power = 0
     
     --初始化副本战场数据
@@ -333,6 +337,7 @@ function CombatCenter:getFbCombatInfosOfId( majorHurdles, littleLevels, preHps, 
             end
             
             enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = enemyCombatInfos.peopleInfos[i].id
+            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = Functions.formatHeroClass(enemyCombatInfos.peopleInfos[i].class)
             enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = enemyCombatInfos.peopleInfos[i].id,
                 level = enemyCombatInfos.peopleInfos[i].level , class = enemyCombatInfos.peopleInfos[i].class,combatType = combatType })
                 
@@ -350,6 +355,7 @@ function CombatCenter:getFbCombatInfosOfId( majorHurdles, littleLevels, preHps, 
             end
             
             enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = enemyCombatInfos.peopleInfos[i].id
+            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = Functions.formatHeroClass(enemyCombatInfos.peopleInfos[i].class)
             enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = enemyCombatInfos.peopleInfos[i].id,
                 level = enemyCombatInfos.peopleInfos[i].level ,class = enemyCombatInfos.peopleInfos[i].class, combatType = combatType })
                 
@@ -367,6 +373,7 @@ function CombatCenter:getFbCombatInfosOfId( majorHurdles, littleLevels, preHps, 
             end
             
             enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = enemyCombatInfos.peopleInfos[i].id
+            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = Functions.formatHeroClass(enemyCombatInfos.peopleInfos[i].class)
             enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = enemyCombatInfos.peopleInfos[i].id,
                 level = enemyCombatInfos.peopleInfos[i].level ,class = enemyCombatInfos.peopleInfos[i].class, combatType = combatType })
                 
@@ -397,16 +404,20 @@ function CombatCenter:getHeroTrialInfos(majorHurdles, littleLevels, enemyIds)
     enemyBeforeInfos.headId = 1
     
     enemyBeforeInfos.heros  = {}
+    enemyBeforeInfos.classSet = {}
     enemyBeforeInfos.power  = 0
 
     local heroTrialData = ConfigHandler:getTrialHeroConfigOfLevel(PlayerData.eventAttr.m_level)
     
     enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = enemyIds[1]
+    enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = Functions.formatHeroClass(heroTrialData["主将阶级"])
+
     enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = enemyBeforeInfos.heros[#enemyBeforeInfos.heros],
         level = heroTrialData["主将等级"], class = heroTrialData["主将阶级"] })
 
     for i=1, 2 do
         enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = enemyIds[i+1]
+        enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = Functions.formatHeroClass(heroTrialData["副将" ..  tostring(i) .. "阶级"])
         enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = enemyBeforeInfos.heros[#enemyBeforeInfos.heros],
             level = heroTrialData["副将" ..  tostring(i) .. "等级"], class = heroTrialData["副将" ..  tostring(i) .. "阶级"] })
     end
@@ -440,9 +451,11 @@ function CombatCenter:getBloodyBattleData(majorHurdles, littleLevels, backCall)
         enemyBeforeInfos.name   = string.format(LanguageConfig["language_Teach34"], littleLevels)
         
         enemyBeforeInfos.heros = {}
+        enemyBeforeInfos.classSet = {}
         enemyBeforeInfos.power = 0
         for i=1, 3 do
             enemyBeforeInfos.heros[#enemyBeforeInfos.heros + 1] = event.data[i].id
+            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = event.data[i].class
             enemyBeforeInfos.power = enemyBeforeInfos.power + math.floor(Functions.getNPCFightValue({ id = event.data[i].id,
                 level = event.data[i].level, class = event.data[i].class })*event.data.add)
         end

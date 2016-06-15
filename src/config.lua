@@ -26,7 +26,7 @@ CC_DESIGN_RESOLUTION = {
 }
 
 -- 是否是运营维护apk 
-G_IsDebugClient = false 
+G_IsDebugClient = true 
 
 -- update
 -- true 使用更新功能， fales 不使用更新功能,用于当前代码调试
@@ -44,7 +44,7 @@ G_IsLinkLoaclIp = false
 
 
 --外网服务器id
-G_ServerId = 4
+G_ServerId = 5
 
 --是否自动获取当前链接的服务器和更新地址
 G_IsAutoGetUrl = false
@@ -73,6 +73,7 @@ G_IsHaveLanchImage = false
 CurrentBigVersion = 3
 CurrentMidVersion = 4
 CurrentMinVersion = 1
+
 
 --输出内存信息
 DEBUG_MEM = false

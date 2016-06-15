@@ -347,7 +347,9 @@ function EnhanceTwoPopView:showCardInfo_up_one()
     --进阶后的卡片
     self._ProjectNode_head_crad10_t:setVisible(true)
     --展示卡片
-    if EnhanceData.MasterData[1].m_class < #g_csBaseCfg.upCardCount+1 then
+    local stars = ConfigHandler:getHeroStarOfId(EnhanceData.MasterData[1].m_id) 
+    --6星以下的武将最高只能进阶到32阶。
+    if (stars <= 5 and EnhanceData.MasterData[1].m_class < 32) or (stars == 6 and  EnhanceData.MasterData[1].m_class < #g_csBaseCfg.upCardCount+1) then
         Functions.getHeroCrad(self._ProjectNode_head_crad10_t, {heroInf = {id = EnhanceData.MasterData[1].m_id,level = EnhanceData.MasterData[1].m_level,
             class = EnhanceData.MasterData[1].m_class+1, soldier = EnhanceData.MasterData[1].m_fafEx,attack =  EnhanceData.MasterData[1].m_attackEx, 
             mp =  EnhanceData.MasterData[1].m_fasEx, hp = EnhanceData.MasterData[1].m_hpEx}})
@@ -367,9 +369,9 @@ function EnhanceTwoPopView:showCardInfo_up_one()
         
     --第二张展示卡牌
     local param = {}
-    local ooo = data.m_class
-    local   pppppp = #g_csBaseCfg.upLevel
-    if data.m_class >= #g_csBaseCfg.upLevel + 1 then   --进化数为最高说明是皇（已到最高阶，已不能进阶
+    --6星以下的武将最高只能进阶到32阶。
+    local stars = ConfigHandler:getHeroStarOfId(data.m_id) 
+    if (stars <= 5 and data.m_class >= 32) or (stars == 6 and data.m_class >= #g_csBaseCfg.upLevel + 1) then   --进化数为最高说明已到最高阶，已不能进阶
     
         Functions.initLabelOfString(self._Text_crad8_level_t, "lv"..tostring(data.m_level), self._Text_crad8_name_t, str,
             self._Text_crad8_HP_num_t, math.floor(data.m_baseHp), self._Text_crad8_ATK_num_t, math.floor(data.m_baseAttack), 
@@ -405,6 +407,7 @@ function EnhanceTwoPopView:showCardInfo_up_one()
     else
         self._Text_Two_cost_money_t:setVisible(true)
         self._Text_Two_cost_soul_t:setVisible(true)
+        Functions.setEnabledBt(self._Button_up_ladder_t,true)
 
         self._Text_introduce_ladder_1_t:setVisible(true)
         self._Text_introduce_ladder_2_t:setVisible(true)
@@ -435,6 +438,9 @@ function EnhanceTwoPopView:showCardInfo_up_one()
     local info = HeroCardData:getHeroInfo(EnhanceData.MasterData[1].m_mark)
     local _money = cs_GetRoleJinJie(info.m_class,info.m_class,ConfigHandler:getHeroStarOfId(info.m_id))
     local idx = EnhanceData.MasterData[1].m_class
+    local iiimoney = g_csBaseCfg.upMoney[idx]
+    local iiisoul = g_csBaseCfg.upSoul[idx]
+    
     Functions.initLabelOfString( self._Text_Two_cost_money_num_t,  g_csBaseCfg.upMoney[idx], self._Text_Two_soul_num_t, g_csBaseCfg.upSoul[idx] )
     
     

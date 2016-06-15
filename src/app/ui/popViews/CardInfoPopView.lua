@@ -124,7 +124,9 @@ end
 function CardInfoPopView:onButton_jin_jieClick()
     Functions.printInfo(self.debug,"Button_jin_jie button is click!")
 
-    if self.card.m_class == #g_csBaseCfg.upLevel+1 then
+    local stars = ConfigHandler:getHeroStarOfId(self.card.m_id) 
+    --6星以下的武将最高只能进阶到32阶。
+    if (stars <= 5 and self.card.m_class >= 32) or (stars == 6 and self.card.m_class == #g_csBaseCfg.upLevel+1) then
         PromptManager:openTipPrompt(LanguageConfig.language_Enhance_14)
     	return
     end
@@ -192,6 +194,9 @@ function CardInfoPopView:onDisplayView(data)
 	--type为2和3时不显示升级，进阶（类型为3时代表数据从商店，积分商城传过来，为4时，代表数据从图鉴过来）
     --type为3时显示的是不存在于背包的卡的详细信息，所以需要虚拟一份数据用来显示。
     
+    --从武将详情去进阶时，如果进阶产生新的技能，需要对坐标做特殊处理（self.jinNenY）。
+    self.jinNenY = 0
+    
     self.type = data[2]
     if self.type == 4 then
     	self.PokedexId = data[1]
@@ -235,6 +240,14 @@ function CardInfoPopView:onDisplayView(data)
     --监听函数
     local onCard_info = function(event)
         local hero_info = HeroCardData:getHeroInfo(event.data)
+        --cc.Node:removeFromParentAndCleanup()
+        if self.jiNenString then
+            for k, v in pairs(self.jiNenString) do
+                v[1]:removeFromParentAndCleanup()
+                v[2]:removeFromParentAndCleanup()
+                v[3]:removeFromParentAndCleanup()
+        	end
+        end
         self:setShow(hero_info)
     end
     Functions.bindEventListener(self, GameEventCenter, HeroCardData.CARDS_DATA_CHANGE_EVENT, onCard_info)
@@ -289,7 +302,8 @@ function CardInfoPopView:showSkill(cardInfo)
     self.hangY = self.hangY - 28
     self._Text_ji_nen_string_1_t:setPosition(self.hangX, self.hangY)
     
-    local H = math.floor(self.hangY - self:rowsNum(skillStr,45))
+    local H = 0
+    H = math.floor(self.hangY - self:rowsNum(skillStr,45))
     Functions.initTextSize(self._Text_ji_nen_string_1_t, { width = 320, height = H})
     Functions.initLabelOfString(self._Text_ji_nen_name_1_t, skillDatas["技能名字"], self._Text_ji_nen_string_1_t, skillStr, self._Text_ji_nen_name_10_t,
         LanguageConfig.language_CardIn_4, self._Text_ji_nen_string_10_t, LanguageConfig.language_CardIn_5)--LanguageConfig.language_CardIn_1
@@ -307,10 +321,12 @@ function CardInfoPopView:showSkill(cardInfo)
             Functions.initTextSize(self._Text_ji_nen_string_10_t, { width = 320, height = H})
         end
     end
+    
+    self.jiNenString = {}
     for k, v in pairs(skillData) do
-        local ji_nen_bei = "Text_ji_nen_name_bei_"..tostring(k)
-        local ji_nen_name = "Text_ji_nen_name_"..tostring(k)
-        local ji_nen_string = "Text_ji_nen_string_"..tostring(k)
+--        local ji_nen_bei = "Text_ji_nen_name_bei_"..tostring(k)
+--        local ji_nen_name = "Text_ji_nen_name_"..tostring(k)
+--        local ji_nen_string = "Text_ji_nen_string_"..tostring(k)
         
         self._Text_ji_nen_name_bei_10_t:setVisible(true)
         self._Text_ji_nen_name_10_t:setVisible(true)
@@ -319,6 +335,9 @@ function CardInfoPopView:showSkill(cardInfo)
         local ji_nen_bei = self._Text_ji_nen_name_bei_10_t:clone()
         local ji_nen_name = self._Text_ji_nen_name_10_t:clone()
         local ji_nen_string = self._Text_ji_nen_string_10_t:clone()
+        
+        local string = {ji_nen_bei, ji_nen_name, ji_nen_string}
+        self.jiNenString[#self.jiNenString + 1] = string
         
         self._Text_ji_nen_name_bei_10_t:setVisible(false)
         self._Text_ji_nen_name_10_t:setVisible(false)
@@ -349,185 +368,6 @@ function CardInfoPopView:showSkill(cardInfo)
         end
     end
 
-
-    
-    
-    --#######################################***************************************--
-    --算出武将进化数，用来确定有几个被动技能
-    --local ladder = ConfigHandler:getHeroJinHuaNumOfId(cardInfo.m_id)
---    if skillId.passiveSpellId1 == nil or skillId.passiveSpellId1 == 0 then
---        local test = self.hangY
---        self._Text_ji_nen_name_5_t:setVisible(true)
---        self._Text_ji_nen_string_5_t:setVisible(true)
---        self._Text_ji_nen_name_5_t:setPositionY(self.hangY)
---        
---        local aaaa = self.hangX
---        self.hangY = self.hangY - 28
---        self._Text_ji_nen_string_5_t:setPosition(self.hangX, self.hangY)
---        
---        H = math.floor(self.hangY - self:rowsNum(LanguageConfig.language_CardIn_5,45))
---        Functions.initTextSize(self._Text_ji_nen_string_5_t, { width = 320, height = H})
---        
---    end
---    if skillId.passiveSpellId1 ~= nil and skillId.passiveSpellId1 > 0 then
---        self._Text_ji_nen_name_5_t:setVisible(false)
---        self._Text_ji_nen_string_5_t:setVisible(false)
---        self._Text_ji_nen_name_2_t:setVisible(true)
---        self._Text_ji_nen_name_bei_2_t:setVisible(true)
---        self._Text_ji_nen_string_2_t:setVisible(true)
---        self._Text_ji_nen_name_2_t:setPositionY(self.hangY)
---        self._Text_ji_nen_name_bei_2_t:setPositionY(self.hangY)
---            self.hangY = self.hangY - 28
---            self._Text_ji_nen_string_2_t:setPosition(self.hangX, self.hangY)
---        
---        --skillId = ConfigHandler:getHeroSkillId(cardInfo.m_id, cardInfo.m_class)
---        skillStr = ConfigHandler:getPassiveSkillTextId(skillId.passiveSpellId1)
---        H = math.floor(self.hangY - self:rowsNum(skillStr,45))
---        Functions.initTextSize(self._Text_ji_nen_string_2_t, { width = 320, height = H})
---        
---        Functions.initLabelOfString(self._Text_ji_nen_name_bei_2_t, LanguageConfig.language_CardIn_3)
---        Functions.initLabelOfString(self._Text_ji_nen_name_2_t, ConfigHandler:getPassiveSkillNameId(skillId.passiveSpellId1), self._Text_ji_nen_string_2_t, skillStr)
---
---    end    
---    if skillId.passiveSpellId2 ~= nil and skillId.passiveSpellId2 > 0 then
---        self._Text_ji_nen_name_3_t:setVisible(true)
---        self._Text_ji_nen_name_bei_3_t:setVisible(true)
---        self._Text_ji_nen_string_3_t:setVisible(true)
---        self._Text_ji_nen_name_bei_3_t:setPositionY(self.hangY)
---        self._Text_ji_nen_name_3_t:setPositionY(self.hangY)
---            self.hangY = self.hangY - 28
---            self._Text_ji_nen_string_3_t:setPosition(self.hangX, self.hangY)
---
---        --skillId = ConfigHandler:getHeroPassiveSkillTwoId(cardInfo.m_id)
---        skillStr = ConfigHandler:getPassiveSkillTextId(skillId.passiveSpellId2)
---        H = math.floor(self.hangY - self:rowsNum(skillStr,45))
---        Functions.initTextSize(self._Text_ji_nen_string_3_t, { width = 320, height = H})
---            Functions.initLabelOfString(self._Text_ji_nen_name_bei_3_t, LanguageConfig.language_CardIn_3)
---        Functions.initLabelOfString(self._Text_ji_nen_name_3_t, ConfigHandler:getPassiveSkillNameId(skillId.passiveSpellId2), self._Text_ji_nen_string_3_t, skillStr)
---    end
---    if skillId.passiveSpellId3 ~= nil and skillId.passiveSpellId3 > 0 then
---        self._Text_ji_nen_name_4_t:setVisible(true)
---        self._Text_ji_nen_name_bei_4_t:setVisible(true)
---        self._Text_ji_nen_string_4_t:setVisible(true)
---        self._Text_ji_nen_name_bei_4_t:setPositionY(self.hangY)
---        self._Text_ji_nen_name_4_t:setPositionY(self.hangY)
---        self.hangY = self.hangY - 28
---        self._Text_ji_nen_string_4_t:setPosition(self.hangX, self.hangY)
---
---        --skillId = ConfigHandler:getHeroPassiveSkillTwoId(cardInfo.m_id)
---        skillStr = ConfigHandler:getPassiveSkillTextId(skillId.passiveSpellId3)
---        H = math.floor(self.hangY - self:rowsNum(skillStr,45))
---        Functions.initTextSize(self._Text_ji_nen_string_4_t, { width = 320, height = H})
---        Functions.initLabelOfString(self._Text_ji_nen_name_bei_4_t, LanguageConfig.language_CardIn_3)
---        Functions.initLabelOfString(self._Text_ji_nen_name_4_t, ConfigHandler:getPassiveSkillNameId(skillId.passiveSpellId3), self._Text_ji_nen_string_4_t, skillStr)
---    end
---    
---        --***********************************************************--
---    if skillId.passiveSpellId4 ~= nil and skillId.passiveSpellId4 > 0 then
---            local Text_ji_nen_name_bei_5 = self._Text_ji_nen_name_bei_3_t:clone()
---            local Text_ji_nen_name_5 = self._Text_ji_nen_name_1_t:clone()
---            local Text_ji_nen_string_5 = self._Text_ji_nen_string_3_t:clone()
---        
---            Functions.initTextColor(self._Text_ji_nen_name_bei_3_t, Text_ji_nen_name_bei_5)
---            Functions.initTextColor(self._Text_ji_nen_name_1_t,Text_ji_nen_name_5)
---            Functions.initTextColor(self._Text_ji_nen_string_3_t,Text_ji_nen_string_5)
---            
---            self._Panel_skill_show_t:addChild(Text_ji_nen_name_bei_5)
---            self._Panel_skill_show_t:addChild(Text_ji_nen_name_5)
---            self._Panel_skill_show_t:addChild(Text_ji_nen_string_5)
---            
---            Text_ji_nen_name_bei_5:setVisible(true)
---            Text_ji_nen_name_5:setVisible(true)
---            Text_ji_nen_string_5:setVisible(true)
---            
---            local len = self._Text_ji_nen_name_1_t:getContentSize()
---            local nameWidth = self._Text_ji_nen_name_1_t:getPositionX()
---        
---            --self._Text_ji_nen_name_3_t:setAnchorPoint(1, 1)
---        
---        Text_ji_nen_name_bei_5:setPositionY(self.hangY)
---            Text_ji_nen_name_5:setPosition(nameWidth - len.width-5, self.hangY + len.height*0.5+5)
---        self.hangY = self.hangY - 28
---        Text_ji_nen_string_5:setPosition(self.hangX, self.hangY)
---
---        --skillId = ConfigHandler:getHeroPassiveSkillTwoId(cardInfo.m_id)
---        skillStr = ConfigHandler:getPassiveSkillTextId(skillId.passiveSpellId4)
---        H = math.floor(self.hangY - self:rowsNum(skillStr,45))
---        Functions.initTextSize(Text_ji_nen_name_5, { width = 320, height = H})
---        Functions.initLabelOfString(Text_ji_nen_name_bei_5, LanguageConfig.language_CardIn_3)
---         local tttttt =    ConfigHandler:getPassiveSkillNameId(skillId.passiveSpellId4)
---        Functions.initLabelOfString(Text_ji_nen_name_5, ConfigHandler:getPassiveSkillNameId(skillId.passiveSpellId4), Text_ji_nen_string_5, skillStr)
---            
---    end
---    
---        if skillId.passiveSpellId5 ~= nil and skillId.passiveSpellId5 > 0 then
---            local Text_ji_nen_name_bei_6 = self._Text_ji_nen_name_bei_3_t:clone()
---            local Text_ji_nen_name_6 = self._Text_ji_nen_name_1_t:clone()
---            local Text_ji_nen_string_6 = self._Text_ji_nen_string_3_t:clone()
---            
---            Functions.initTextColor(self._Text_ji_nen_name_bei_3_t, Text_ji_nen_name_bei_6)
---            Functions.initTextColor(self._Text_ji_nen_name_1_t,Text_ji_nen_name_6)
---            Functions.initTextColor(self._Text_ji_nen_string_3_t,Text_ji_nen_string_6)
---
---            self._Panel_skill_show_t:addChild(Text_ji_nen_name_bei_6)
---            self._Panel_skill_show_t:addChild(Text_ji_nen_name_6)
---            self._Panel_skill_show_t:addChild(Text_ji_nen_string_6)
---            
---            Text_ji_nen_name_bei_6:setVisible(true)
---            Text_ji_nen_name_6:setVisible(true)
---            Text_ji_nen_string_6:setVisible(true)
---            
---            local len = self._Text_ji_nen_name_1_t:getContentSize()
---            local nameWidth = self._Text_ji_nen_name_1_t:getPositionX()
---
---            Text_ji_nen_name_bei_6:setPositionY(self.hangY)
---            Text_ji_nen_name_6:setPosition(nameWidth - len.width-5, self.hangY + len.height*0.5+5)
---            self.hangY = self.hangY - 28
---            Text_ji_nen_string_6:setPosition(self.hangX, self.hangY)
---
---            --skillId = ConfigHandler:getHeroPassiveSkillTwoId(cardInfo.m_id)
---            skillStr = ConfigHandler:getPassiveSkillTextId(skillId.passiveSpellId5)
---            H = math.floor(self.hangY - self:rowsNum(skillStr,45))
---            Functions.initTextSize(Text_ji_nen_name_6, { width = 320, height = H})
---            Functions.initLabelOfString(Text_ji_nen_name_bei_6, LanguageConfig.language_CardIn_3)
---            Functions.initLabelOfString(Text_ji_nen_name_6, ConfigHandler:getPassiveSkillNameId(skillId.passiveSpellId5), Text_ji_nen_string_6, skillStr)
---        end
---        
---        if skillId.passiveSpellId6 ~= nil and skillId.passiveSpellId6 > 0 then
---            local Text_ji_nen_name_bei_7 = self._Text_ji_nen_name_bei_3_t:clone()
---            local Text_ji_nen_name_7 = self._Text_ji_nen_name_1_t:clone()
---            local Text_ji_nen_string_7 = self._Text_ji_nen_string_3_t:clone()
---            
---            Functions.initTextColor(self._Text_ji_nen_name_bei_3_t, Text_ji_nen_name_bei_7)
---            Functions.initTextColor(self._Text_ji_nen_name_1_t,Text_ji_nen_name_7)
---            Functions.initTextColor(self._Text_ji_nen_string_3_t,Text_ji_nen_string_7)
---
---            self._Panel_skill_show_t:addChild(Text_ji_nen_name_bei_7)
---            self._Panel_skill_show_t:addChild(Text_ji_nen_name_7)
---            self._Panel_skill_show_t:addChild(Text_ji_nen_string_7)
---            
---            Text_ji_nen_name_bei_7:setVisible(true)
---            Text_ji_nen_name_7:setVisible(true)
---            Text_ji_nen_string_7:setVisible(true)
---            
---            local len = self._Text_ji_nen_name_1_t:getContentSize()
---            
---            local nameWidth = self._Text_ji_nen_name_1_t:getPositionX()
---
---            Text_ji_nen_name_bei_7:setPositionY(self.hangY)
---            Text_ji_nen_name_7:setPosition(nameWidth - len.width-5, self.hangY + len.height*0.5+5)
---            self.hangY = self.hangY - 28
---            Text_ji_nen_string_7:setPosition(self.hangX, self.hangY)
---
---            --skillId = ConfigHandler:getHeroPassiveSkillTwoId(cardInfo.m_id)
---            skillStr = ConfigHandler:getPassiveSkillTextId(skillId.passiveSpellId4)
---            H = math.floor(self.hangY - self:rowsNum(skillStr,45))
---            Functions.initTextSize(Text_ji_nen_name_7, { width = 320, height = H})
---            Functions.initLabelOfString(Text_ji_nen_name_bei_7, LanguageConfig.language_CardIn_3)
---            Functions.initLabelOfString(Text_ji_nen_name_7, ConfigHandler:getPassiveSkillNameId(skillId.passiveSpellId6), Text_ji_nen_string_7, skillStr)
---        end
---    --***********************************************************--
---    
     
     self.hangY = self.hangY - 15
     if ConfigHandler:getHeroFateInfosOfId(cardInfo.m_id) then
@@ -562,7 +402,11 @@ function CardInfoPopView:showSkill(cardInfo)
     Functions.initLabelOfString(self._Text_card_Description_t, skillStr)
     local data = self._ScrollView_info_t:getInnerContainerSize()
     --self._ScrollView_info_t:getInnerContainer():setAnchorPoint({ x = 0, y = 1 })
-    data.height = data.height - self.hangY
+
+    if math.abs(self.hangY) > math.abs(self.jinNenY) then
+        data.height = data.height - (self.hangY - self.jinNenY)
+    end
+    self.jinNenY = self.hangY
 
     self._ScrollView_info_t:setInnerContainerSize(data)
     local achoPos = self._ScrollView_info_t:getInnerContainer():getPositionY()
