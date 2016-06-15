@@ -87,7 +87,7 @@ function PlayerData:init()
     local onEliteRate = function(event)
         GameState.eliteRate = event.data.eliteRate
     end
-    NetWork:addNetWorkListener({ 2, 25 }, onEliteRate)
+    NetWork:addNetWorkListener({ 2, 27 }, onEliteRate)
     
 end
 
