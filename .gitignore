@@ -4,3 +4,4 @@ config.json
 .svn
 !.gitignore
 *.zip
+simulator

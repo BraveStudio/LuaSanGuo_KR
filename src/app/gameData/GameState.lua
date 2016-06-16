@@ -36,7 +36,6 @@ GameState.storeAttr.defenseEmbattleSelectData_s = ""
 GameState.storeAttr.NstoreOrTstore_f = 0   -- 0 nothing 1 NstroeLogin  2 TstoreLogin
 -- GameState.storeAttr.isExtractExpansionFile_b = false
 GameState.storeAttr.isCloseSystemSpeaker_b = false
-GameState.storeAttr.isOpenedCafe_b = false
 
 function GameState:init()
     self.super.init(self)
