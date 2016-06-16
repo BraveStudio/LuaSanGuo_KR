@@ -44,7 +44,7 @@ G_IsLinkLoaclIp = false
 
 
 --外网服务器id
-G_ServerId = 5
+G_ServerId = 4
 
 --是否自动获取当前链接的服务器和更新地址
 G_IsAutoGetUrl = false
@@ -72,8 +72,7 @@ G_IsHaveLanchImage = false
 --当前版本
 CurrentBigVersion = 3
 CurrentMidVersion = 4
-CurrentMinVersion = 1
-
+CurrentMinVersion = 3
 
 --输出内存信息
 DEBUG_MEM = false

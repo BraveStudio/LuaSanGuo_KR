@@ -279,7 +279,7 @@ end
 function pm_GetCardAttackEx(partHeros)
 
 	local sum = 0
-	for k, v in ipairs(partHeros) do
+	for k, v in pairs(partHeros) do
 		if v.id and v.id > 0 then
 			sum = sum + pm_GetCardAttack({ heroInfo = v }) * g_RoleCardConfig[v.id].pjAddEx
 		end
@@ -291,7 +291,7 @@ end
 function pm_GetCardHpEx(partHeros)
 
 	local sum = 0
-	for k, v in ipairs(partHeros) do
+	for k, v in pairs(partHeros) do
 	    if v.id and v.id > 0 then
             sum = sum + pm_GetCardHp({ heroInfo = v }) * g_RoleCardConfig[v.id].pjAddEx
 		end
@@ -304,7 +304,7 @@ end
 function pm_GetCardFasEx(partHeros)
 
 	local sum = 0
-	for k, v in ipairs(partHeros) do
+	for k, v in pairs(partHeros) do
 		if v.id and v.id > 0 then
 			sum = sum + pm_GetCardFas({ heroInfo = v }) * g_RoleCardConfig[v.id].pjAddEx
 		end
@@ -317,7 +317,7 @@ end
 function pm_GetCardFafEx(partHeros)
 
 	local sum = 0
-	for k, v in ipairs(partHeros) do
+	for k, v in pairs(partHeros) do
 		if v.id and v.id > 0 then
 			sum = sum + pm_GetCardFaf({ heroInfo = v }) * g_RoleCardConfig[v.id].pjAddEx
 		end
