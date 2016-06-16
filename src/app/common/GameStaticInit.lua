@@ -6,6 +6,8 @@ end
 
 --初始化游戏全局枚举变量
 GloableEnum = require("app.configs.GloableEnum")
+--初始化游戏anysdk枚举变量
+AnysdkConst = require("app.sdk.anysdkConst")
 
 --初始化游戏全局状态数据
 GameState = require("app.gameData.GameState")
@@ -49,7 +51,10 @@ NetWork:init()
 --加载sdk配置
 SDKConfig = require("app.sdk.SDKConfig")
 SDKConfig:init()
-
+if G_SDKType == 6 then 
+	require "app.sdk.PluginChannel"
+	PluginChannel = PluginChannel.new()
+end
 --全局网络模块初始化
 if HttpClient then
 	HttpClient:destory()
