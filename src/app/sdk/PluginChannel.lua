@@ -1,9 +1,9 @@
-local PluginChannel = class("PluginChannel")
+PluginChannel = class("PluginChannel")
 
 local user_plugin = nil    --获取用户插件
 local iap_plugin_maps = nil --支付插件
 --登陆监听函数
-function PluginChannel:onUserResult( plugin, code, msg )
+local function onUserResult( plugin, code, msg )
     print("on user action listener.")
     print("code:"..code..",msg:"..msg)
     if code == UserActionResultCode.kInitSuccess then
@@ -45,7 +45,7 @@ function PluginChannel:onUserResult( plugin, code, msg )
     end
 end
 --支付监听函数
-function PluginChannel:onPayResult( code, msg, info )
+local function onPayResult( code, msg, info )
     print("on iap result listener.")
     print("code:"..code..",msg:"..msg)
     if code == PayResultCode.kPaySuccess then
@@ -69,6 +69,8 @@ function PluginChannel:onPayResult( code, msg, info )
     end
 end
 function PluginChannel:ctor()
+    print("PluginChannel!!!!!!!!!!!!!")
+    print("PluginChannel!!!!!!!!!!!!!")
     --for anysdk
     local agent = AgentManager:getInstance()
     --init
@@ -79,6 +81,7 @@ function PluginChannel:ctor()
     local privateKey = "6C6B80BE7AD41F784E0624D87897707A"
     local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php"
     local agent = AgentManager:getInstance()
+    print("PluginChannel!!!!!!!!!!!!!")
     --init
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
     --load
@@ -87,14 +90,14 @@ function PluginChannel:ctor()
     -- get user plugin
     user_plugin = agent:getUserPlugin()
     if user_plugin ~= nil then
-        user_plugin:setActionListener(handler(self,self.onUserResult))
+        user_plugin:setActionListener(onUserResult)
     end
 
     iap_plugin_maps = agent:getIAPPlugin()
     for key, value in pairs(iap_plugin_maps) do
         print("key:" .. key)
         print("value: " .. type(value))
-        value:setResultListener(handler(self,self.onPayResult))
+        value:setResultListener(onPayResult)
     end
     agent:setIsAnaylticsEnabled(true)
 end

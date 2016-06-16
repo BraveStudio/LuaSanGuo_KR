@@ -47,16 +47,12 @@ function StartupSceneViewController:onStartbtClick()
     Functions.printInfo(self.debug,"Startbt button is click!")
     Functions.setAdbrixTag("firstTimeExperience","touch_screen_complete")
     
-    -- GameCtlManager:goTo("app.ui.eulaSceneSystem.EulaSceneViewController")
     if not GameState.storeAttr.isConfirmEula_b then 
         GameCtlManager:goTo("app.ui.eulaSceneSystem.EulaSceneViewController")
     else
         if G_SDKType == 6 then 
-            Functions.callJavaFuc(function()
-                print("PluginChannel  login !!!!!")
-                PluginChannel:login()
-                print("PluginChannel  login !!!!!")
-            end)
+   
+   
         else
             if not GameState.storeAttr.isLoginNaver_b then
                 Functions.goToLoginView()

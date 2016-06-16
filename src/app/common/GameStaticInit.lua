@@ -1,4 +1,4 @@
- 
+
 
 if CC_SHOW_FPS then
     cc.Director:getInstance():setDisplayStats(true)
@@ -51,10 +51,7 @@ NetWork:init()
 --加载sdk配置
 SDKConfig = require("app.sdk.SDKConfig")
 SDKConfig:init()
-if G_SDKType == 6 then 
-	require "app.sdk.PluginChannel"
-	PluginChannel = PluginChannel.new()
-end
+
 --全局网络模块初始化
 if HttpClient then
 	HttpClient:destory()

@@ -1733,7 +1733,7 @@ end
 --tyj start
 
 function Functions.callJavaFuc(func)
-    if G_IsUseSDK then
+    if G_IsUseSDK and G_SDKType ~= 6 then
         func()
     end
 end
@@ -1750,7 +1750,7 @@ function Functions.goToLoginView()
 end
 function Functions.setAdbrixTag(tagType,tagName,secondParameter)
 
-    if G_IsUseSDK then
+    if G_IsUseSDK and G_SDKType ~= 6 then
         if secondParameter ~= nil then 
             NativeUtil:javaCallHanler({command = tagType,activityName = tagName,secondParameter = tostring(secondParameter)})
         else
@@ -1759,7 +1759,7 @@ function Functions.setAdbrixTag(tagType,tagName,secondParameter)
     end
 end
 function Functions.setPopupKey(key)
-    if G_IsUseSDK then  
+    if G_IsUseSDK and G_SDKType ~= 6 then  
         if key == "start" then 
            NativeUtil:javaCallHanler({command = "openPopUp",popUpKey = key})
         elseif PlayerData.eventAttr.m_guideStageId == 0 then
