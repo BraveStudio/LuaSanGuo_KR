@@ -1,17 +1,21 @@
-PluginChannel = class("PluginChannel")
-
+PluginChannel = {}
+local NoticeManager = require("app.ui.noticeSystem.NoticeManager")
 local user_plugin = nil    --获取用户插件
 local iap_plugin_maps = nil --支付插件
 --登陆监听函数
-local function onUserResult( plugin, code, msg )
+function PluginChannel:onUserResult( plugin, code, msg )
     print("on user action listener.")
     print("code:"..code..",msg:"..msg)
+    NoticeManager:openTips(GameCtlManager.currentController_t, {title = "code:"..code..",msg:"..msg ,type = 5})
     if code == UserActionResultCode.kInitSuccess then
-        --do
+        Functions.setLoginInf(msg)
+        if GameState.storeAttr.NaverUserId_s ~= "" then
+            Functions.sdkLoginHandler(usrId)
+        end
     elseif code == UserActionResultCode.kInitFail then
         --do
     elseif code == UserActionResultCode.kLoginSuccess then
-        --do
+ 
     elseif code == UserActionResultCode.kLoginNetworkError then
         --do
     elseif code == UserActionResultCode.kLoginNoNeed then
@@ -45,9 +49,10 @@ local function onUserResult( plugin, code, msg )
     end
 end
 --支付监听函数
-local function onPayResult( code, msg, info )
+function PluginChannel:onPayResult( code, msg, info )
     print("on iap result listener.")
     print("code:"..code..",msg:"..msg)
+    NoticeManager:openTips(GameCtlManager.currentController_t, {title = "code:"..code..",msg:"..msg ,type = 5}) 
     if code == PayResultCode.kPaySuccess then
         --do
     elseif code == PayResultCode.kPayFail then
@@ -68,7 +73,7 @@ local function onPayResult( code, msg, info )
         --do
     end
 end
-function PluginChannel:ctor()
+function PluginChannel:init()
     print("PluginChannel!!!!!!!!!!!!!")
     print("PluginChannel!!!!!!!!!!!!!")
     --for anysdk
@@ -79,7 +84,7 @@ function PluginChannel:ctor()
    	local appKey = "6D7E6FC3-4DDD-E5EF-B131-B60D14A30B81"
     local appSecret = "5ed642ca101399889cba0ce2e4b486d7"
     local privateKey = "6C6B80BE7AD41F784E0624D87897707A"
-    local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php"
+    local oauthLoginServer = "http://192.168.0.251:8085/sanguoGM/sanguoGMSomeFunc2/AnySdkVeriServ"
     local agent = AgentManager:getInstance()
     print("PluginChannel!!!!!!!!!!!!!")
     --init
@@ -90,20 +95,20 @@ function PluginChannel:ctor()
     -- get user plugin
     user_plugin = agent:getUserPlugin()
     if user_plugin ~= nil then
-        user_plugin:setActionListener(onUserResult)
+        user_plugin:setActionListener(handler(self,self.onUserResult))
     end
 
     iap_plugin_maps = agent:getIAPPlugin()
     for key, value in pairs(iap_plugin_maps) do
         print("key:" .. key)
         print("value: " .. type(value))
-        value:setResultListener(onPayResult)
+        value:setResultListener(handler(self,self.onPayResult))
     end
     agent:setIsAnaylticsEnabled(true)
 end
 function PluginChannel:login()
 	if user_plugin ~= nil then
-        user_plugin:setActionListener(onUserResult)
+        user_plugin:setActionListener(handler(self,self.onUserResult))
 	    user_plugin:login()
 	end
 end
@@ -177,11 +182,11 @@ end
 function PluginChannel:pay()
 	if iap_plugin_maps ~= nil then
         local info = {
-                Product_Price="0.1", 
+                Product_Price="2", 
                 Product_Id="monthly",  
                 Product_Name="gold",  
                 Server_Id="13",  
-                Product_Count="1",  
+                Product_Count="1",    
                 Role_Id="1001",  
                 Role_Name="asd"
             }
@@ -193,5 +198,5 @@ function PluginChannel:pay()
         end
 	end
 end
-
+return PluginChannel
     

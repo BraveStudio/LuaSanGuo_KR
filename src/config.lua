@@ -33,11 +33,11 @@ G_IsDebugClient = false
 G_IsUpdate = false
 
 --是否使用sdk
-G_IsUseSDK = false
+G_IsUseSDK = true
 
 
 --SDK类型：1：NStore,2:TStore 3:CStore 4:gplay 5:ios-store 6:anysdk
-G_SDKType = 4
+G_SDKType = 6
 
 --渠道类型 :探娱
 G_ChannelType = 1

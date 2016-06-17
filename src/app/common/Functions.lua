@@ -1737,6 +1737,12 @@ function Functions.callJavaFuc(func)
         func()
     end
 end
+--anysdk ref 
+function Functions.callAnySdkFuc(func)
+    if G_IsUseSDK and G_SDKType == 6 then
+        func()
+    end
+end
 function Functions.goToLoginView()
     if G_SDKType == 3 then 
         GameCtlManager:goTo("app.ui.cstoreLoginSystem.CstoreLoginViewController")
@@ -1764,6 +1770,17 @@ function Functions.setPopupKey(key)
            NativeUtil:javaCallHanler({command = "openPopUp",popUpKey = key})
         elseif PlayerData.eventAttr.m_guideStageId == 0 then
            NativeUtil:javaCallHanler({command = "openPopUp",popUpKey = key}) 
+        end
+    end
+end
+function Functions.setLoginInf(msg)
+    if G_IsUseSDK and G_SDKType == 6 then  
+        require("cocos.cocos2d.json")
+        local msgTable = json.decode(msg)
+        GameState.storeAttr.isLoginNaver_b = true
+        if G_ChannelType == 1 then 
+            GameState.storeAttr.NaverUserId_s = msgTable["data"]["ucid"]
+            GameState.storeAttr.NaverUserName_s = usrName["data"]["nickName"]
         end
     end
 end

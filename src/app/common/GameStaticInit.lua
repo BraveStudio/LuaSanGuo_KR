@@ -51,7 +51,11 @@ NetWork:init()
 --加载sdk配置
 SDKConfig = require("app.sdk.SDKConfig")
 SDKConfig:init()
-
+--
+Functions.callAnySdkFuc(function()
+	PluginChannel = require("app.sdk.PluginChannel")
+	PluginChannel:init()
+end)
 --全局网络模块初始化
 if HttpClient then
 	HttpClient:destory()
