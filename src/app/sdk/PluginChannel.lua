@@ -1,7 +1,9 @@
 PluginChannel = {}
+require("cocos.cocos2d.json")
 local NoticeManager = require("app.ui.noticeSystem.NoticeManager")
 local user_plugin = nil    --获取用户插件
 local iap_plugin_maps = nil --支付插件
+local agent = nil
 --登陆监听函数
 function PluginChannel:onUserResult( plugin, code, msg )
     print("on user action listener.")
@@ -18,17 +20,17 @@ function PluginChannel:onUserResult( plugin, code, msg )
             end 
         end)
     elseif code == UserActionResultCode.kLoginNetworkError then
-        --do
+        PromptManager:openTipPrompt("网络错误,请重试！")
     elseif code == UserActionResultCode.kLoginNoNeed then
-        --do
+       PromptManager:openTipPrompt("不需要登录！")
     elseif code == UserActionResultCode.kLoginFail then
-        --do
+       PromptManager:openTipPrompt("登录失败！")
     elseif code == UserActionResultCode.kLoginCancel then
-        --do
+       PromptManager:openTipPrompt("登录取消")
     elseif code == UserActionResultCode.kLogoutSuccess then
-        --do
+       PromptManager:openTipPrompt("注销成功")
     elseif code == UserActionResultCode.kLogoutFail then
-        --do
+       PromptManager:openTipPrompt("注销失败")
     elseif code == UserActionResultCode.kPlatformEnter then
         --do
     elseif code == UserActionResultCode.kPlatformBack then
@@ -42,9 +44,9 @@ function PluginChannel:onUserResult( plugin, code, msg )
     elseif code == UserActionResultCode.kRealNameRegister then
         --do
     elseif code == UserActionResultCode.kAccountSwitchSuccess then
-        --do
+        PromptManager:openTipPrompt("账户切换成功！")
     elseif code == UserActionResultCode.kAccountSwitchFail then
-        --do
+        PromptManager:openTipPrompt("账户切换失败！")
     elseif code == UserActionResultCode.kOpenShop then
         --do
     end
@@ -60,34 +62,33 @@ function PluginChannel:onPayResult( code, msg, info )
     elseif code == PayResultCode.kPayFail then
         PromptManager:openTipPrompt("支付失败！")
     elseif code == PayResultCode.kPayCancel then
-         PromptManager:openTipPrompt(LanguageConfig.language_9_79)
+        PromptManager:openTipPrompt(LanguageConfig.language_9_79)
     elseif code == PayResultCode.kPayNetworkError then
-        --do
+        PromptManager:openTipPrompt("网络错误,请重试！")
     elseif code == PayResultCode.kPayProductionInforIncomplete then
         --do
     elseif code == PayResultCode.kPayInitSuccess then
-        --do
+        PromptManager:openTipPrompt("支付初始化成功！")
     elseif code == PayResultCode.kPayInitFail then
         --do
     elseif code == PayResultCode.kPayNowPaying then
         --do
     elseif code == PayResultCode.kPayRechargeSuccess then
-        --do
+
     end
 end
 function PluginChannel:init()
     print("PluginChannel!!!!!!!!!!!!!")
     print("PluginChannel!!!!!!!!!!!!!")
     --for anysdk
-    local agent = AgentManager:getInstance()
     --init
     --anysdk //c++层初始化
     --注意：这里appKey, appSecret, privateKey，要替换成自己打包工具里面的值(登录打包工具，游戏管理界面上显示的那三个参数)。
-   	local appKey = "6D7E6FC3-4DDD-E5EF-B131-B60D14A30B81"
+    local appKey = "6D7E6FC3-4DDD-E5EF-B131-B60D14A30B81"
     local appSecret = "5ed642ca101399889cba0ce2e4b486d7"
     local privateKey = "6C6B80BE7AD41F784E0624D87897707A"
     local oauthLoginServer = "http://192.168.0.251:8085/sanguoGM/sanguoGMSomeFunc2/AnySdkVeriServ"
-    local agent = AgentManager:getInstance()
+    agent = AgentManager:getInstance()
     print("PluginChannel!!!!!!!!!!!!!")
     --init
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
@@ -109,76 +110,80 @@ function PluginChannel:init()
     agent:setIsAnaylticsEnabled(true)
 end
 function PluginChannel:login()
-	if user_plugin ~= nil then
+    if user_plugin ~= nil then
         user_plugin:setActionListener(handler(self,self.onUserResult))
-	    user_plugin:login()
-	end
+        user_plugin:login()
+    end
 end
-
+function PluginChannel:getCustomParam()
+    local customParam = agent:getCustomParam()
+    local msgTable = json.decode(customParam)
+    return msgTable
+end
 function PluginChannel:logout()
-	if user_plugin ~= nil then
+    if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("logout") then
             user_plugin:callFuncWithParam("logout")
         end
-	end
+    end
 end
 
 function PluginChannel:enterPlatform()
-	if user_plugin ~= nil then
+    if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("enterPlatform") then
             user_plugin:callFuncWithParam("enterPlatform")
         end
-	end
+    end
 end
 
 function PluginChannel:showToolBar()
-	if user_plugin ~= nil then
-	    if user_plugin:isFunctionSupported("showToolBar") then
-	        local param1 = PluginParam:create(ToolBarPlace.kToolBarTopLeft)
-	        user_plugin:callFuncWithParam("showToolBar", param1)
-	    end
-	end
+    if user_plugin ~= nil then
+        if user_plugin:isFunctionSupported("showToolBar") then
+            local param1 = PluginParam:create(ToolBarPlace.kToolBarTopLeft)
+            user_plugin:callFuncWithParam("showToolBar", param1)
+        end
+    end
 end
 
 function PluginChannel:hideToolBar()
-	if user_plugin ~= nil then
+    if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("hideToolBar") then
             user_plugin:callFuncWithParam("hideToolBar")
         end
-	end
+    end
 end
 
 function PluginChannel:accountSwitch()
-	if user_plugin ~= nil then
+    if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("accountSwitch") then
             user_plugin:callFuncWithParam("accountSwitch")
         end
-	end
+    end
 end
 
 function PluginChannel:realNameRegister()
-	if user_plugin ~= nil then
+    if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("realNameRegister") then
             user_plugin:callFuncWithParam("realNameRegister")
         end
-	end
+    end
 end
 
 function PluginChannel:antiAddictionQuery()
-	if user_plugin ~= nil then
+    if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("antiAddictionQuery") then
             user_plugin:callFuncWithParam("antiAddictionQuery")
         end
-	end
+    end
 end
 
 function PluginChannel:submitLoginGameRole()
-	if user_plugin ~= nil then
+    if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("submitLoginGameRole") then
             local data = PluginParam:create({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
             user_plugin:callFuncWithParam("submitLoginGameRole", data)
         end
-	end
+    end
 end
 
 function PluginChannel:getProductName(index)
@@ -202,7 +207,14 @@ function PluginChannel:getProductId(index)
 end
 function PluginChannel:pay(index,data)
      NoticeManager:openTips(GameCtlManager.currentController_t, {title = "index:"..index..",money:"..data.money,type = 5})
-	if iap_plugin_maps ~= nil then
+    if iap_plugin_maps ~= nil then
+        local customParam = self:getCustomParam()
+        local money = 0
+        if customParam.debug then 
+            money = 0.01
+        else
+            money = data.money
+        end
         local info = {
                 Product_Price = data.money, 
                 Product_Id = self:getProductId(index) or "",  
@@ -219,7 +231,7 @@ function PluginChannel:pay(index,data)
             print("value: " .. type(value))
             value:payForProduct(info)
         end
-	end
+    end
 end
 return PluginChannel
     
