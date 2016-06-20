@@ -278,8 +278,7 @@ end
 function MainViewController:onAddmoneybtClick()
     Functions.printInfo(self.debug,"Addmoneybt button is click!")
     -- local payView = require("app.ui.popViews.PayPopView"):new()--cs
-    -- self:openChildView("app.ui.popViews.PayPopView",{isRemove = false,name = "PayPopView"})
-    PluginChannel:pay()
+    self:openChildView("app.ui.popViews.PayPopView",{isRemove = false,name = "PayPopView"})
 end
 --@auto code Addmoneybt btFunc end
 

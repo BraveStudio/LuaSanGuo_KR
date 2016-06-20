@@ -1773,14 +1773,19 @@ function Functions.setPopupKey(key)
         end
     end
 end
-function Functions.setLoginInf(msg)
+function Functions.setLoginInf(msg,handler)
     if G_IsUseSDK and G_SDKType == 6 then  
         require("cocos.cocos2d.json")
         local msgTable = json.decode(msg)
         GameState.storeAttr.isLoginNaver_b = true
-        if G_ChannelType == 1 then 
-            GameState.storeAttr.NaverUserId_s = msgTable["data"]["ucid"]
-            GameState.storeAttr.NaverUserName_s = usrName["data"]["nickName"]
+        if G_ChannelType == "000255" then 
+            if msgTable["data"] ~= nil then
+                GameState.storeAttr.NaverUserId_s = msgTable["data"]["ucid"] or ""
+                GameState.storeAttr.NaverUserName_s = msgTable["data"]["nickName"] or ""
+                if handler ~= nil then 
+                    handler()
+                end
+            end
         end
     end
 end

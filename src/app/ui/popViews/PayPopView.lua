@@ -128,10 +128,14 @@ function PayPopView:initDisplayUI()
       	local onWidgetBtClick = function(event)
              Functions.printInfo(self.debug," onWidgetClick") 
              Functions.setAdbrixTag("retension","gold_recharging_inter")  
-             Functions.callJavaFuc(function()
-                PromptManager:openHttpLinkPrompt()   
-                NativeUtil:javaCallHanler({command = "pay",productCode = data.productCode,productName = data.productName})
-             end)         
+             -- Functions.callJavaFuc(function()
+             --    PromptManager:openHttpLinkPrompt() 
+             --    NativeUtil:javaCallHanler({command = "pay",productCode = data.productCode,productName = data.productName})
+             -- end)  
+             Functions.callAnySdkFuc(function( )
+                 PromptManager:openHttpLinkPrompt()
+                 PluginChannel:pay(index,data)
+             end)       
         end
       	widget:onTouch(Functions.createClickListener(onWidgetBtClick, "zoom"))
     end
@@ -145,6 +149,8 @@ function PayPopView:initDisplayUI()
      Functions.bindArryListWithData(self._payListView_t,{ firstData = g_payProductConfig_Gplay }, listHandler,{direction = true, col = 2, firstSegment = 10, segment = 15 }) 
   elseif G_SDKType == 5 then
      Functions.bindArryListWithData(self._payListView_t,{ firstData = g_payProductConfig_Astore }, listHandler,{direction = true, col = 2, firstSegment = 10, segment = 15 }) 
+  elseif G_SDKType == 6 then
+     Functions.bindArryListWithData(self._payListView_t,{ firstData = g_payProductConfig_Anysdk }, listHandler,{direction = true, col = 2, firstSegment = 10, segment = 15 })   
   end 
 end
 function PayPopView:playRewardBoxAni(target)

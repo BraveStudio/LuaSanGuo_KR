@@ -187,7 +187,7 @@ g_pvetuandui = {
 
 g_pveEliteLimit = 3
 
-g_pveMAX_FB_ID = 22
+g_pveMAX_FB_ID = 25
 
 --关卡星星领奖配置	
 g_PassStarAward = 
@@ -1122,6 +1122,41 @@ g_payProductConfig_Astore =
 	[7] = {productCode = "cash_250",show_moneyStr = "5,500",show_goldStr = "250",img = "pay_2.png",gold = 250, money = 5500, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
     [8] = {productCode = "cash_150",show_moneyStr = "3,300",show_goldStr = "150",img = "pay_1.png",gold = 150, money = 3300, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
 }
+g_channelConfig = {
+	["000255"] = {
+			["productCode"] = {
+				["cash_500"] = 1,
+				["cash_1500"] = 2,
+				["cash_11000"] = 3,
+				["cash_7500"] = 4,
+				["cash_5000"] = 5,
+				["cash_2500"] = 6,
+				["cash_250"] = 7,
+				["cash_150"] = 8,},
+			["productName"] = {
+				["cash_500"] = 1,
+				["cash_1500"] = 2,
+				["cash_11000"] = 3,
+				["cash_7500"] = 4,
+				["cash_5000"] = 5,
+				["cash_2500"] = 6,
+				["cash_250"] = 7,
+				["cash_150"] = 8,},
+	},
+}
+
+g_payProductConfig_Anysdk = 
+{
+	[1] = {productName = "gold 500",productCode = "cash_500",show_moneyStr = "500",show_goldStr = "500",img = "pay_3.png",gold = 500, money = 50, multiple = 2,isRecommand = true,rate = 0, inf = LanguageConfig.ui_payInf_1},
+	[2] = {productName = "gold 1500",productCode = "cash_1500",show_moneyStr = "150",show_goldStr = "1,500",img = "pay_4.png",gold = 1500, money = 150, multiple = 2,isRecommand = true,rate = 0, inf = LanguageConfig.ui_payInf_1},
+	[3] = {productName = "gold 11000",productCode = "cash_11000",show_moneyStr = "1,100",show_goldStr = "11,000",img = "pay_8.png",gold = 11000, money = 1100, multiple = 2,isRecommand = false,rate = 20, inf = LanguageConfig.ui_payInf_1},
+	[4] = {productName = "gold 7500",productCode = "cash_7500",show_moneyStr = "750",show_goldStr = "7,500",img = "pay_7.png",gold = 7500, money = 750, multiple = 2,isRecommand = false,rate = 10, inf = LanguageConfig.ui_payInf_1},
+	[5] = {productName = "gold 5000",productCode = "cash_5000",show_moneyStr = "500",show_goldStr = "5,000",img = "pay_5.png",gold = 5000, money = 500, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
+	[6] = {productName = "gold 2500",productCode = "cash_2500",show_moneyStr = "250",show_goldStr = "2,500",img = "pay_5.png",gold = 2500, money = 250, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
+	[7] = {productName = "gold 250",productCode = "cash_250",show_moneyStr = "25",show_goldStr = "250",img = "pay_2.png",gold = 250, money = 25, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
+    [8] = {productName = "gold 150",productCode = "cash_150",show_moneyStr = "15",show_goldStr = "150",img = "pay_1.png",gold = 150, money = 15, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
+}
+
 g_payShowRMB = {3300,5500,11000,33000,55000,110000}
 --月卡配置
 g_monthVip = 

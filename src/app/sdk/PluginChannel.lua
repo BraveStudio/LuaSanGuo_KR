@@ -6,16 +6,17 @@ local iap_plugin_maps = nil --支付插件
 function PluginChannel:onUserResult( plugin, code, msg )
     print("on user action listener.")
     print("code:"..code..",msg:"..msg)
-    NoticeManager:openTips(GameCtlManager.currentController_t, {title = "code:"..code..",msg:"..msg ,type = 5})
+    -- NoticeManager:openTips(GameCtlManager.currentController_t, {title = "code:"..code..",msg:"..msg ,type = 5})
     if code == UserActionResultCode.kInitSuccess then
-        Functions.setLoginInf(msg)
-        if GameState.storeAttr.NaverUserId_s ~= "" then
-            Functions.sdkLoginHandler(usrId)
-        end
+
     elseif code == UserActionResultCode.kInitFail then
         --do
     elseif code == UserActionResultCode.kLoginSuccess then
- 
+        Functions.setLoginInf(msg,function( )
+            if GameState.storeAttr.NaverUserId_s ~= nil then 
+                Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s)  
+            end 
+        end)
     elseif code == UserActionResultCode.kLoginNetworkError then
         --do
     elseif code == UserActionResultCode.kLoginNoNeed then
@@ -52,13 +53,14 @@ end
 function PluginChannel:onPayResult( code, msg, info )
     print("on iap result listener.")
     print("code:"..code..",msg:"..msg)
-    NoticeManager:openTips(GameCtlManager.currentController_t, {title = "code:"..code..",msg:"..msg ,type = 5}) 
+    -- NoticeManager:openTips(GameCtlManager.currentController_t, {title = "iap-code:"..code..",msg:"..msg ,type = 5}) 
+    PromptManager:closeHttpLinkPrompt() 
     if code == PayResultCode.kPaySuccess then
-        --do
+        NoticeManager:openTips(GameCtlManager.currentController_t, {title = LanguageConfig.language_0_48 ,type = 5,isShowNpc = "npc/NPC_lb_gold.png"}) 
     elseif code == PayResultCode.kPayFail then
-        --do
+        PromptManager:openTipPrompt("支付失败！")
     elseif code == PayResultCode.kPayCancel then
-        --do
+         PromptManager:openTipPrompt(LanguageConfig.language_9_79)
     elseif code == PayResultCode.kPayNetworkError then
         --do
     elseif code == PayResultCode.kPayProductionInforIncomplete then
@@ -179,18 +181,39 @@ function PluginChannel:submitLoginGameRole()
 	end
 end
 
-function PluginChannel:pay()
+function PluginChannel:getProductName(index)
+    if g_channelConfig[G_ChannelType] ~= nil then 
+        for k,v in pairs(g_channelConfig[G_ChannelType]["productName"]) do
+            if v == index then 
+                return k
+            end
+        end
+    end
+end
+function PluginChannel:getProductId(index)
+    local name = ""
+    if g_channelConfig[G_ChannelType] ~= nil then 
+        for k,v in pairs(g_channelConfig[G_ChannelType]["productCode"]) do
+            if v == index then 
+                return k
+            end
+        end
+    end
+end
+function PluginChannel:pay(index,data)
+     NoticeManager:openTips(GameCtlManager.currentController_t, {title = "index:"..index..",money:"..data.money,type = 5})
 	if iap_plugin_maps ~= nil then
         local info = {
-                Product_Price="2", 
-                Product_Id="monthly",  
-                Product_Name="gold",  
-                Server_Id="13",  
-                Product_Count="1",    
-                Role_Id="1001",  
-                Role_Name="asd"
+                Product_Price = data.money, 
+                Product_Id = self:getProductId(index) or "",  
+                Product_Name = self:getProductName(index) or "",  
+                Server_Id = NetWork.serverId,  
+                Product_Count = "1",    
+                Role_Id = tostring(PlayerData.eventAttr.m_uid),  
+                Role_Name = tostring(PlayerData.eventAttr.m_name)
             }
         -- analytics_plugin:logEvent("pay", info)
+      
         for key, value in pairs(iap_plugin_maps) do
             print("key:" .. key)
             print("value: " .. type(value))
