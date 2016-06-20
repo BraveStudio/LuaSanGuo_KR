@@ -1111,5 +1111,6 @@ local languageConfig_ch =
 ["language_ExpTransfer_4"] = "경험치 승계 재료 무장은 초기화 상태가 됩니다. 계속하시겠습니까?", 
 ["language_ExpTransfer_5"] = "무장의 레벨은 주공의 레벨을 초과할 수 없어 일부 경험치는 소실됩니다. 계속 하시겠습니까?", 
 ["ui_CombatView_invalid"] = "유효 시간이 초과되어 전투를 정상적으로 종료 할 수 없었습니다.",
+["language_Union_44"] = "정말 길드장을 양도하시겠습니까?",
 }
  return languageConfig_ch

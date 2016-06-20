@@ -187,7 +187,7 @@ g_pvetuandui = {
 
 g_pveEliteLimit = 3
 
-g_pveMAX_FB_ID = 22
+g_pveMAX_FB_ID = 25
 
 --关卡星星领奖配置	
 g_PassStarAward = 
@@ -1124,6 +1124,41 @@ g_payProductConfig_Astore =
 	[7] = {productCode = "cash_250",show_moneyStr = "5,500",show_goldStr = "250",img = "pay_2.png",gold = 250, money = 5500, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
     [8] = {productCode = "cash_150",show_moneyStr = "3,300",show_goldStr = "150",img = "pay_1.png",gold = 150, money = 3300, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
 }
+g_channelConfig = {
+	["1"] = {
+			["productCode"] = {
+				["cash_500"] = 1,
+				["cash_1500"] = 2,
+				["cash_11000"] = 3,
+				["cash_7500"] = 4,
+				["cash_5000"] = 5,
+				["cash_2500"] = 6,
+				["cash_250"] = 7,
+				["cash_150"] = 8,},
+			["productName"] = {
+				["cash_500"] = 1,
+				["cash_1500"] = 2,
+				["cash_11000"] = 3,
+				["cash_7500"] = 4,
+				["cash_5000"] = 5,
+				["cash_2500"] = 6,
+				["cash_250"] = 7,
+				["cash_150"] = 8,},
+	},
+}
+
+g_payProductConfig_Anysdk = 
+{
+	[1] = {productName = "gold 500",productCode = "cash_500",show_moneyStr = "500",show_goldStr = "500",img = "pay_3.png",gold = 500, money = 50, multiple = 2,isRecommand = true,rate = 0, inf = LanguageConfig.ui_payInf_1},
+	[2] = {productName = "gold 1500",productCode = "cash_1500",show_moneyStr = "150",show_goldStr = "1,500",img = "pay_4.png",gold = 1500, money = 150, multiple = 2,isRecommand = true,rate = 0, inf = LanguageConfig.ui_payInf_1},
+	[3] = {productName = "gold 11000",productCode = "cash_11000",show_moneyStr = "1,100",show_goldStr = "11,000",img = "pay_8.png",gold = 11000, money = 1100, multiple = 2,isRecommand = false,rate = 20, inf = LanguageConfig.ui_payInf_1},
+	[4] = {productName = "gold 7500",productCode = "cash_7500",show_moneyStr = "750",show_goldStr = "7,500",img = "pay_7.png",gold = 7500, money = 750, multiple = 2,isRecommand = false,rate = 10, inf = LanguageConfig.ui_payInf_1},
+	[5] = {productName = "gold 5000",productCode = "cash_5000",show_moneyStr = "500",show_goldStr = "5,000",img = "pay_5.png",gold = 5000, money = 500, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
+	[6] = {productName = "gold 2500",productCode = "cash_2500",show_moneyStr = "250",show_goldStr = "2,500",img = "pay_5.png",gold = 2500, money = 250, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
+	[7] = {productName = "gold 250",productCode = "cash_250",show_moneyStr = "25",show_goldStr = "250",img = "pay_2.png",gold = 250, money = 25, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
+    [8] = {productName = "gold 150",productCode = "cash_150",show_moneyStr = "15",show_goldStr = "150",img = "pay_1.png",gold = 150, money = 15, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
+}
+
 g_payShowRMB = {3300,5500,11000,33000,55000,110000}
 --月卡配置
 g_monthVip = 
@@ -1726,15 +1761,15 @@ g_appendReward = {
 -- 充值活动送神将
 g_payActcfg = 
 {
-	startTime = {year = 2016,month = 6,day=8,hour=10,min=5,sec=0},
-	endTime = {year = 2016,month = 6,day=9,hour=10,min=0,sec=0},
+	startTime = {year = 2016,month = 6,day=23,hour=10,min=30,sec=0},
+	endTime = {year = 2016,month = 6,day=30,hour=10,min=0,sec=0},
 	payCount = {500,1000,2000,5000,10000},
 	reward = {
-				[1] = {{77,1,1},{-2,4,500},{44,4,10}},
-				[2] = {{97,1,1},{-2,4,1000},{44,4,20}},
-				[3] = {{86,1,1},{-2,4,1500},{44,4,30}},
-				[4] = {{120,1,1},{-2,4,2000},{44,4,40}},
-				[5] = {{134,1,1},{-2,4,5000},{44,4,50}},
+				[1] = {{77,1,1},{-2,4,500},{44,4,10},{76,4,2}},
+				[2] = {{97,1,1},{-2,4,1000},{44,4,20},{77,4,1}},
+				[3] = {{86,1,1},{-2,4,1500},{44,4,30},{77,4,2}},
+				[4] = {{120,1,1},{-2,4,2000},{44,4,40},{77,4,5}},
+				[5] = {{134,1,1},{-2,4,5000},{44,4,50},{77,4,12}},
 			 },
 	-- description = "累计充值到一定元宝，会有你意想不到的惊喜，还在等什么，快去充值吧！",
 	description = "누적 충전 원보량에 따라 더욱 강력한 보상 획득!",  --kr
@@ -1744,8 +1779,8 @@ g_payActcfg =
 --每日充值
 g_everyFirstPaycfg = 
 {
-	startTime = {year = 2016,month = 6,day=8,hour=10,min=5,sec=0},
-	endTime = {year = 2016,month = 6,day=9,hour=10,min=0,sec=0},
+	startTime = {year = 2016,month = 6,day=23,hour=10,min=30,sec=0},
+	endTime = {year = 2016,month = 6,day=30,hour=10,min=0,sec=0},
 	-- payCount = {10,30,50,100},						--充值的人民币
 	payCount = {3000,6000,15000,35000},				    --充值的韩元
 	reward = {
@@ -1763,8 +1798,8 @@ g_everyFirstPaycfg =
 --活动累计消费
 g_allConsumecfg = 
 {
-	startTime = {year = 2016,month = 6,day=8,hour=10,min=5,sec=0},
-	endTime = {year = 2016,month = 6,day=9,hour=10,min=0,sec=0},
+	startTime = {year = 2016,month = 6,day=23,hour=10,min=30,sec=0},
+	endTime = {year = 2016,month = 6,day=30,hour=10,min=0,sec=0},
 	consumeCount = {500,1000,2000,5000,10000,30000},						--消费的
 	reward = {
 				[1] = {{-3,4,50000},{-6,4,800},{4,4,10},{44,4,10},},
@@ -1782,8 +1817,8 @@ g_allConsumecfg =
 --活动天梯争霸
 g_tiantizhengba = 
 {
-	startTime = {year = 2016,month = 6,day=8,hour=10,min=5,sec=0},
-	endTime = {year = 2016,month = 6,day=9,hour=10,min=0,sec=0},
+	startTime = {year = 2016,month = 6,day=23,hour=10,min=30,sec=0},
+	endTime = {year = 2016,month = 6,day=30,hour=10,min=0,sec=0},
 	rank = {1,2,3,10,50,100,200,500},									--排名
 	reward = {															--排名对应讲理
 				[1] = {{-2,4,1500},{38,4,15},{-3,4,15000000}},

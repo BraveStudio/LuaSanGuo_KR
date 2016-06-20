@@ -252,4 +252,5 @@ g_evtCode =
 	returnGuildActif = 53,	--失败方返回公会资金
 	ExpMove = 54,			--经验转移
 	AddRoleCardExpToJJD = 55,	--增加角色经验卡 通过经验丹
+	payfail = 56,			--充值失败 客户端掉线
 }

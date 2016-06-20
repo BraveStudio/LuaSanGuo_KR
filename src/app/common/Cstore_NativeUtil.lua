@@ -81,7 +81,7 @@ function NativeUtil._JniBackCall(msg)
             if msgTable["SetAdId"] then
                 GameState.storeAttr.advertisingId_s = msgTable["SetAdId"]
             end
-
+            
             Functions.sdkLoginHandler(usrId)
         elseif k == "SetAdId" then             
             GameState.storeAttr.advertisingId_s = v

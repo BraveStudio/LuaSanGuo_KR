@@ -983,6 +983,7 @@ local languageConfig_ch =
         language_Union_42 = "公会捐献暂未开启！",
 
         language_Union_43 = "在线",
+        language_Union_44 = "你确定要转让公会会长吗？",
         
         
         language_IntegralShop_1 = "达到购买上限",
