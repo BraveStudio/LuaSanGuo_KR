@@ -182,6 +182,11 @@ function MinFbSelectViewController:onDisplayView()
 
     --初始化bg
     local map = string.format("cs/ui_res/FbSelectUI/map%d.png", math.ceil(BiographyData.eventAttr.curSelectFbId/6))
+    --没有第五张世界地图
+    if math.ceil(BiographyData.eventAttr.curSelectFbId/6) > 4 then
+        map = string.format("cs/ui_res/FbSelectUI/map%d.png", 4)
+    end
+
     Functions.loadImageWithSprite(self._bg_t, map)
 
     --绑定体力监听

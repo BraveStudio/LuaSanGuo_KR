@@ -376,9 +376,12 @@ end
 function BaseCreatureView:onSkillEffectEnd(event)
     
     local effectData = self.effectLists[event.data.id]
+    if effectData == nil then
+    	return
+    end
     effectData.deleteMsgIds = effectData.deleteMsgIds or {}
     local model = self.model
-    if effectData and table.hasValue(effectData.msgIds, event.data.msgId) then
+    if table.hasValue(effectData.msgIds, event.data.msgId) then
 
         if  not table.hasValue(effectData.deleteMsgIds, event.data.msgId) then
             effectData.deleteMsgIds[#effectData.deleteMsgIds+1] = event.data.msgId

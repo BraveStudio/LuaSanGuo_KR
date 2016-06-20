@@ -271,14 +271,14 @@ function CombatCenter:getCombatBeforeHeroInfos(heroInfos)
 
     --添加主英雄
     heroBeforeInfos.heros[#heroBeforeInfos.heros+1] = heroInfos.MainHero[1].id
-    heroBeforeInfos.classSet[#heroBeforeInfos.classSet+1] = Functions.formatHeroClass(heroInfos.MainHero[1].class)
+    heroBeforeInfos.classSet[#heroBeforeInfos.classSet+1] = heroInfos.MainHero[1].class
     heroBeforeInfos.power = heroBeforeInfos.power + cs_GetCardFightValue({ heroInfo = heroInfos.MainHero[1],
                         partHeros = heroInfos.PartHero, equipInfos = equipInfos[1]})
     
     --添加副将
     for k, v in pairs(heroInfos.ViceHeros) do
         heroBeforeInfos.heros[#heroBeforeInfos.heros+1] = v.id
-        heroBeforeInfos.classSet[#heroBeforeInfos.classSet+1] = Functions.formatHeroClass(v.class)
+        heroBeforeInfos.classSet[#heroBeforeInfos.classSet+1] = v.class
         heroBeforeInfos.power = heroBeforeInfos.power + cs_GetCardFightValue({ heroInfo = v,
                         partHeros = heroInfos.PartHero, equipInfos = equipInfos[k+1]})
     end
@@ -337,7 +337,7 @@ function CombatCenter:getFbCombatInfosOfId( majorHurdles, littleLevels, preHps, 
             end
             
             enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = enemyCombatInfos.peopleInfos[i].id
-            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = Functions.formatHeroClass(enemyCombatInfos.peopleInfos[i].class)
+            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = enemyCombatInfos.peopleInfos[i].class
             enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = enemyCombatInfos.peopleInfos[i].id,
                 level = enemyCombatInfos.peopleInfos[i].level , class = enemyCombatInfos.peopleInfos[i].class,combatType = combatType })
                 
@@ -355,7 +355,7 @@ function CombatCenter:getFbCombatInfosOfId( majorHurdles, littleLevels, preHps, 
             end
             
             enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = enemyCombatInfos.peopleInfos[i].id
-            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = Functions.formatHeroClass(enemyCombatInfos.peopleInfos[i].class)
+            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = enemyCombatInfos.peopleInfos[i].class
             enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = enemyCombatInfos.peopleInfos[i].id,
                 level = enemyCombatInfos.peopleInfos[i].level ,class = enemyCombatInfos.peopleInfos[i].class, combatType = combatType })
                 
@@ -373,7 +373,7 @@ function CombatCenter:getFbCombatInfosOfId( majorHurdles, littleLevels, preHps, 
             end
             
             enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = enemyCombatInfos.peopleInfos[i].id
-            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = Functions.formatHeroClass(enemyCombatInfos.peopleInfos[i].class)
+            enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = enemyCombatInfos.peopleInfos[i].class
             enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = enemyCombatInfos.peopleInfos[i].id,
                 level = enemyCombatInfos.peopleInfos[i].level ,class = enemyCombatInfos.peopleInfos[i].class, combatType = combatType })
                 

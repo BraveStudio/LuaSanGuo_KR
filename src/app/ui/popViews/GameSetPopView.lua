@@ -175,8 +175,18 @@ function GameSetPopView:onDisplayView()
     self.naverText = self.csbNode:getChildByName("Panel_1"):getChildByName("naverText")
 
     if GameState:getLoginType() == "NaverSdk" then
+
+        local strFormat = "%s"
+        if GameState.storeAttr.NstoreOrTstore_f == 1 then
+            strFormat = "%s(Naver Store)"
+        elseif GameState.storeAttr.NstoreOrTstore_f == 2 then
+            strFormat = "%s(One Store)"
+        end
+
+        NaverUserName = string.format(strFormat, GameState.storeAttr.NaverUserName_s)
+
         if self.naverText then
-            self.naverText:setString(GameState.storeAttr.NaverUserName_s)
+            self.naverText:setString(NaverUserName)
         else
             self.naverText:setVisible(false)
             self._nstoreBz_t:setVisible(false)
