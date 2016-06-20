@@ -126,7 +126,7 @@ function CardInfoPopView:onButton_jin_jieClick()
 
     local stars = ConfigHandler:getHeroStarOfId(self.card.m_id) 
     --6星以下的武将最高只能进阶到32阶。
-    if (stars <= 5 and self.card.m_class >= 32) or (stars == 6 and self.card.m_class == #g_csBaseCfg.upLevel+1) then
+    if (stars <= 5 and self.card.m_class >= 32) or (stars == 6 and self.card.m_class == g_csBaseCfg.upCardLadder) then
         PromptManager:openTipPrompt(LanguageConfig.language_Enhance_14)
     	return
     end

@@ -7,7 +7,7 @@
 			<key>tyj/ui_res/SevenStar/card.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1,506},{200,300}}</string>
+				<string>{{1,488},{200,300}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -51,13 +51,13 @@
 			<key>tyj/ui_res/SevenStar/sevenstars_bg.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1,1},{880,503}}</string>
+				<string>{{1,1},{880,485}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false />
 				<key>sourceSize</key>
-				<string>{880,503}</string>
+				<string>{880,485}</string>
 			</dict>
 		</dict>
 		<key>metadata</key>
@@ -69,14 +69,14 @@
 			<key>realTextureFileName</key>
 			<string>SevenStar.png</string>
 			<key>size</key>
-			<string>{984,807}</string>
+			<string>{984,789}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
 			<integer>984</integer>
 			<key>height</key>
-			<integer>807</integer>
+			<integer>789</integer>
 		</dict>
 	</dict>
 </plist>

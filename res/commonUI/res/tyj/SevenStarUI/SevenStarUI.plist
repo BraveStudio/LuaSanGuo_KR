@@ -180,6 +180,72 @@
 				<key>sourceSize</key>
 				<string>{268,19}</string>
 			</dict>
+			<key>commonUI/res/tyj/SevenStarUI/sevenstars_dao.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{133,664},{124,124}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{124,124}</string>
+			</dict>
+			<key>commonUI/res/tyj/SevenStarUI/sevenstars_mie.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{133,790},{124,124}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{124,124}</string>
+			</dict>
+			<key>commonUI/res/tyj/SevenStarUI/sevenstars_mo.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{259,664},{124,124}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{124,124}</string>
+			</dict>
+			<key>commonUI/res/tyj/SevenStarUI/sevenstars_dao_h.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{259,790},{124,124}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{124,124}</string>
+			</dict>
+			<key>commonUI/res/tyj/SevenStarUI/sevenstars_mo_h.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{265,1},{124,124}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{124,124}</string>
+			</dict>
+			<key>commonUI/res/tyj/SevenStarUI/sevenstars_mie_h.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{265,127},{124,124}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{124,124}</string>
+			</dict>
 		</dict>
 		<key>metadata</key>
 		<dict>
@@ -190,12 +256,12 @@
 			<key>realTextureFileName</key>
 			<string>SevenStarUI.png</string>
 			<key>size</key>
-			<string>{294,1009}</string>
+			<string>{390,1009}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>294</integer>
+			<integer>390</integer>
 			<key>height</key>
 			<integer>1009</integer>
 		</dict>

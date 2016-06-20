@@ -21,9 +21,9 @@
 20	적벽대전			22	map/cbj4.jpg																	
 21	화용도			23	map/cbj4.jpg																	
 22	남군침공			24	map/cbj4.jpg																	
-23	합비전투																					
-24	감로사																					
-25	동오군주																					
+23	합비전투			25	map/cbj23.jpg																	
+24	감로사			26	map/cbj22.jpg																	
+25	동오군주			27	map/cbj24.jpg																	
 26	위남전투																					
 27	낙퐁파																					
 28	금마초																					

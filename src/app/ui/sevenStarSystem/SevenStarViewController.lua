@@ -68,6 +68,15 @@ function SevenStarViewController:onDidLoadView()
 	self._huangBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("board"):getChildByName("huangBt")
 	self._huangBt_t:onTouch(Functions.createClickListener(handler(self, self.onHuangbtClick), ""))
 
+	self._daoBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("board"):getChildByName("daoBt")
+	self._daoBt_t:onTouch(Functions.createClickListener(handler(self, self.onDaobtClick), ""))
+
+	self._moBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("board"):getChildByName("moBt")
+	self._moBt_t:onTouch(Functions.createClickListener(handler(self, self.onMobtClick), ""))
+
+	self._mieBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("board"):getChildByName("mieBt")
+	self._mieBt_t:onTouch(Functions.createClickListener(handler(self, self.onMiebtClick), ""))
+
 	self._refrashBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("board"):getChildByName("nomalPanel"):getChildByName("refrashBt")
 	self._refrashBt_t:onTouch(Functions.createClickListener(handler(self, self.onRefrashbtClick), ""))
 
@@ -202,6 +211,48 @@ function SevenStarViewController:onHelpbtClick()
 end
 --@auto code Helpbt btFunc end
 
+--@auto code Daobt btFunc
+function SevenStarViewController:onDaobtClick()
+    Functions.printInfo(self.debug,"Daobt button is click!")
+    self.hunType = 7
+    self._tips_t:setVisible(false)
+    self._nomalPanel_t:setVisible(true)
+    --self:setOpenLevelString(self.hunType)
+    self:clearAtrrSlot()
+    self:showAllStarAtrr(self.hunType,SevenStarData.heroMark)
+    self:playerParticle(self._daoBt_t)
+    Functions.playAnimationWithRemove(self._card_t,"An_card",0,0)
+end
+--@auto code Daobt btFunc end
+
+--@auto code Mobt btFunc
+function SevenStarViewController:onMobtClick()
+    Functions.printInfo(self.debug,"Mobt button is click!")
+    self.hunType = 8
+    self._tips_t:setVisible(false)
+    self._nomalPanel_t:setVisible(true)
+    --self:setOpenLevelString(self.hunType)
+    self:clearAtrrSlot()
+    self:showAllStarAtrr(self.hunType,SevenStarData.heroMark)
+    self:playerParticle(self._moBt_t)
+    Functions.playAnimationWithRemove(self._card_t,"An_card",0,0)
+end
+--@auto code Mobt btFunc end
+
+--@auto code Miebt btFunc
+function SevenStarViewController:onMiebtClick()
+    Functions.printInfo(self.debug,"Miebt button is click!")
+    self.hunType = 9
+    self._tips_t:setVisible(false)
+    self._nomalPanel_t:setVisible(true)
+    --self:setOpenLevelString(self.hunType)
+    self:clearAtrrSlot()
+    self:showAllStarAtrr(self.hunType,SevenStarData.heroMark)
+    self:playerParticle(self._mieBt_t)
+    Functions.playAnimationWithRemove(self._card_t,"An_card",0,0)
+end
+--@auto code Miebt btFunc end
+
 --@auto button backcall end
 
 
@@ -276,8 +327,8 @@ function SevenStarViewController:showHeroCard(mark)
     local heroInf = HeroCardData:searchHeroOfMark(mark)
     local heroId = heroInf.m_id
     
-    local  btTable = {self._zhenBt_t,self._guiBt_t,self._shenBt_t,self._shengBt_t,self._wangBt_t,self._huangBt_t}
-    for i = 1, 6 do
+    local  btTable = {self._zhenBt_t,self._guiBt_t,self._shenBt_t,self._shengBt_t,self._wangBt_t,self._huangBt_t,self._daoBt_t,self._moBt_t,self._mieBt_t}
+    for i = 1, #btTable do
         Functions.setEnabledBt(btTable[i],false)
     end
     for i = 2, Functions.formatHeroClass(heroInf.m_class) do
@@ -316,7 +367,7 @@ function SevenStarViewController:showSingleStarAtrr(target,index,var,hun)
         var = var - 4
     end
     if var == 1 then
-        propImg = "seven_starts_army.png"
+        propImg = "seven_starts_army.png" --法防
         -- propInf = starData[index]["轩辕"]
         propInf = LanguageConfig.language_sevenStar_4 .. "+" .. StartAttrCfg[hun][var][index] 
     elseif var == 2  then
@@ -328,7 +379,7 @@ function SevenStarViewController:showSingleStarAtrr(target,index,var,hun)
         -- propInf = starData[index]["神农"]
         propInf = LanguageConfig.language_sevenStar_6 .. "+" .. StartAttrCfg[hun][var][index] 
     elseif var == 4 then
-        propImg = "seven_starts_mp.png"
+        propImg = "seven_starts_mp.png" -- 法术
         -- propInf = starData[index]["昊天"]
         propInf = LanguageConfig.language_sevenStar_7 .. "+" .. StartAttrCfg[hun][var][index] 
     end

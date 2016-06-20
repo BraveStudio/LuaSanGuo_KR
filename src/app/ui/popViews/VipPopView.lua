@@ -390,7 +390,7 @@ function VipPopView:displayPage(page,index,model)
              Functions.setEnabledBt(rewardBt, false)
              -- rewardBtText:setString(LanguageConfig.language_vip_1)
              Functions.loadImageWithWidget(rewardBtText,"tyj/uiFonts_res/yilingqu.png")
-             self:addVipPrize(index)
+             self:addVipPrize(event.data)
              VipData:updateVipRewardFlag()
         end
         VipData:RequestVipLevelReward(index,rewardHander)
@@ -425,10 +425,10 @@ function VipPopView:displayPage(page,index,model)
     Functions.bindListWithData(page:getChildByName("listView"), g_vipConfig.vipPrivilege[index], PrivilegeHandler) 
 end
 --添加VIP礼包
-function VipPopView:addVipPrize(VipLevel)
-	for i=1, #g_VipCgf.VipLevelPrize[VipLevel] do	        
-        local disNode = Functions.createPartNode({ nodeId = g_VipCgf.VipLevelPrize[VipLevel][i][1], nodeType = g_VipCgf.VipLevelPrize[VipLevel][i][2], count = g_VipCgf.VipLevelPrize[VipLevel][i][3]})
-      	Functions:addItemResources({id = g_VipCgf.VipLevelPrize[VipLevel][i][1],type = g_VipCgf.VipLevelPrize[VipLevel][i][2],count = g_VipCgf.VipLevelPrize[VipLevel][i][3]})
+function VipPopView:addVipPrize(prizeData)
+	for i=1, #prizeData do	        
+        local disNode = Functions.createPartNode({ nodeId = prizeData[i].id, nodeType = prizeData[i].type, count = prizeData[i].num})
+      	Functions:addItemResources({id = prizeData[i].id,type = prizeData[i].type,count = prizeData[i].num,slot = prizeData[i].slot})
     end
 end
 return VipPopView

@@ -50,3 +50,6 @@ ID	资源路径	空行
 49	cartoon/c201.jpg	
 50	cartoon/c211.jpg	
 51	cartoon/c221.jpg	
+52	cartoon/c231.jpg	
+53	cartoon/c241.jpg	
+54	cartoon/c251.jpg	

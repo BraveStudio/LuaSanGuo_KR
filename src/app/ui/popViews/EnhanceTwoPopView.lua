@@ -349,7 +349,7 @@ function EnhanceTwoPopView:showCardInfo_up_one()
     --展示卡片
     local stars = ConfigHandler:getHeroStarOfId(EnhanceData.MasterData[1].m_id) 
     --6星以下的武将最高只能进阶到32阶。
-    if (stars <= 5 and EnhanceData.MasterData[1].m_class < 32) or (stars == 6 and  EnhanceData.MasterData[1].m_class < #g_csBaseCfg.upCardCount+1) then
+    if (stars <= 5 and EnhanceData.MasterData[1].m_class < 32) or (stars == 6 and  EnhanceData.MasterData[1].m_class < g_csBaseCfg.upCardLadder) then
         Functions.getHeroCrad(self._ProjectNode_head_crad10_t, {heroInf = {id = EnhanceData.MasterData[1].m_id,level = EnhanceData.MasterData[1].m_level,
             class = EnhanceData.MasterData[1].m_class+1, soldier = EnhanceData.MasterData[1].m_fafEx,attack =  EnhanceData.MasterData[1].m_attackEx, 
             mp =  EnhanceData.MasterData[1].m_fasEx, hp = EnhanceData.MasterData[1].m_hpEx}})
@@ -371,7 +371,7 @@ function EnhanceTwoPopView:showCardInfo_up_one()
     local param = {}
     --6星以下的武将最高只能进阶到32阶。
     local stars = ConfigHandler:getHeroStarOfId(data.m_id) 
-    if (stars <= 5 and data.m_class >= 32) or (stars == 6 and data.m_class >= #g_csBaseCfg.upLevel + 1) then   --进化数为最高说明已到最高阶，已不能进阶
+    if (stars <= 5 and data.m_class >= 32) or (stars == 6 and data.m_class >= g_csBaseCfg.upCardLadder) then   --进化数为最高说明已到最高阶，已不能进阶
     
         Functions.initLabelOfString(self._Text_crad8_level_t, "lv"..tostring(data.m_level), self._Text_crad8_name_t, str,
             self._Text_crad8_HP_num_t, math.floor(data.m_baseHp), self._Text_crad8_ATK_num_t, math.floor(data.m_baseAttack), 
