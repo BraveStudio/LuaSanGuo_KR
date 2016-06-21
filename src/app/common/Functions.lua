@@ -2482,6 +2482,22 @@ function Functions.strRtrim(input)
 end
 end
 
+--根据table生成http 参数字符串
+function Functions.createHttpParamOfTable(data)
+    local str = ""
+    local i = 0
+    local len = table.nums(data)
+    for k, v in pairs(data) do
+        if string.len(tostring(v)) > 0 then
+            str = str .. k .. "=" .. tostring(v)
+            i = i + 1
+            str = str .. "&"
+        end
+    end
+    str = string.sub(str, 1,string.len(str) - 1)
+    return str
+end
+
 --创建动态礼包节点
 --@target
 --@prizedata:{{1,4,2},,,}

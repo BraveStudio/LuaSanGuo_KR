@@ -306,10 +306,15 @@ function NetWork:loginUserServer(userName, userPassword, onSuccess)
     end  
 
     -- 注册脚本回调方法  
-    xhr:registerScriptHandler(onReadyStateChange)  
-    local questStr = "username=" .. userName .. "&password=" .. userPassword .. "&gaid=" .. GameState.storeAttr.advertisingId_s
-        .. "&isDebug=" .. tostring(G_IsDebugClient)
-    xhr:send(questStr) -- 发送请求
+    xhr:registerScriptHandler(onReadyStateChange)       
+    local info = GameState:getLoginData()
+    info["username"] = userName
+    info["password"] = userPassword
+    info["gaid"] = GameState.storeAttr.advertisingId_s
+    info["isDebug"] = G_IsDebugClient
+    local loginStr = Functions.createHttpParamOfTable(info)
+    
+    xhr:send(loginStr) -- 发送请求
    
 end
 
@@ -340,6 +345,12 @@ function NetWork:registUserServer(userName, userPassword, onSuccess)
 
     -- 注册脚本回调方法  
     xhr:registerScriptHandler(onReadyStateChange)  
+
+    local info = GameState:getLoginData()
+    info["username"] = userName
+    info["password"] = userPassword
+    info["gaid"] = GameState.storeAttr.advertisingId_s
+    local loginStr = Functions.createHttpParamOfTable(info)
     xhr:send("username=" .. userName .. "&password=" .. userPassword .. "&gaid=" .. GameState.storeAttr.advertisingId_s) -- 发送请求
     
 end

@@ -68,7 +68,7 @@ end
 function Union_CY_PopView:onButton_hui_zhang_2Click()
     Functions.printInfo(self.debug,"Button_hui_zhang_2 button is click!")
     --弹出框
-    NoticeManager:openTips(self:getController(), { handler = handler(self,self.JobTransfer), title = LanguageConfig.language_Union_23})
+    NoticeManager:openTips(self:getController(), { handler = handler(self,self.JobTransfer), title = LanguageConfig.language_Union_44})
 
 end
 --@auto code Button_hui_zhang_2 btFunc end
