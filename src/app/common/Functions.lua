@@ -1783,7 +1783,7 @@ function Functions.setLoginInf(msg,handler)
                 GameState.storeAttr.NaverUserId_s = msgTable["data"]["ucid"] or ""
                 GameState.storeAttr.NaverUserName_s = msgTable["data"]["nickName"] or ""
                 if handler ~= nil then 
-                    handler()
+                    handler(msgTable)
                 end
             end
         end

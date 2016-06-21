@@ -88,6 +88,8 @@ elseif G_SDKType == 4 then
 	NativeUtil = require("app.common.Gplay_NativeUtil")
 elseif G_SDKType == 5 then 
 	NativeUtil = require("app.common.Astore_NativeUtil")
+elseif G_SDKType == 6 then 
+	NativeUtil = require("app.common.AnySdk_NativeUtil")
 else
 	NativeUtil = require("app.common.NativeUtil")
 end

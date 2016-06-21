@@ -14,11 +14,14 @@ function PluginChannel:onUserResult( plugin, code, msg )
     elseif code == UserActionResultCode.kInitFail then
         --do
     elseif code == UserActionResultCode.kLoginSuccess then
-        Functions.setLoginInf(msg,function( )
+        Functions.setLoginInf(msg,function(event)
             if GameState.storeAttr.NaverUserId_s ~= nil then 
+
                 Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s)  
             end 
         end)
+
+
     elseif code == UserActionResultCode.kLoginNetworkError then
         PromptManager:openTipPrompt("网络错误,请重试！")
     elseif code == UserActionResultCode.kLoginNoNeed then
