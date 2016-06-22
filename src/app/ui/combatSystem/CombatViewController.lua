@@ -381,6 +381,9 @@ function CombatViewController:onFbPveCombat(data, combatType)
     local onFightCall= function()
         local onPveFightRequetReturn = function(event)
             CombatCenter:setRand(event.seed)
+            Functions.callAnySdkFuc(function( )
+                NativeUtil:javaCallHanler({command = "onBegin",missionId = "001" })
+            end)
             self:combatResLoad()
         end
             

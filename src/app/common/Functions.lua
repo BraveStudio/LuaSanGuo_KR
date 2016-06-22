@@ -1733,7 +1733,13 @@ end
 --tyj start
 
 function Functions.callJavaFuc(func)
-    if G_IsUseSDK then
+    if G_IsUseSDK and G_SDKType ~= 6 then
+        func()
+    end
+end
+--anysdk ref 
+function Functions.callAnySdkFuc(func)
+    if G_IsUseSDK and G_SDKType == 6 then
         func()
     end
 end
@@ -1750,7 +1756,7 @@ function Functions.goToLoginView()
 end
 function Functions.setAdbrixTag(tagType,tagName,secondParameter)
 
-    if G_IsUseSDK then
+    if G_IsUseSDK and G_SDKType ~= 6 then
         if secondParameter ~= nil then 
             NativeUtil:javaCallHanler({command = tagType,activityName = tagName,secondParameter = tostring(secondParameter)})
         else
@@ -1759,11 +1765,28 @@ function Functions.setAdbrixTag(tagType,tagName,secondParameter)
     end
 end
 function Functions.setPopupKey(key)
-    if G_IsUseSDK then  
+    if G_IsUseSDK and G_SDKType ~= 6 then  
         if key == "start" then 
            NativeUtil:javaCallHanler({command = "openPopUp",popUpKey = key})
         elseif PlayerData.eventAttr.m_guideStageId == 0 then
            NativeUtil:javaCallHanler({command = "openPopUp",popUpKey = key}) 
+        end
+    end
+end
+function Functions.setLoginInf(msg,handler)
+    if G_IsUseSDK and G_SDKType == 6 then  
+        PromptManager:openTipPrompt("登陆成功！")
+        require("cocos.cocos2d.json")
+        local msgTable = json.decode(msg)
+        GameState.storeAttr.isLoginNaver_b = true
+        if G_ChannelType == "000255" then 
+            if msgTable["data"] ~= nil then
+                GameState.storeAttr.NaverUserId_s = msgTable["data"]["ucid"] or ""
+                GameState.storeAttr.NaverUserName_s = msgTable["data"]["nickName"] or ""
+                if handler ~= nil then 
+                    handler(msgTable)
+                end
+            end
         end
     end
 end
@@ -3694,6 +3717,9 @@ function Functions.buyPowerHandler(controller)
             local handler = function()
                 PlayerData:RequestBuyPowerInf(function()
                     -- Functions.setAdbrixTag("retention","energy_buy")
+                    Functions.callAnySdkFuc(function( )
+                         NativeUtil:javaCallHanler({command = "onPurchase",item = "power",itemNumber = 1,priceInVirtualCurrency = 20})
+                    end)
                     if PlayerData.eventAttr.m_buyEnergyCount <= 14 then 
                         Functions.setAdbrixTag("retention","energy_buy_" .. tostring(PlayerData.eventAttr.m_buyEnergyCount),tostring(PlayerData.eventAttr.m_level))
                     end

@@ -1,4 +1,4 @@
- 
+
 
 if CC_SHOW_FPS then
     cc.Director:getInstance():setDisplayStats(true)
@@ -6,6 +6,8 @@ end
 
 --初始化游戏全局枚举变量
 GloableEnum = require("app.configs.GloableEnum")
+--初始化游戏anysdk枚举变量
+AnysdkConst = require("app.sdk.anysdkConst")
 
 --初始化游戏全局状态数据
 GameState = require("app.gameData.GameState")
@@ -49,7 +51,11 @@ NetWork:init()
 --加载sdk配置
 SDKConfig = require("app.sdk.SDKConfig")
 SDKConfig:init()
-
+--
+Functions.callAnySdkFuc(function()
+	PluginChannel = require("app.sdk.PluginChannel")
+	PluginChannel:init()
+end)
 --全局网络模块初始化
 if HttpClient then
 	HttpClient:destory()
@@ -82,6 +88,8 @@ elseif G_SDKType == 4 then
 	NativeUtil = require("app.common.Gplay_NativeUtil")
 elseif G_SDKType == 5 then 
 	NativeUtil = require("app.common.Astore_NativeUtil")
+elseif G_SDKType == 6 then 
+	NativeUtil = require("app.common.AnySdk_NativeUtil")
 else
 	NativeUtil = require("app.common.NativeUtil")
 end

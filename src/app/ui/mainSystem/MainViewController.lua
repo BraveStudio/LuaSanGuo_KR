@@ -331,6 +331,9 @@ end
 function MainViewController:onTaskbtClick()
     Functions.printInfo(self.debug,"Taskbt button is click!")
     GameCtlManager:push("app.ui.taskSystem.TaskViewController")
+    Functions.callAnySdkFuc(function( )
+        NativeUtil:javaCallHanler({command = "onEvent",eventId = "003",data = {["level"] = 20}})
+    end)
 end
 --@auto code Taskbt btFunc end
 

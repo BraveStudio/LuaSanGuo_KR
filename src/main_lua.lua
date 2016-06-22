@@ -41,6 +41,7 @@ function lanchLoadRes()
             CommonWidgets:init()
             PRELOAD_INIT_MODEL["app.ui.common.CommonWidgets"] = CommonWidgets
             GameCtlManager:goTo("app.ui.loadingSystem.LoadingViewController")
+            -- GameCtlManager:goTo("app.ui.startupSceneSystem.StartupSceneViewController")
            -- GameCtlManager:goTo("app.ui.eulaSceneSystem.EulaSceneViewController")
         end)
 end

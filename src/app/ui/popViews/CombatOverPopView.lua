@@ -477,7 +477,9 @@ function CombatOverPopView:displayCombatResult_(event)
     end
     
     if self.combatResult == 1 then
-    
+        Functions.callAnySdkFuc(function( )
+            NativeUtil:javaCallHanler({command = "onCompleted",missionId = "003"})
+        end)
         if self.currentType == CombatCenter.CombatType.RB_PVPPlayerData and event.err ~= 1 then
             self._fightFailPanel_t:setVisible(false)
             self._fightInvalidPanel_t:setVisible(true)
@@ -491,6 +493,10 @@ function CombatOverPopView:displayCombatResult_(event)
         end
     else
         --初始化npc
+        
+        Functions.callAnySdkFuc(function( )
+            NativeUtil:javaCallHanler({command = "onFailed",missionId = "003",cause = "nopower"})
+        end)
         Functions.loadImageWithSprite(self._fail_npc_t, "npc/NPC_zgl_combatFail.png")
         
         self:setCombatResultDis(false)

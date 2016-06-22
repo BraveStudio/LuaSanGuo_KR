@@ -47,32 +47,35 @@ function StartupSceneViewController:onStartbtClick()
     Functions.printInfo(self.debug,"Startbt button is click!")
     Functions.setAdbrixTag("firstTimeExperience","touch_screen_complete")
     
-    -- GameCtlManager:goTo("app.ui.eulaSceneSystem.EulaSceneViewController")
-    if not GameState.storeAttr.isConfirmEula_b then 
+    if not GameState.storeAttr.isConfirmEula_b  and G_SDKType ~= 6 then 
         GameCtlManager:goTo("app.ui.eulaSceneSystem.EulaSceneViewController")
     else
-        if not GameState.storeAttr.isLoginNaver_b then
-            Functions.goToLoginView()
-        else            
-            if GameState.storeAttr.NaverUserId_s ~= "" and G_SDKType ~= 4 then
-                if GameState.storeAttr.NaverUserName_s ~= "" then   
-                    if G_SDKType == 5 and G_isFirstStartApp then         
-                        G_isFirstStartApp = false
-                        Functions.callJavaFuc(function()             
-                                NativeUtil:GameCenterLogin()
-                        end)
-                    else 
-                        Functions.callJavaFuc(function()  
-                            PromptManager:openHttpLinkPrompt()        
-                            NativeUtil:javaCallHanler({command = "setUsrName",usrName = GameState.storeAttr.NaverUserName_s,usrId = GameState.storeAttr.NaverUserId_s})
-                        end)
+        if G_SDKType == 6 then 
+            PluginChannel:login()
+        else
+            if not GameState.storeAttr.isLoginNaver_b then
+                Functions.goToLoginView()
+            else            
+                if GameState.storeAttr.NaverUserId_s ~= "" and G_SDKType ~= 4 then
+                    if GameState.storeAttr.NaverUserName_s ~= "" then   
+                        if G_SDKType == 5 and G_isFirstStartApp then         
+                            G_isFirstStartApp = false
+                            Functions.callJavaFuc(function()             
+                                    NativeUtil:GameCenterLogin()
+                            end)
+                        else 
+                            Functions.callJavaFuc(function()  
+                                PromptManager:openHttpLinkPrompt()        
+                                NativeUtil:javaCallHanler({command = "setUsrName",usrName = GameState.storeAttr.NaverUserName_s,usrId = GameState.storeAttr.NaverUserId_s})
+                            end)
+                        end
                     end
+                    -- Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s)
+                else
+                    Functions.callJavaFuc(function()             
+                            NativeUtil:sdkLogin()
+                    end)
                 end
-                -- Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s)
-            else
-                Functions.callJavaFuc(function()             
-                        NativeUtil:sdkLogin()
-                end)
             end
         end
     end

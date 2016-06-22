@@ -126,7 +126,9 @@ end
 function Player:onLogout(code)
 
     Functions.clearGameData()
-
+    Functions.callAnySdkFuc(function()
+        PluginChannel:logout()    
+    end)
     if self.isOnline then
         GameEventCenter:dispatchEvent({ name = Player.PLAYER_LOGOUT_EVENT })
         self.isOnline = false
