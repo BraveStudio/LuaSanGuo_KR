@@ -276,12 +276,12 @@ function LoadingViewController:sdkUpdateCall()
             else
                 self:startUpdate()
             end
-        elseif G_SDKType == 6 then
-            scheduler.performWithDelayGlobal(function()
-                GameEventCenter:addEventListener(GameEventCenter.GAME_ANYSDK_INIT_FINISH, function()
-                        self:startUpdate()
-                end)
-            end, 0.1)
+        -- elseif G_SDKType == 6 then
+        --     -- scheduler.performWithDelayGlobal(function()
+        --         -- GameEventCenter:addEventListener(GameEventCenter.GAME_ANYSDK_INIT_FINISH, function()
+        --                 self:startUpdate()
+        --         end)
+        --     end, 0.1)
         else  
            self:startUpdate()
         end

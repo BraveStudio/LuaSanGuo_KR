@@ -33,21 +33,21 @@ G_IsDebugClient = false
 G_IsUpdate = false
 
 --是否使用sdk
-G_IsUseSDK = true
+G_IsUseSDK = false
 
 
 --SDK类型：1：NStore,2:TStore 3:CStore 4:gplay 5:ios-store 6:anysdk
-G_SDKType = 6
+G_SDKType = 1
 
 --渠道类型 :探娱
 G_ChannelType = "000255"
 
 -- NetWork 是否连接内网，true: 连接内网，false: 连接外网
-G_IsLinkLoaclIp = true
+G_IsLinkLoaclIp = false
 
 
 --外网服务器id
-G_ServerId = 4
+G_ServerId = 1
 
 --是否自动获取当前链接的服务器和更新地址
 G_IsAutoGetUrl = false

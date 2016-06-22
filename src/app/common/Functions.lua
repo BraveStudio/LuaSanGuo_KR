@@ -1778,15 +1778,18 @@ function Functions.setLoginInf(msg,handler)
         require("cocos.cocos2d.json")
         local msgTable = json.decode(msg)
         GameState.storeAttr.isLoginNaver_b = true
-        if G_ChannelType == "000255" then 
-            if msgTable["data"] ~= nil then
-                GameState.storeAttr.NaverUserId_s = msgTable["data"]["accountId"] or ""
-                GameState.storeAttr.NaverUserName_s = msgTable["data"]["nickName"] or ""
-                if handler ~= nil then 
-                    handler(msgTable)
-                end
-            end
-        end
+        -- if G_ChannelType == "000255" then 
+        --     if msgTable["data"] ~= nil then
+        --         GameState.storeAttr.NaverUserId_s = msgTable["data"]["accountId"] or ""
+        --         GameState.storeAttr.NaverUserName_s = msgTable["data"]["nickName"] or ""
+        --         if handler ~= nil then 
+        --             handler(msgTable)
+        --         end
+        --     end
+        -- end
+        local customParam = PluginChannel:getCustomParam()
+        GameState.storeAttr.NaverUserId_s = Functions.getTableFieldOfPath(msgTable,customParam.path.usrId)
+        GameState.storeAttr.NaverUserName_s = Functions.getTableFieldOfPath(msgTable,customParam.path.usrName)
     end
 end
 --c++风格取整

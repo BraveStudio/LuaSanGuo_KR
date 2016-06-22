@@ -11,7 +11,7 @@ function PluginChannel:onUserResult( plugin, code, msg )
     print("code:"..code..",msg:"..msg)
     local customParam = nil
     if code == UserActionResultCode.kInitSuccess then
-        GameEventCenter:dispatchEvent({ name = GameEventCenter.GAME_ANYSDK_INIT_FINISH })
+        -- GameEventCenter:dispatchEvent({ name = GameEventCenter.GAME_ANYSDK_INIT_FINISH })
         customParam = self:getCustomParam()
         if customParam.showToolBar ~= nil and customParam.showToolBar == 1 then
             self:showToolBar() 
@@ -126,11 +126,11 @@ end
 function PluginChannel:getCustomParam()
     local customParam = agent:getCustomParam()
     local msgTable = json.decode(customParam)
-    if msgTable.debug then 
-        PromptManager:openTipPrompt("true")
-    else
-        PromptManager:openTipPrompt("false")
-    end
+    -- if msgTable.debug then 
+    --     PromptManager:openTipPrompt("true")
+    -- else
+    --     PromptManager:openTipPrompt("false")
+    -- end
     return msgTable
 end
 function PluginChannel:getChannelId()
