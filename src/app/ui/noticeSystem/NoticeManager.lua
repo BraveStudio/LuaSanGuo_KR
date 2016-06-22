@@ -42,6 +42,8 @@ NoticeManager.REWARD_HERO_CARD_TIPS = 8
 NoticeManager.EDIT_NAME_TIPS = 1
 NoticeManager.EDIT_BROADCAST_TIPS = 2
 
+NoticeManager.DEBUG_INFO_DISPLAY = 1000
+
 --弹出错误提示
 function NoticeManager:openErrorNotive(controller, data)
     if not self.errNotice then
@@ -128,6 +130,18 @@ function NoticeManager:openTips(controller, param)
         GameCtlManager:addCurTopLayer(tips)
     else
         controller:openChildView(tips,{isRemove = false})
+    end
+end
+
+function NoticeManager:debugDisplay(isDebug, msg, cb)
+
+    if isDebug then
+        local notice = Factory:createInfoPanel()
+        notice:setInfo(msg)
+        notice:setCloseCb(cb)
+        GameCtlManager.currentController_t:openChildView(notice)
+    else
+        cb()
     end
 end
 

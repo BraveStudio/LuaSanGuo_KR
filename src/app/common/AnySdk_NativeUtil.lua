@@ -92,7 +92,6 @@ function NativeUtil._JniBackCall(msg)
             end
             Functions.sdkLoginHandler(usrId)
         elseif k == "fastLoginGame" then
-            PromptManager:openTipPrompt("登陆成功")
             if msgTable["ip"] then
                 GameState.loginData.ip = msgTable["ip"]
             end
@@ -105,8 +104,7 @@ function NativeUtil._JniBackCall(msg)
             GameState.loginData.accountid = GameState.storeAttr.NaverUserId_s
             GameState.loginData.pfid = PluginChannel:getChannelId() 
             GameState.loginData.pfname = PluginChannel:getChannelName()
-            -- Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s) 
-            Functions.sdkLoginHandler("uctest003") 
+            Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s) 
         elseif k == "productCode" then
             VipData:RequestVipPay(v)
         elseif k == "igaworks" then

@@ -39,6 +39,9 @@ end
 function InfoPopView:onClose_btClick()
     Functions.printInfo(self.debug,"Close_bt button is click!")
     
+    if self._closeCB then
+        self._closeCB()
+    end
     self:close()
 end
 --@auto code Close_bt btFunc end
@@ -93,6 +96,10 @@ end
 function InfoPopView:setTitle(title)
     -- if not title then
     -- end
+end
+
+function InfoPopView:setCloseCb(cb)
+    self._closeCB = cb
 end
 
 function InfoPopView:hideClose()

@@ -1,6 +1,7 @@
 PluginChannel = {}
 require("cocos.cocos2d.json")
 local NoticeManager = require("app.ui.noticeSystem.NoticeManager")
+local scheduler = require("app.common.scheduler")  
 local user_plugin = nil    --获取用户插件
 local iap_plugin_maps = nil --支付插件
 local agent = nil
@@ -8,31 +9,38 @@ local agent = nil
 function PluginChannel:onUserResult( plugin, code, msg )
     print("on user action listener.")
     print("code:"..code..",msg:"..msg)
-    
+    local customParam = nil
     if code == UserActionResultCode.kInitSuccess then
-
+        GameEventCenter:dispatchEvent({ name = GameEventCenter.GAME_ANYSDK_INIT_FINISH })
+        customParam = self:getCustomParam()
+        if customParam.showToolBar ~= nil and customParam.showToolBar == 1 then
+            self:showToolBar() 
+        end
     elseif code == UserActionResultCode.kInitFail then
         PromptManager:openTipPrompt("sdk初始化失败！")
     elseif code == UserActionResultCode.kLoginSuccess then
-        -- Functions.setLoginInf(msg,function(event)
-        --     NativeUtil:sdkLogin()
-        -- end)
-        NativeUtil:sdkLogin()
+        NoticeManager:debugDisplay(customParam.debug, msg, function()
+            Functions.setLoginInf(msg,function(event)
+                NativeUtil:sdkLogin()
+                if customParam.showToolBar ~= nil and customParam.showToolBar == 2 then
+                    self:showToolBar()
+                end
+            end)
+        end)
     elseif code == UserActionResultCode.kLoginNetworkError then
         PromptManager:openTipPrompt("网络错误,请重试！")
     elseif code == UserActionResultCode.kLoginNoNeed then
        PromptManager:openTipPrompt("不需要登录！")
     elseif code == UserActionResultCode.kLoginFail then
        PromptManager:openTipPrompt("登录失败！")
-       NativeUtil:sdkLogin()
     elseif code == UserActionResultCode.kLoginCancel then
        PromptManager:openTipPrompt("登录取消")
     elseif code == UserActionResultCode.kLogoutSuccess then
-       PromptManager:openTipPrompt("注销成功")
+       Player:logout(true)
     elseif code == UserActionResultCode.kLogoutFail then
        PromptManager:openTipPrompt("注销失败")
     elseif code == UserActionResultCode.kPlatformEnter then
-        --do
+       PromptManager:openTipPrompt("进入平台")
     elseif code == UserActionResultCode.kPlatformBack then
         --do
     elseif code == UserActionResultCode.kPausePage then
@@ -42,9 +50,9 @@ function PluginChannel:onUserResult( plugin, code, msg )
     elseif code == UserActionResultCode.kAntiAddictionQuery then
         --do
     elseif code == UserActionResultCode.kRealNameRegister then
-        --do
+
     elseif code == UserActionResultCode.kAccountSwitchSuccess then
-        PromptManager:openTipPrompt("账户切换成功！")
+        
     elseif code == UserActionResultCode.kAccountSwitchFail then
         PromptManager:openTipPrompt("账户切换失败！")
     elseif code == UserActionResultCode.kOpenShop then
@@ -87,7 +95,7 @@ function PluginChannel:init()
     local appKey = "6D7E6FC3-4DDD-E5EF-B131-B60D14A30B81"
     local appSecret = "5ed642ca101399889cba0ce2e4b486d7"
     local privateKey = "6C6B80BE7AD41F784E0624D87897707A"
-    local oauthLoginServer = "http://192.168.0.251:8085/sanguoGM/sanguoGMSomeFunc2/AnySdkVeriServ"
+    local oauthLoginServer = "http://120.26.201.186:8085/sanguoGM/sanguoGMSomeFunc2/AnySdkVeriServ"
     agent = AgentManager:getInstance()
     print("PluginChannel!!!!!!!!!!!!!")
     --init
@@ -118,14 +126,19 @@ end
 function PluginChannel:getCustomParam()
     local customParam = agent:getCustomParam()
     local msgTable = json.decode(customParam)
+    if msgTable.debug then 
+        PromptManager:openTipPrompt("true")
+    else
+        PromptManager:openTipPrompt("false")
+    end
     return msgTable
 end
 function PluginChannel:getChannelId()
     return agent:getChannelId()
 end
 function PluginChannel:getChannelName()
-    local nameTable = {["000255"] = "UC"}
-    return nameTable[G_ChannelType]
+    local customParam = self:getCustomParam()
+    return customParam.channelName or "test"
 end
 function PluginChannel:logout()
     if user_plugin ~= nil then
@@ -237,8 +250,10 @@ function PluginChannel:pay(index,data)
             print("key:" .. key)
             print("value: " .. type(value))
             value:payForProduct(info)
+            scheduler.performWithDelayGlobal(function ( )
+               ProtocolIAP:resetPayState()
+            end, 3)
         end
     end
 end
 return PluginChannel
-    

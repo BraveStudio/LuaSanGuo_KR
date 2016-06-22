@@ -1775,13 +1775,12 @@ function Functions.setPopupKey(key)
 end
 function Functions.setLoginInf(msg,handler)
     if G_IsUseSDK and G_SDKType == 6 then  
-        PromptManager:openTipPrompt("登陆成功！")
         require("cocos.cocos2d.json")
         local msgTable = json.decode(msg)
         GameState.storeAttr.isLoginNaver_b = true
         if G_ChannelType == "000255" then 
             if msgTable["data"] ~= nil then
-                GameState.storeAttr.NaverUserId_s = msgTable["data"]["ucid"] or ""
+                GameState.storeAttr.NaverUserId_s = msgTable["data"]["accountId"] or ""
                 GameState.storeAttr.NaverUserName_s = msgTable["data"]["nickName"] or ""
                 if handler ~= nil then 
                     handler(msgTable)
@@ -2519,6 +2518,21 @@ function Functions.createHttpParamOfTable(data)
     end
     str = string.sub(str, 1,string.len(str) - 1)
     return str
+end
+
+--根据路径获取表中数据
+function Functions.getTableFieldOfPath(t, path)
+    local paths = string.split(path, "/")
+    local value = nil
+    value = t
+    for i=1,#paths do
+        if value[paths[i]] then
+            value =  value[paths[i]]
+        else
+            return nil
+        end
+    end
+    return value
 end
 
 --创建动态礼包节点

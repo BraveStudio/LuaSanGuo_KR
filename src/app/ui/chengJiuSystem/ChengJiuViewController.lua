@@ -184,6 +184,12 @@ function ChengJiuViewController:getChengjiuInfStr(index,data)
             str = LanguageConfig.language_cjrenwu_35
         elseif temp_x == 6 then
             str = LanguageConfig.language_cjrenwu_36
+        elseif temp_x == 7 then
+            str = LanguageConfig.language_cjrenwu_37
+        elseif temp_x == 8 then
+            str = LanguageConfig.language_cjrenwu_38
+        elseif temp_x == 9 then
+            str = LanguageConfig.language_cjrenwu_39
         else
             str = LanguageConfig.language_cjrenwu_36
         end
