@@ -1775,6 +1775,7 @@ function Functions.setPopupKey(key)
 end
 function Functions.setLoginInf(msg,handler)
     if G_IsUseSDK and G_SDKType == 6 then  
+        PromptManager:openTipPrompt("登陆成功！")
         require("cocos.cocos2d.json")
         local msgTable = json.decode(msg)
         GameState.storeAttr.isLoginNaver_b = true
@@ -2502,6 +2503,22 @@ function Functions.strRtrim(input)
     function string.rtrim(input)
     return string.gsub(input, "[ \t\n\r\13]+$", "")
 end
+end
+
+--根据table生成http 参数字符串
+function Functions.createHttpParamOfTable(data)
+    local str = ""
+    local i = 0
+    local len = table.nums(data)
+    for k, v in pairs(data) do
+        if string.len(tostring(v)) > 0 then
+            str = str .. k .. "=" .. tostring(v)
+            i = i + 1
+            str = str .. "&"
+        end
+    end
+    str = string.sub(str, 1,string.len(str) - 1)
+    return str
 end
 
 --创建动态礼包节点
@@ -3700,6 +3717,9 @@ function Functions.buyPowerHandler(controller)
             local handler = function()
                 PlayerData:RequestBuyPowerInf(function()
                     -- Functions.setAdbrixTag("retention","energy_buy")
+                    Functions.callAnySdkFuc(function( )
+                         NativeUtil:javaCallHanler({command = "onPurchase",item = "power",itemNumber = 1,priceInVirtualCurrency = 20})
+                    end)
                     if PlayerData.eventAttr.m_buyEnergyCount <= 14 then 
                         Functions.setAdbrixTag("retention","energy_buy_" .. tostring(PlayerData.eventAttr.m_buyEnergyCount),tostring(PlayerData.eventAttr.m_level))
                     end

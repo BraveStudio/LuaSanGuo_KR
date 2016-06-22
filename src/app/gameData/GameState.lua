@@ -40,6 +40,7 @@ GameState.storeAttr.isCloseSystemSpeaker_b = false
 function GameState:init()
     self.super.init(self)
     self.eliteRate = 1
+    self.loginData = {} --todo
 end
 
 --四种登陆方式
@@ -54,6 +55,10 @@ function GameState:getLoginType()
     end
     
     return loginName
+end
+
+function GameState:getLoginData()
+    return self.loginData
 end
 
 return GameState

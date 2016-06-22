@@ -12,7 +12,7 @@ function NativeUtil:init()
 
     GameEventCenter:addEventListener("ENTER_MAINVIEW_EVENT_NAME", function ( ) 
        VipData:needToConsumProduct()
-       if isOpenPopup then  
+        if isOpenPopup then  
             isOpenPopup = false
             Functions.callJavaFuc(function( )
                self:javaCallHanler({command = "initNaverIAP"})
@@ -28,6 +28,13 @@ function NativeUtil:init()
                end
             end)
         end
+        Functions.callAnySdkFuc(function( )
+            self:javaCallHanler({command = "initAccount",account = tostring(PlayerData.eventAttr.m_uid)})
+            self:javaCallHanler({command = "setAccountName",accountName = GameState.storeAttr.NaverUserId_s})
+            self:javaCallHanler({command = "setGender",gender = PlayerData.eventAttr.m_sex})
+            self:javaCallHanler({command = "setLevel",level = PlayerData.eventAttr.m_level})
+            self:javaCallHanler({command = "setGameServer",gameServer = NetWork.serverId})
+        end)
     end)
 end
 
@@ -69,7 +76,6 @@ end
 function NativeUtil._JniBackCall(msg)
 
     print("sdfsdfs-----_JniBackCall")
-
     local msgTable = json.decode(msg)
     for k,v in pairs(msgTable) do
         print(" _JniBackCall k " .. tostring(k) .. " v " .. tostring(v))
@@ -85,16 +91,22 @@ function NativeUtil._JniBackCall(msg)
                 GameState.storeAttr.advertisingId_s = msgTable["SetAdId"]
             end
             Functions.sdkLoginHandler(usrId)
-        elseif k == "SetAdId" then             
-            GameState.storeAttr.advertisingId_s = v
-            print("advertisingId:" .. GameState.storeAttr.advertisingId_s)
         elseif k == "fastLoginGame" then
-            PromptManager:openHttpLinkPrompt()
-
-            if msgTable["SetAdId"] then
-                GameState.storeAttr.advertisingId_s = msgTable["SetAdId"]
+            PromptManager:openTipPrompt("登陆成功")
+            if msgTable["ip"] then
+                GameState.loginData.ip = msgTable["ip"]
             end
-            Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s, msgTable["SetAdId"]) 
+            if msgTable["mac"] then
+                GameState.loginData.mac = msgTable["mac"]
+            end
+            if msgTable["devicetype"] then
+                GameState.loginData.devicetype = msgTable["devicetype"]
+            end
+            GameState.loginData.accountid = GameState.storeAttr.NaverUserId_s
+            GameState.loginData.pfid = PluginChannel:getChannelId() 
+            GameState.loginData.pfname = PluginChannel:getChannelName()
+            -- Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s) 
+            Functions.sdkLoginHandler("uctest003") 
         elseif k == "productCode" then
             VipData:RequestVipPay(v)
         elseif k == "igaworks" then

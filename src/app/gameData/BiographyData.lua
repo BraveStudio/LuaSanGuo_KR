@@ -587,7 +587,9 @@ function BiographyData:getSweepData(sweepNum, callBack)
 
     local onSweepReturn = function(data)
         PlayerData:setPlayerPower(data.energy)
-
+        Functions.callAnySdkFuc(function( )
+             NativeUtil:javaCallHanler({command = "onUse",item = "power",itemNumber = 1})
+        end)
         local old_level = PlayerData.eventAttr.m_level
         for k, v in ipairs(data.result) do
 

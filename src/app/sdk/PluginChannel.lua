@@ -8,26 +8,23 @@ local agent = nil
 function PluginChannel:onUserResult( plugin, code, msg )
     print("on user action listener.")
     print("code:"..code..",msg:"..msg)
-    -- NoticeManager:openTips(GameCtlManager.currentController_t, {title = "code:"..code..",msg:"..msg ,type = 5})
+    
     if code == UserActionResultCode.kInitSuccess then
 
     elseif code == UserActionResultCode.kInitFail then
-        --do
+        PromptManager:openTipPrompt("sdk初始化失败！")
     elseif code == UserActionResultCode.kLoginSuccess then
-        Functions.setLoginInf(msg,function(event)
-            if GameState.storeAttr.NaverUserId_s ~= nil then 
-
-                Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s)  
-            end 
-        end)
-
-
+        -- Functions.setLoginInf(msg,function(event)
+        --     NativeUtil:sdkLogin()
+        -- end)
+        NativeUtil:sdkLogin()
     elseif code == UserActionResultCode.kLoginNetworkError then
         PromptManager:openTipPrompt("网络错误,请重试！")
     elseif code == UserActionResultCode.kLoginNoNeed then
        PromptManager:openTipPrompt("不需要登录！")
     elseif code == UserActionResultCode.kLoginFail then
        PromptManager:openTipPrompt("登录失败！")
+       NativeUtil:sdkLogin()
     elseif code == UserActionResultCode.kLoginCancel then
        PromptManager:openTipPrompt("登录取消")
     elseif code == UserActionResultCode.kLogoutSuccess then
@@ -123,6 +120,13 @@ function PluginChannel:getCustomParam()
     local msgTable = json.decode(customParam)
     return msgTable
 end
+function PluginChannel:getChannelId()
+    return agent:getChannelId()
+end
+function PluginChannel:getChannelName()
+    local nameTable = {["000255"] = "UC"}
+    return nameTable[G_ChannelType]
+end
 function PluginChannel:logout()
     if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("logout") then
@@ -209,12 +213,12 @@ function PluginChannel:getProductId(index)
     end
 end
 function PluginChannel:pay(index,data)
-     NoticeManager:openTips(GameCtlManager.currentController_t, {title = "index:"..index..",money:"..data.money,type = 5})
     if iap_plugin_maps ~= nil then
         local customParam = self:getCustomParam()
         local money = 0
         if customParam.debug then 
             money = 0.01
+            index = 9
         else
             money = data.money
         end

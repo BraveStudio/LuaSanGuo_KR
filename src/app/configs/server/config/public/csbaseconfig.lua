@@ -1123,7 +1123,7 @@ g_payProductConfig_Astore =
     [8] = {productCode = "cash_150",show_moneyStr = "3,300",show_goldStr = "150",img = "pay_1.png",gold = 150, money = 3300, multiple = 2, isRecommand = false,rate = 0,inf = LanguageConfig.ui_payInf_1},
 }
 g_channelConfig = {
-	["000255"] = {
+	["1"] = {
 			["productCode"] = {
 				["cash_500"] = 1,
 				["cash_1500"] = 2,
