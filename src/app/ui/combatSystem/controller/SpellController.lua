@@ -41,6 +41,20 @@ function SpellController:initUI()
     cdTime:setPosition(head:getPositionX(), head:getPositionY())
     model:addChild(cdTime)
 
+    -- 调整herohead的顺序
+    model:getChildByName("choose"):setLocalZOrder(1)
+    head:setLocalZOrder(2)
+    colorBg:setLocalZOrder(3)
+    cdTime:setLocalZOrder(4)
+    model:getChildByName("frame"):setLocalZOrder(5)
+    model:getChildByName("jieJi_1"):setLocalZOrder(6)
+    model:getChildByName("jieJi_2"):setLocalZOrder(7)
+    model:getChildByName("jieJi_3"):setLocalZOrder(8)
+    model:getChildByName("jieJi_4"):setLocalZOrder(9)
+    model:getChildByName("star"):setLocalZOrder(10)
+    model:getChildByName("name"):setLocalZOrder(11)
+    model:getChildByName("lock"):setLocalZOrder(12)
+
     --初始化动画节点
     self.animaNode = self.view:getChildByName("animaNode")
     Functions.playAnimaOfUI(self.animaNode:getChildByName("animaSprite"), "Ani_skillRelease")
