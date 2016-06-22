@@ -166,9 +166,19 @@ function BaseCreatureView:bindFunc_()
 
     --绑定hp
     self.hpView = self.displayNode_:getChildByName("hp_panel"):getChildByName("hp")
+
+    if self.model.m_raw_hp < self.model.eventAttr.m_hp then  --防止血量超过上限，进度条无显示
+        self.model.m_raw_hp = self.model.eventAttr.m_hp
+    end
+
     self.hpView:setPercent(self.model.eventAttr.m_hp/self.model.m_raw_hp*100)
     self.hp = self.displayNode_:getChildByName("hp_panel")
     local onHpChange = function(event)
+
+        if self.model.m_raw_hp < event.data then  --防止血量超过上限，进度条无显示
+            self.model.m_raw_hp = event.data
+        end
+        
         self.hpView:setPercent(event.data/self.model.m_raw_hp*100)
         if event.data == 0 then
             self:heroDeathFunc_()
