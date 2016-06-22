@@ -821,6 +821,10 @@ function CombatViewController:initCombatDisHeroCom_(comView, combatHeros, combat
             
             curHp = math.floor(curHp)
             allHp = math.floor(allHp)
+
+            if allHp < curHp then
+                allHp = curHp
+            end
             hp:setPercent(curHp/allHp*100)
             hp_text:setString(tostring(curHp) .. "/" .. tostring(allHp))
         end

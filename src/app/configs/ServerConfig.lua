@@ -3,8 +3,8 @@ local ServerConfig = {}
 -- 171.212.112.50:8095
 ServerConfig.LocalServer = 
 {
-    PUBLICE_AND = "http://192.168.0.104:8085/sanguoGM/",
-    updateUrl = "http://192.168.0.104:8095/sanguoGM/luaupdate/"
+    PUBLICE_AND = "http://192.168.0.251:8085/sanguoGM/",
+    updateUrl = "http://192.168.0.251:8095/sanguoGM/luaupdate/"
 --    PUBLICE_AND = "http://171.212.112.178:18085/sanguoGM/",
 --    updateUrl = "http://171.212.112.178:18095/sanguoGM/luaupdate/"
 }
@@ -33,6 +33,10 @@ ServerConfig.LanServer =
         updateUrl = "http://szjp-patch-kr.dstamp.net/live/"
     },
     [6] = {
+        PUBLICE_AND = "http://121.40.110.58:8085/sanguoGM/" ,--CBT
+        updateUrl = "http://121.40.110.58:8100/sanguoGM/luaupdate/"
+    },
+    [7] = {
         PUBLICE_AND = "http://121.40.110.58:8085/sanguoGM/" ,--CBT
         updateUrl = "http://121.40.110.58:8100/sanguoGM/luaupdate/"
     },

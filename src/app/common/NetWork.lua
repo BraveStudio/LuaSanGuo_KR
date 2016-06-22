@@ -351,7 +351,7 @@ function NetWork:registUserServer(userName, userPassword, onSuccess)
     info["password"] = userPassword
     info["gaid"] = GameState.storeAttr.advertisingId_s
     local loginStr = Functions.createHttpParamOfTable(info)
-    xhr:send("username=" .. userName .. "&password=" .. userPassword .. "&gaid=" .. GameState.storeAttr.advertisingId_s) -- 发送请求
+    xhr:send(loginStr) -- 发送请求
     
 end
 

@@ -597,8 +597,8 @@ local languageConfig_ch =
         resetJYgk_2 = "今日已重置%d次，重置精英关卡次数不足，提升VIP等级可获更多次数。",
         resetJYgk_3 = "重置成功！",
 
-        ui_CombatView_shu = "蜀国大军1",
-        ui_CombatView_wu = "吴国大军1",
+        ui_CombatView_shu = "蜀国大军",
+        ui_CombatView_wu = "吴国大军",
         ui_CombatView_1 = "右下角头像闪光表示武将可以使用大招，点击头像释放大招",
         ui_CombatView_2 = "战场中许多敌人太过弱小，这时候就能使用自动战斗了!",
         ui_CombatView_tip_3 = "等级10级可以使用",
@@ -626,7 +626,7 @@ local languageConfig_ch =
         ui_CombatView_Fb_19 = "第十九章",
         ui_CombatView_GkIndex = "第%d章",
 
-        ui_NewPlayerView_1 = "请输入你的大名2",
+        ui_NewPlayerView_1 = "请输入你的大名",
 
         ui_MinFbSelectView_1 = "等级限制，君主%d级开启",
         ui_MinFbSelectView_2 = "下一个地方的精英副本已经开放.",
