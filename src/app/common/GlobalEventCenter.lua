@@ -2,6 +2,7 @@ local GlobalEventCenter = {}
 
 GlobalEventCenter.GAME_ENTER_BACKGROUND = "GAME_ENTER_BACKGROUND"
 GlobalEventCenter.GAME_ENTER_FOREGROUND = "GAME_ENTER_FOREGROUND"
+GlobalEventCenter.GAME_ANYSDK_INIT_FINISH = "GAME_ANYSDK_INIT_FINISH"
 
 local eventCenter_ = {}
 
