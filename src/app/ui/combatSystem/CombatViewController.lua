@@ -1109,14 +1109,14 @@ function CombatViewController:loadCombatRes(heroInfo, models, backCall)
     --根据战斗英雄，添加技能特效
     for k,v in pairs(heros) do
         local animaName = v.skillAnimaName
-        if animaName and #animaName > 0 and animaName ~= "0" and not table.hasValue(self.skillAnimaNames, animaName) then
+        if animaName and #animaName > 0 and animaName ~= "0" and animaName ~= "nil" and not table.hasValue(self.skillAnimaNames, animaName) then
             self.skillAnimaNames[#self.skillAnimaNames + 1] = animaName
         end
         
         local skillDatas = v.m_spells.skillDatas
         for k, v in pairs(skillDatas) do
             local animaName = v.m_SkillRes
-            if not table.hasValue(self.skillAnimaNames, animaName) then
+            if animaName and #animaName > 0 and animaName ~= "0" and animaName ~= "nil" and not table.hasValue(self.skillAnimaNames, animaName) then
                 self.skillAnimaNames[#self.skillAnimaNames + 1] = animaName
             end
         end
@@ -1124,7 +1124,7 @@ function CombatViewController:loadCombatRes(heroInfo, models, backCall)
         local passiveSkillDatas = v.m_spells.passiveSkillDatas
         for k, v in pairs(passiveSkillDatas) do
             local animaName = v.m_SkillAnima
-            if animaName and animaName ~= "" and animaName ~= 0 and not table.hasValue(self.skillAnimaNames, animaName) then
+            if animaName and #animaName > 0 and animaName ~= "0" and animaName ~= "nil" and not table.hasValue(self.skillAnimaNames, animaName) then
                 self.skillAnimaNames[#self.skillAnimaNames + 1] = animaName
             end
         end
@@ -1134,7 +1134,7 @@ function CombatViewController:loadCombatRes(heroInfo, models, backCall)
     --加载收集模型资源
     for k, v in pairs(models) do
         local temp = v.m_resId
-        if not table.hasValue(self.skillAnimaNames, temp) then
+        if temp and #temp > 0 and temp ~= "0" and animaName ~= "nil" and not table.hasValue(self.skillAnimaNames, temp) then
             self.skillAnimaNames[#self.skillAnimaNames + 1] = temp
         end
     end
