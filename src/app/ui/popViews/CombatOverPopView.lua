@@ -491,7 +491,21 @@ function CombatOverPopView:displayCombatResult_(event)
             self:setCombatResultDis(true) 
             ResultFuncs[self.currentType](event) 
         end
+
+        if self.currentType == CombatCenter.CombatType.RB_PVE then
+             --中文统计
+            Functions.callAnySdkFuc(function()
+                Analytics:finishLevel( tostring(BiographyData.eventAttr.curSelectFbId) .. "_" .. tostring(BiographyData.eventAttr.curSelectIndex))
+            end)
+        end
     else
+        if self.currentType == CombatCenter.CombatType.RB_PVE then
+             --中文统计
+            Functions.callAnySdkFuc(function()
+                Analytics:failLevel( tostring(BiographyData.eventAttr.curSelectFbId) .. "_" .. tostring(BiographyData.eventAttr.curSelectIndex))
+            end)
+        end
+        
         --初始化npc
         
         Functions.callAnySdkFuc(function( )

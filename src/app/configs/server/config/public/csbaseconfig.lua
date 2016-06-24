@@ -1,7 +1,9 @@
 LanguageConfig = LanguageConfig or {}
 
 --------------------客户端服务器共用数值配置区----------------------
---特殊物品配置(物品类型是4，算是道具，id为负数)： 经验，元宝，金币，体力，武魂（-1 ~ -5）
+--特殊物品配置(物品类型是4，算是道具，id为负数)： 经验，元宝，金币，体力，武魂，魂晶，天梯积分，（-1 ~ -8）
+--游戏中限制次数（  类型为4，id从 －100 开始）: 精英关卡重置：－100， 天梯挑战次数：－101， 刷七星坛：－102,普通元宝抽一次：－103
+-- 普通元宝抽十次：－104，限时神将抽一次：－105
 
 --任务配置 每日任务积分配置 
 g_csMsnToScore = {
@@ -1149,7 +1151,7 @@ g_channelConfig = {
 
 g_payProductConfig_Anysdk = 
 {
-	[1] = {productName = "gold 500",productCode = "cash_500",show_moneyStr = "500",show_goldStr = "500",img = "pay_3.png",gold = 500, money = 50, multiple = 2,isRecommand = true,rate = 0, inf = LanguageConfig.ui_payInf_1},
+	[1] = {productName = "gold 500",productCode = "cash_500",show_moneyStr = "50",show_goldStr = "500",img = "pay_3.png",gold = 500, money = 50, multiple = 2,isRecommand = true,rate = 0, inf = LanguageConfig.ui_payInf_1},
 	[2] = {productName = "gold 1500",productCode = "cash_1500",show_moneyStr = "150",show_goldStr = "1,500",img = "pay_4.png",gold = 1500, money = 150, multiple = 2,isRecommand = true,rate = 0, inf = LanguageConfig.ui_payInf_1},
 	[3] = {productName = "gold 11000",productCode = "cash_11000",show_moneyStr = "1,100",show_goldStr = "11,000",img = "pay_8.png",gold = 11000, money = 1100, multiple = 2,isRecommand = false,rate = 20, inf = LanguageConfig.ui_payInf_1},
 	[4] = {productName = "gold 7500",productCode = "cash_7500",show_moneyStr = "750",show_goldStr = "7,500",img = "pay_7.png",gold = 7500, money = 750, multiple = 2,isRecommand = false,rate = 10, inf = LanguageConfig.ui_payInf_1},

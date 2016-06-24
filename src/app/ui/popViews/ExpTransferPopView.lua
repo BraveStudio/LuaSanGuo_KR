@@ -164,7 +164,8 @@ function ExpTransferPopView:onDisplayView()
         if event.data.jumpType == 6 then
             self.propId = event.data.jumpData.propId
             self.proportion = g_roleExpMoveConfig.base
-            
+            --为了埋点统计特殊处理
+            ExpTransferData.itemID = self.propId
             --转移的比例数
             if self.propId ~= nil then
                 self.proportion = self.proportion + g_roleExpMoveConfig.items[self.propId]

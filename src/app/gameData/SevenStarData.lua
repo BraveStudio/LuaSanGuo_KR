@@ -30,6 +30,9 @@ function SevenStarData:RequestRefrashAtrr(heroMark,hunType,handler)
             if consumeType == 1 then --消耗元宝
                 if consumption > 0 then
                     -- PlayerData.eventAttr["m_gold"] = PlayerData.eventAttr["m_gold"] - consumption
+                    Functions.callAnySdkFuc(function( )
+                        Analytics:onPurchase({-102,4,1},PlayerData.eventAttr.m_gold - event.price)
+                    end) 
                     PlayerData.eventAttr["m_gold"] = event.price
                 end
             elseif consumeType == 0 then -- 消耗符印

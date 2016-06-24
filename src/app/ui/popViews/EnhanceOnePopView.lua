@@ -677,6 +677,10 @@ function EnhanceOnePopView:sendCardUPLevel()
         --卡包数据变动监听
         HeroCardData:cardsDataChange(EnhanceData.MasterData[1].m_mark)
 
+        --埋点
+        Functions.callAnySdkFuc(function()
+            Analytics:logEvent("WJSJ", {level = toString(PlayerData.eventAttr.m_level)})
+        end)
     end
     local met = EnhanceData.DeputyData
     local metMark = {}

@@ -36,6 +36,7 @@ function FbSelectViewController:onDidLoadView()
 	self._fbPanel2_t = self.view_t.csbNode:getChildByName("main"):getChildByName("PageView_1"):getChildByName("fbPanel2")
 	self._fbPanel3_t = self.view_t.csbNode:getChildByName("main"):getChildByName("PageView_1"):getChildByName("fbPanel3")
 	self._fbPanel4_t = self.view_t.csbNode:getChildByName("main"):getChildByName("PageView_1"):getChildByName("fbPanel4")
+	self._fbPanel5_t = self.view_t.csbNode:getChildByName("main"):getChildByName("PageView_1"):getChildByName("fbPanel5")
 	self._TopResNode_t = self.view_t.csbNode:getChildByName("main"):getChildByName("TopResNode")
 	
     --label list

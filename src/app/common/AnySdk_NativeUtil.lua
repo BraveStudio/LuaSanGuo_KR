@@ -28,13 +28,6 @@ function NativeUtil:init()
                end
             end)
         end
-        Functions.callAnySdkFuc(function( )
-            self:javaCallHanler({command = "initAccount",account = tostring(PlayerData.eventAttr.m_uid)})
-            self:javaCallHanler({command = "setAccountName",accountName = GameState.storeAttr.NaverUserId_s})
-            self:javaCallHanler({command = "setGender",gender = PlayerData.eventAttr.m_sex})
-            self:javaCallHanler({command = "setLevel",level = PlayerData.eventAttr.m_level})
-            self:javaCallHanler({command = "setGameServer",gameServer = NetWork.serverId})
-        end)
     end)
 end
 
@@ -92,7 +85,6 @@ function NativeUtil._JniBackCall(msg)
             end
             Functions.sdkLoginHandler(usrId)
         elseif k == "fastLoginGame" then
-            PromptManager:openTipPrompt("登陆成功")
             if msgTable["ip"] then
                 GameState.loginData.ip = msgTable["ip"]
             end
@@ -105,8 +97,7 @@ function NativeUtil._JniBackCall(msg)
             GameState.loginData.accountid = GameState.storeAttr.NaverUserId_s
             GameState.loginData.pfid = PluginChannel:getChannelId() 
             GameState.loginData.pfname = PluginChannel:getChannelName()
-            -- Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s) 
-            Functions.sdkLoginHandler("uctest003") 
+            Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s) 
         elseif k == "productCode" then
             VipData:RequestVipPay(v)
         elseif k == "igaworks" then
@@ -181,6 +172,9 @@ function NativeUtil._JniBackCall(msg)
                 if not GameCtlManager.isViewLoading then
                     local handler = function()
                         -- NativeUtil:javaCallHanler({command = "exitApp"})
+                        Functions.callAnySdkFuc(function()
+                            Analytics:stopSession()
+                        end)
                         cc.Director:getInstance():endToLua() 
                     end 
                     local handler1 = function()

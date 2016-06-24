@@ -80,9 +80,15 @@ function EnlistData:sendGetCard(listener)
             end
             if self.m_CardType == 4 and self.m_CardNum == 1 then
                 Functions.setAdbrixTag("retension","herohof_buy_gold_1_nonfree", tostring(PlayerData.eventAttr.m_level))
+                Functions.callAnySdkFuc(function()
+                    Analytics:onPurchase({-103, 4 ,1}, toString(math.floor(PlayerData.eventAttr.m_gold - event.gold)))
+                end)
             end
             if self.m_CardType == 4 and self.m_CardNum == 10 then
                 Functions.setAdbrixTag("retension","herohof_buy_gold_10", tostring(PlayerData.eventAttr.m_level))
+                Functions.callAnySdkFuc(function()
+                    Analytics:onPurchase({-104, 4 ,1}, toString(math.floor(PlayerData.eventAttr.m_gold - event.gold)))
+                end)
             end
 
         

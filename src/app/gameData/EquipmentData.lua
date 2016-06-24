@@ -113,6 +113,10 @@ end
 function EquipmentData:requestEquipEnhance(inf,handler)
     --监听服务器数据
     local onServerRequest = function (event)
+        Functions.callAnySdkFuc(function( )
+            local enhanceName = {"ZBQH","ZBHC","ZBXL"}
+            Analytics:setAccount(enhanceName[inf.enhanceType],{level = tostring(PlayerData.eventAttr.m_level)})
+        end)
         if handler ~= nil then
             handler(event)
         end

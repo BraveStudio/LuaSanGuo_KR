@@ -691,6 +691,11 @@ function MinFbSelectViewController:fightBeginRuleCheck_()
                  --重置精英关卡成功
                 Functions.setAdbrixTag("retension","dungeon_reset_buy_" .. tostring(PlayerData.eventAttr.m_passResetCount), tostring(PlayerData.eventAttr.m_level))
                 
+                --中文统计
+                Functions.callAnySdkFuc(function()
+                     Analytics:onPurchase({-100,4,1}, PlayerData.eventAttr.m_gold - event.gold)
+                end)
+
                 PlayerData.eventAttr.m_gold =  event.gold
                 PromptManager:openTipPrompt(LanguageConfig["resetJYgk_3"])
             end

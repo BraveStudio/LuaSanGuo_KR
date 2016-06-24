@@ -231,6 +231,10 @@ function SoldiersPopView:onButton_up_levelClick()
             --动画
             self:actionLevel()
             self:showSoldiersBZ()
+            --埋点
+            Functions.callAnySdkFuc(function()
+                Analytics:logEvent("XBSJ", {level = toString(PlayerData.eventAttr.m_level)})
+            end)
         else
             --弹出报错信息
             PromptManager:openTipPrompt(ConfigHandler:getServerErrorCode(event.ret))
@@ -289,6 +293,10 @@ function SoldiersPopView:onButton_ladderClick()
         --刷新标志
         SoldiersData:refreshSoldiers()
         self:showSoldiersBZ()
+        --埋点
+        Functions.callAnySdkFuc(function()
+            Analytics:logEvent("XBJJ", {level = toString(PlayerData.eventAttr.m_level)})
+        end)
     end
 
     NetWork:addNetWorkListener({ 3, 3 }, Functions.createNetworkListener(onUpLadder,true,"ret"))

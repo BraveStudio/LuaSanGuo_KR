@@ -207,6 +207,10 @@ end
 function GuideManager:finishGuide()
     print("guide state: " .. PlayerData.eventAttr.m_guideStageId .. " guide id: " .. PlayerData.eventAttr.m_guideId .. " if finish")
 
+    Functions.callAnySdkFuc(function()
+	       Analytics:logEvent("XSYD", { stageId = tostring(PlayerData.eventAttr.m_guideStageId), index = tostring(PlayerData.eventAttr.m_guideIndex)})
+	 end)
+
     local msg = {idx = {6, 3}, ret = true , stageId = PlayerData.eventAttr.m_guideStageId ,index = PlayerData.eventAttr.m_guideIndex }
     PlayerData.eventAttr.m_guideStageId = 0
     PlayerData.eventAttr.m_newGuildIndex = 0

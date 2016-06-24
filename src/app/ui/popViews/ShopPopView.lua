@@ -172,6 +172,12 @@ function ShopPopView:sendBuyShop()
 
         Functions.playSound("get_loot.mp3")
         ShopData:clearShopData()--清空商城数据
+        --埋点
+        if PlayerData.eventAttr.m_gold > event.gold then
+            Functions.callAnySdkFuc(function()
+                Analytics:onPurchase({event.goodID, event.goodtype ,event.goodcount}, toString(math.floor((PlayerData.eventAttr.m_gold - event.gold)/event.goodcount)))
+            end)
+        end
         PlayerData.eventAttr.m_gold = event.gold
         PlayerData.eventAttr.m_money = event.money
         PlayerData.eventAttr.m_hunjing = event.hunjing
@@ -200,9 +206,8 @@ function ShopPopView:sendBuyShop()
         self._controller_t:closeChildView(self)
         --弹出报错信息
         PromptManager:openTipPrompt(LanguageConfig.language_9_7) 
-
     end
-local data  = self.shopModel.m_Idx
+
     NetWork:addNetWorkListener({ 5, 12 }, Functions.createNetworkListener(onBuyShop,true,"ret"))
     NetWork:sendToServer({ idx = { 5, 12 }, index = self.shopModel.m_Idx})
 end
