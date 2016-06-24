@@ -332,7 +332,7 @@ function BaseCreatureView:onSkillEffectStart(event)
         local effectScale     = ConfigHandler:getSkillEffScaleOfId(event.data.id, event.data.isPt)
         if not effectScale then effectScale = 1 end
 
-        if effectAnimaName and effectAnimaName ~= "" and effectAnimaName ~= 0 then
+        if effectAnimaName and effectAnimaName ~= "" and effectAnimaName ~= 0 and effectAnimaName ~= "nil" then
             local sprite = Functions.createSprite({ scale = effectScale })
             self:addChild(sprite)
             if event.data.isLoop == 1 then
@@ -355,7 +355,7 @@ function BaseCreatureView:onSkillEffectStart(event)
 
         --获取技能buff文字
         local buffNames = ConfigHandler:getSkillBuffName(event.data.id, event.data.isPt)
-        if buffNames and buffNames ~= "" and buffNames ~= 0 then
+        if buffNames and buffNames ~= "" and buffNames ~= 0 and buffNames ~= "nil"then
             for i=1, #buffNames do
                 local lab = Functions.createSprite({ spriteName = buffNames[i] ,pos = { x = Functions.getPosOfIndex(i, #buffNames, 80, 0), y = 30 }})
                 self:addChild(lab)
@@ -367,7 +367,7 @@ function BaseCreatureView:onSkillEffectStart(event)
         
         --获取技能音效
         local sound = ConfigHandler:getSkillSoundName(event.data.id, event.data.isPt)
-        if sound and sound ~= "" and sound ~= 0 then
+        if sound and sound ~= "" and sound ~= 0 and sound ~= "nil" then
             Audio.playSoundWithCount(sound)
             -- Audio.playSound(sound)
         end
