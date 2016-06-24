@@ -3,8 +3,8 @@ local ServerConfig = {}
 -- 171.212.112.50:8095
 ServerConfig.LocalServer = 
 {
-    PUBLICE_AND = "http://192.168.0.251:8085/sanguoGM/",
-    updateUrl = "http://192.168.0.251:8095/sanguoGM/luaupdate/"
+    PUBLICE_AND = "http://192.168.0.104:8085/sanguoGM/",
+    updateUrl = "http://192.168.0.251:104/sanguoGM/luaupdate/"
 --    PUBLICE_AND = "http://171.212.112.178:18085/sanguoGM/",
 --    updateUrl = "http://171.212.112.178:18095/sanguoGM/luaupdate/"
 }
@@ -29,7 +29,7 @@ ServerConfig.LanServer =
         updateUrl = "http://121.42.147.30:8100/sanguoGM/luaupdate/"
     },
     [5] = {
-        PUBLICE_AND = "http://14.63.170.172:8085/sanguoGM/" ,--CBT
+        PUBLICE_AND = "http://14.63.170.172:8085/sanguoGM/" ,--live
         updateUrl = "http://szjp-patch-kr.dstamp.net/live/"
     },
     [6] = {
@@ -37,8 +37,8 @@ ServerConfig.LanServer =
         updateUrl = "http://121.40.110.58:8100/sanguoGM/luaupdate/"
     },
     [7] = {
-        PUBLICE_AND = "http://121.40.110.58:8085/sanguoGM/" ,--CBT
-        updateUrl = "http://121.40.110.58:8100/sanguoGM/luaupdate/"
+        PUBLICE_AND = "http://hjby.tanyu.mobi:8085/sanguoGM/" ,--中文CBT
+        updateUrl = "http://hjby.tanyu.mobi:8100/sanguoGM/luaupdate/"
     },
 }
 

@@ -742,6 +742,7 @@ local languageConfig_ch =
         language_vip_4 = "礼包",
         language_vip_5 = "特权",
         language_vip_tip_1 = "VIP3 开启战斗加速功能",
+        language_vip_not_pay = "本次测试，暂不支持充值功能！",
         --扫荡系统
         language_sweep_1 = "第%d战",
         language_sweep_2 = "扫荡%d次",

@@ -90,6 +90,13 @@ function MailTwoPopView:onButton_getClick()
             	local count = v[3]
             	local slot = v.slot
             	
+            	--埋点统计
+            	if id == -2 then
+                    Functions.callAnySdkFuc(function()
+                        Analytics:onReward({id, type, count})
+                    end)
+            	end
+            	
                 Functions:addItemResources( {id = id, type = type, count = count, slot = slot} )
             end
             self.param.eventAttr.m_fetched = 1

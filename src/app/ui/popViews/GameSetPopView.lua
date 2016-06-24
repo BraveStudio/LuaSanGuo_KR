@@ -174,6 +174,11 @@ function GameSetPopView:onDisplayView()
 
     self.naverText = self.csbNode:getChildByName("Panel_1"):getChildByName("naverText")
 
+    if G_CurrentLanguage == "ch" then
+        self._logoutBt_t:setVisible(false)
+        self._changeServerBt_t:setPositionX(self._changeServerBt_t:getParent():getSize().width/2)
+    end
+
     if GameState:getLoginType() == "NaverSdk" then
 
         local strFormat = "%s"

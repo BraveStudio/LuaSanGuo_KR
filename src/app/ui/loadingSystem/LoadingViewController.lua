@@ -91,6 +91,9 @@ function LoadingViewController:onDisplayView()
     --                 PromptManager:openLoadingPrompt("",true)
     --         end, 0.06)
     --sdk
+    Functions.callAnySdkFuc(function()
+        Analytics:startSession()
+    end)
     Functions.setAdbrixTag("firstTimeExperience","update_try")
 
     --更新提示面板

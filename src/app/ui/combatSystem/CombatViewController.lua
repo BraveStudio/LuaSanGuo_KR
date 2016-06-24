@@ -48,42 +48,42 @@ function CombatViewController:onDidLoadView()
 
     --output list
     self._main_t = self.view_t.csbNode:getChildByName("main")
-    self._combatPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel")
-    self._combatBg_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel"):getChildByName("combatBg")
-    self._colorPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel"):getChildByName("colorPanel")
-    self._time_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_1"):getChildByName("time")
-    self._control_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel")
-    self._right_down_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_down_panel")
-    self._video_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("video_panel")
-    self._left_top_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_top_panel")
-    self._right_top_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel")
-    self._fbinfo_Panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel")
-    self._fbInfo_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel"):getChildByName("fbInfo")
-    self._shield_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("shield_panel")
-    
+	self._combatPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel")
+	self._combatBg_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel"):getChildByName("combatBg")
+	self._colorPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("combatPanel"):getChildByName("colorPanel")
+	self._time_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_1"):getChildByName("time")
+	self._control_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel")
+	self._right_down_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_down_panel")
+	self._video_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("video_panel")
+	self._left_top_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_top_panel")
+	self._right_top_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel")
+	self._fbinfo_Panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel")
+	self._fbInfo_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel"):getChildByName("fbInfo")
+	self._shield_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("shield_panel")
+	
     --label list
     
     --button list
     self._handleFightBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("handleFightBt")
-    self._handleFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onHandlefightbtClick), ""))
+	self._handleFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onHandlefightbtClick), ""))
 
-    self._autoFightBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("autoFightBt")
-    self._autoFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onAutofightbtClick), ""))
+	self._autoFightBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("autoFightBt")
+	self._autoFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onAutofightbtClick), ""))
 
-    self._speed2Bt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("speed2Bt")
-    self._speed2Bt_t:onTouch(Functions.createClickListener(handler(self, self.onSpeed2btClick), ""))
+	self._speed2Bt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("speed2Bt")
+	self._speed2Bt_t:onTouch(Functions.createClickListener(handler(self, self.onSpeed2btClick), ""))
 
-    self._speed1Bt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("speed1Bt")
-    self._speed1Bt_t:onTouch(Functions.createClickListener(handler(self, self.onSpeed1btClick), ""))
+	self._speed1Bt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("speed1Bt")
+	self._speed1Bt_t:onTouch(Functions.createClickListener(handler(self, self.onSpeed1btClick), ""))
 
-    self._combatSkipBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("video_panel"):getChildByName("combatSkipBt")
-    self._combatSkipBt_t:onTouch(Functions.createClickListener(handler(self, self.onCombatskipbtClick), ""))
+	self._combatSkipBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("video_panel"):getChildByName("combatSkipBt")
+	self._combatSkipBt_t:onTouch(Functions.createClickListener(handler(self, self.onCombatskipbtClick), ""))
 
-    self._resumeBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_down_panel"):getChildByName("resumeBt")
-    self._resumeBt_t:onTouch(Functions.createClickListener(handler(self, self.onResumebtClick), ""))
+	self._resumeBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_down_panel"):getChildByName("resumeBt")
+	self._resumeBt_t:onTouch(Functions.createClickListener(handler(self, self.onResumebtClick), ""))
 
-    self._pauseBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_down_panel"):getChildByName("pauseBt")
-    self._pauseBt_t:onTouch(Functions.createClickListener(handler(self, self.onPausebtClick), ""))
+	self._pauseBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("left_down_panel"):getChildByName("pauseBt")
+	self._pauseBt_t:onTouch(Functions.createClickListener(handler(self, self.onPausebtClick), ""))
 
 end
 --@auto code uiInit end
@@ -385,6 +385,11 @@ function CombatViewController:onFbPveCombat(data, combatType)
                 NativeUtil:javaCallHanler({command = "onBegin",missionId = "001" })
             end)
             self:combatResLoad()
+
+            --中文统计
+            Functions.callAnySdkFuc(function()
+                Analytics:startLevel( tostring(BiographyData.eventAttr.curSelectFbId) .. "_" .. tostring(BiographyData.eventAttr.curSelectIndex))
+            end)
         end
             
         NetWork:addNetWorkListener({ 1, 1 }, Functions.createNetworkListener(onPveFightRequetReturn, true, _, handler(self, self.quitCombat) ))

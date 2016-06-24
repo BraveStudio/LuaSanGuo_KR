@@ -12,6 +12,7 @@ ExpTransferData.EXP_HERO = "EXP_HERO"
 ExpTransferData.markOne = 0
 ExpTransferData.markTwo = 0
 ExpTransferData.ExpHero = {}
+ExpTransferData.itemID = 0
 
 
 function ExpTransferData:init()
@@ -46,12 +47,35 @@ function ExpTransferData:SendExpTransfer(datas, listener)
         info.m_class = 1
         HeroCardData:updateHeroBaseAttr(self:getMarkOne())
         listener()
+        
+        --埋点
+        Functions.callAnySdkFuc(function()
+            Analytics:logEvent("CS", {level = toString(PlayerData.eventAttr.m_level), proportion = toString(self:getMaiDianNum())})
+        end)
     end
 
     NetWork:addNetWorkListener({5,31}, Functions.createNetworkListener(onExp,true,"ret"))
     local msg = {idx = {5, 31},  data = datas}
     NetWork:sendToServer(msg)
 
+end
+
+--埋点（记录经验转换百分比）
+function ExpTransferData:getMaiDianNum()
+    local MaiDianNum = 0
+    if ExpTransferData.itemID == 0 then
+    	MaiDianNum = 40
+    elseif ExpTransferData.itemID == 70 then
+        MaiDianNum = 60
+    elseif ExpTransferData.itemID == 71 then
+        MaiDianNum = 80
+    elseif ExpTransferData.itemID == 72 then
+        MaiDianNum = 100
+    end
+    if MaiDianNum == 0 then
+        assert(MaiDianNum == 0, "MaiDianNum number is 0")
+    end
+    return MaiDianNum
 end
 
 function ExpTransferData:setMarkOne(mark)

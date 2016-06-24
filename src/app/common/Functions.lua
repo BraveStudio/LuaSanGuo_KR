@@ -1787,9 +1787,13 @@ function Functions.setLoginInf(msg,handler)
         --         end
         --     end
         -- end
+
         local customParam = PluginChannel:getCustomParam()
-        GameState.storeAttr.NaverUserId_s = Functions.getTableFieldOfPath(msgTable,customParam.path.usrId)
-        GameState.storeAttr.NaverUserName_s = Functions.getTableFieldOfPath(msgTable,customParam.path.usrName)
+        GameState.storeAttr.NaverUserId_s = Functions.getTableFieldOfPath(msgTable,customParam.path.usrId )
+        GameState.storeAttr.NaverUserName_s = Functions.getTableFieldOfPath(msgTable,customParam.path.usrName )
+        if handler ~= nil then 
+            handler(msgTable)
+        end
     end
 end
 --c++风格取整
@@ -3734,9 +3738,6 @@ function Functions.buyPowerHandler(controller)
             local handler = function()
                 PlayerData:RequestBuyPowerInf(function()
                     -- Functions.setAdbrixTag("retention","energy_buy")
-                    Functions.callAnySdkFuc(function( )
-                         NativeUtil:javaCallHanler({command = "onPurchase",item = "power",itemNumber = 1,priceInVirtualCurrency = 20})
-                    end)
                     if PlayerData.eventAttr.m_buyEnergyCount <= 14 then 
                         Functions.setAdbrixTag("retention","energy_buy_" .. tostring(PlayerData.eventAttr.m_buyEnergyCount),tostring(PlayerData.eventAttr.m_level))
                     end

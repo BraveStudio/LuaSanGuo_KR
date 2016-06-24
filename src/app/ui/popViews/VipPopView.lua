@@ -59,6 +59,11 @@ function VipPopView:onPaybtClick()
     -- end
     -- VipData:RequestVipPay(500,handler)
 
+    if G_CurrentLanguage == "ch" then
+        PromptManager:openTipPrompt(LanguageConfig.language_vip_not_pay)
+        return
+    end
+    
     self._controller_t:openChildView("app.ui.popViews.PayPopView",{isRemove = false})
      -- VipData:RequestVipPay("0","0","GD201512021789764")
 end

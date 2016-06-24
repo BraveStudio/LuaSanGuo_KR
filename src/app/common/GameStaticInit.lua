@@ -56,6 +56,10 @@ Functions.callAnySdkFuc(function()
 	PluginChannel = require("app.sdk.PluginChannel")
 	PluginChannel:init()
 end)
+Functions.callAnySdkFuc(function()
+	Analytics = require("app.sdk.Analytics")
+	Analytics:init()
+end)
 --全局网络模块初始化
 if HttpClient then
 	HttpClient:destory()

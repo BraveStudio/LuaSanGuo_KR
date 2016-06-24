@@ -200,9 +200,14 @@ function ShopPopView:sendBuyShop()
         self._controller_t:closeChildView(self)
         --弹出报错信息
         PromptManager:openTipPrompt(LanguageConfig.language_9_7) 
-
+        --埋点
+        if self.shopModel.m_MoneyType == 1 then
+            Functions.callAnySdkFuc(function()
+                Analytics:onPurchase({event.goodID, event.goodtype ,event.goodcount}, toString(math.floor((PlayerData.eventAttr.m_gold - event.gold)/event.goodcount)))
+            end)
+        end
     end
-local data  = self.shopModel.m_Idx
+
     NetWork:addNetWorkListener({ 5, 12 }, Functions.createNetworkListener(onBuyShop,true,"ret"))
     NetWork:sendToServer({ idx = { 5, 12 }, index = self.shopModel.m_Idx})
 end

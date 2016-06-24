@@ -9,20 +9,20 @@ local agent = nil
 function PluginChannel:onUserResult( plugin, code, msg )
     print("on user action listener.")
     print("code:"..code..",msg:"..msg)
-    local customParam = nil
     if code == UserActionResultCode.kInitSuccess then
         -- GameEventCenter:dispatchEvent({ name = GameEventCenter.GAME_ANYSDK_INIT_FINISH })
-        customParam = self:getCustomParam()
-        if customParam.showToolBar ~= nil and customParam.showToolBar == 1 then
+        local customParam = self:getCustomParam()
+        if customParam.showToolBar ~= nil and tonumber(customParam.showToolBar) == 1 then
             self:showToolBar() 
         end
     elseif code == UserActionResultCode.kInitFail then
         PromptManager:openTipPrompt("sdk初始化失败！")
     elseif code == UserActionResultCode.kLoginSuccess then
+        local customParam = self:getCustomParam()
         NoticeManager:debugDisplay(customParam.debug, msg, function()
             Functions.setLoginInf(msg,function(event)
                 NativeUtil:sdkLogin()
-                if customParam.showToolBar ~= nil and customParam.showToolBar == 2 then
+                if customParam.showToolBar ~= nil and tonumber(customParam.showToolBar) == 2 then
                     self:showToolBar()
                 end
             end)
@@ -86,8 +86,6 @@ function PluginChannel:onPayResult( code, msg, info )
     end
 end
 function PluginChannel:init()
-    print("PluginChannel!!!!!!!!!!!!!")
-    print("PluginChannel!!!!!!!!!!!!!")
     --for anysdk
     --init
     --anysdk //c++层初始化
@@ -95,9 +93,8 @@ function PluginChannel:init()
     local appKey = "6D7E6FC3-4DDD-E5EF-B131-B60D14A30B81"
     local appSecret = "5ed642ca101399889cba0ce2e4b486d7"
     local privateKey = "6C6B80BE7AD41F784E0624D87897707A"
-    local oauthLoginServer = "http://120.26.201.186:8085/sanguoGM/sanguoGMSomeFunc2/AnySdkVeriServ"
+    local oauthLoginServer = "http://hjby.tanyu.mobi:8085/sanguoGM/sanguoGMSomeFunc2/AnySdkVeriServ"
     agent = AgentManager:getInstance()
-    print("PluginChannel!!!!!!!!!!!!!")
     --init
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
     --load
@@ -207,8 +204,9 @@ function PluginChannel:submitLoginGameRole()
 end
 
 function PluginChannel:getProductName(index)
-    if g_channelConfig[G_ChannelType] ~= nil then 
-        for k,v in pairs(g_channelConfig[G_ChannelType]["productName"]) do
+    local channelId = self:getChannelId()
+    if g_channelConfig[channelId] ~= nil then 
+        for k,v in pairs(g_channelConfig[channelId]["productName"]) do
             if v == index then 
                 return k
             end
@@ -216,9 +214,9 @@ function PluginChannel:getProductName(index)
     end
 end
 function PluginChannel:getProductId(index)
-    local name = ""
-    if g_channelConfig[G_ChannelType] ~= nil then 
-        for k,v in pairs(g_channelConfig[G_ChannelType]["productCode"]) do
+    local channelId = self:getChannelId()
+    if g_channelConfig[channelId] ~= nil then 
+        for k,v in pairs(g_channelConfig[channelId]["productCode"]) do
             if v == index then 
                 return k
             end

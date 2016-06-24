@@ -85,7 +85,9 @@ function LevelUpPopView:onDisplayView(data)
 
     self.endCallBack = data.callBack
 	Functions.initLabelOfString(self._level_text_t, data.oldLevel,self._upLevelText_t, data.newLevel)
-
+    Functions.callAnySdkFuc(function( )
+        Analytics:setAccount()
+    end)
     self._tips1_1_t:setVisible(false)
     self._tips1_1_d_t:setVisible(false)
     self._uplevel_pnc_t:setVisible(false)

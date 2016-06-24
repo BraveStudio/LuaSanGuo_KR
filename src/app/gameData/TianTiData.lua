@@ -38,6 +38,9 @@ end
 function TianTiData:RequestBuyCountInf(handler)
      --监听服务器数据
     local onServerRequest = function (event)
+        Functions.callAnySdkFuc(function( )
+            Analytics:onPurchase({-101,4,1},PlayerData.eventAttr.m_gold - event.gold)
+        end)
         TianTiData.eventAttr.m_tianTiCount = event.ttcount
         TianTiData.myPlayerData.m_tianTiBuyCount = event.ttbuy
         TianTiData.myPlayerData.price = event.price

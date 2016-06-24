@@ -135,7 +135,7 @@ end
 
 function NoticeManager:debugDisplay(isDebug, msg, cb)
 
-    if isDebug then
+    if isDebug == 1 then
         local notice = Factory:createInfoPanel()
         notice:setInfo(msg)
         notice:setCloseCb(cb)

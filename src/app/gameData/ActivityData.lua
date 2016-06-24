@@ -208,6 +208,11 @@ function ActivityData:RequestTakeCard(type,xsHeroType,handler)
     --监听服务器数据
     local onServerRequest = function (event)
         HeroCardData:addCard({slot = event.tmp[1].slot,id = event.tmp[1].id}) 
+        if type == 2 then
+            Functions.callAnySdkFuc(function( )
+                Analytics:onPurchase({-105,1,1},PlayerData.eventAttr.m_gold - event.gold)
+            end)  
+        end
         PlayerData.eventAttr.m_gold = event.gold
         ActivityData.eventAttr.score = event.score
         ActivityData.eventAttr.rank = event.rank         
@@ -218,6 +223,7 @@ function ActivityData:RequestTakeCard(type,xsHeroType,handler)
             ActivityData.eventAttr.cdTime = event.initTime
             ActivityData.eventAttr.freeHeroRemainTime = ActivityData.xsHero.CD - (TimerManager:getCurrentSecond() - ActivityData.eventAttr.cdTime)
         end
+
         if handler ~= nil then
             handler(event)
         end

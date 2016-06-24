@@ -117,6 +117,12 @@ function Player:onLogin()
 
             GameCtlManager:goTo("app.ui.mainSystem.MainViewController")
         end  
+
+        if G_isFirstStartApp then 
+            Functions.callAnySdkFuc(function( )
+                Analytics:setAccount()
+            end)
+        end
         return true
     end
 
@@ -128,6 +134,9 @@ function Player:onLogout(code)
     Functions.clearGameData()
     Functions.callAnySdkFuc(function()
         PluginChannel:logout()    
+    end)
+    Functions.callAnySdkFuc(function( )
+        Analytics:setAccount()
     end)
     if self.isOnline then
         GameEventCenter:dispatchEvent({ name = Player.PLAYER_LOGOUT_EVENT })

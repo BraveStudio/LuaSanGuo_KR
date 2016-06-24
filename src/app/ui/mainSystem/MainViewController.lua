@@ -47,7 +47,7 @@ function MainViewController:onDidLoadView()
 	self._sevenStar_anima_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("sevenStar_anima")
 	self._sevenStarTitle_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("sevenStarTitle")
 	self._fire_anima_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("fire_anima")
-	self._heroShilianTitle_0_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("heroShilianTitle_0")
+	self._gvgTitle_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("gvgTitle")
 	self._MainFrontPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel")
 	self._tinkerText_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("tinkerText")
 	self._mailTitil_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("mailTitil")
@@ -64,7 +64,7 @@ function MainViewController:onDidLoadView()
 	self._powerText_t = self.view_t.csbNode:getChildByName("main"):getChildByName("tipBtPanel"):getChildByName("Resource_12_0_0"):getChildByName("powerText")
 	self._power_bt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("tipBtPanel"):getChildByName("power_bt")
 	self._downBtPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("downBtPanel")
-	self._taskBg_t = self.view_t.csbNode:getChildByName("main"):getChildByName("downBtPanel"):getChildByName("btFrame7"):getChildByName("taskBt"):getChildByName("taskBg")
+	self._taskBg_t = self.view_t.csbNode:getChildByName("main"):getChildByName("downBtPanel"):getChildByName("btFrame7"):getChildByName("taskBg")
 	self._topHead_t = self.view_t.csbNode:getChildByName("main"):getChildByName("LeftTopPanel"):getChildByName("topHead")
 	self._levelText_t = self.view_t.csbNode:getChildByName("main"):getChildByName("LeftTopPanel"):getChildByName("level_28"):getChildByName("levelText")
 	self._heroNameText_t = self.view_t.csbNode:getChildByName("main"):getChildByName("LeftTopPanel"):getChildByName("namebg_31"):getChildByName("heroNameText")
@@ -278,6 +278,12 @@ end
 function MainViewController:onAddmoneybtClick()
     Functions.printInfo(self.debug,"Addmoneybt button is click!")
     -- local payView = require("app.ui.popViews.PayPopView"):new()--cs
+
+    if G_CurrentLanguage == "ch" then
+    	PromptManager:openTipPrompt(LanguageConfig.language_vip_not_pay)
+    	return
+    end
+
     self:openChildView("app.ui.popViews.PayPopView",{isRemove = false,name = "PayPopView"})
 end
 --@auto code Addmoneybt btFunc end
@@ -285,7 +291,7 @@ end
 --@auto code Addpowerbt btFunc
 function MainViewController:onAddpowerbtClick()
     Functions.printInfo(self.debug,"Addpowerbt button is click!")
-    
+
     Functions.setAdbrixTag("retension","energy_inter")
     Functions.buyPowerHandler(self)
 end
@@ -514,6 +520,11 @@ function MainViewController:onDisplayView()
 
     GameEventCenter:dispatchEvent({ name = MainViewController.ENTER_MAINVIEW_EVENT_NAME  })
 
+    if G_CurrentLanguage == "ch" then
+    	-- 隐藏韩国帮助按钮
+    	self._serviceBt_t:setVisible(false)
+    end
+    
     --sdk
     Functions.setAdbrixTag("firstTimeExperience","loading_2_complete")
     Functions.callJavaFuc(function()            
@@ -715,7 +726,7 @@ function MainViewController:initUiDisplay_()
 	    end
 	end)
     --隐藏首充大礼包
-    if PlayerData.eventAttr.m_vipFirstFlag == 2 then
+    if PlayerData.eventAttr.m_vipFirstFlag == 2 or G_CurrentLanguage == "ch" then
     	self._scdlbBt_t:setVisible(false)
     else
     	self._scdlbBt_t:setVisible(true)
@@ -805,6 +816,12 @@ function MainViewController:initUiTitleState_()
    	Functions.setGraySprite(self._mainCityTitil_t, not ModelManager:isModelOpenOfName("city"))
    	Functions.bindUiWithModelAttr(self._mainCityTitil_t, PlayerData, "m_level", function()
 				Functions.setGraySprite(self._mainCityTitil_t, not ModelManager:isModelOpenOfName("city"))
+			end)
+
+	--工会战
+	Functions.setGraySprite(self._gvgTitle_t, not ModelManager:isModelOpenOfName("guildBattle"))
+	Functions.bindUiWithModelAttr(self._gvgTitle_t, PlayerData, "m_level", function()
+				Functions.setGraySprite(self._gvgTitle_t, not ModelManager:isModelOpenOfName("guildBattle"))
 			end)
 end
 

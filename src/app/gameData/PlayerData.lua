@@ -94,6 +94,9 @@ end
 function PlayerData:RequestBuyMoneyInf(handler)
     --监听服务器数据
     local onServerRequest = function (event)
+        Functions.callAnySdkFuc(function( )
+            Analytics:onPurchase({-3,4,1},PlayerData.eventAttr.m_gold - event.data.gold)
+        end)
         local money = PlayerData.eventAttr.m_money
         PlayerData.eventAttr.m_money = event.data.money
         PlayerData.eventAttr.m_gold = event.data.gold
@@ -114,6 +117,9 @@ end
 function PlayerData:RequestBuyPowerInf(handler)
     --监听服务器数据
     local onServerRequest = function (event)  
+        Functions.callAnySdkFuc(function( )
+            Analytics:onPurchase({-4,4,1},PlayerData.eventAttr.m_gold - event.m_gold)
+        end)
         PlayerData.eventAttr.m_gold = event.m_gold
         PlayerData:setPlayerPower(event.m_energy)
         PlayerData.eventAttr.energyPrice = event.price
