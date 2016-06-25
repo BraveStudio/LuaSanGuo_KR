@@ -41,12 +41,26 @@ function VipData:init()
     end
     NetWork:addNetWorkListener({ 2, 16 }, onVipInit)
 
-    -- local adbrixHandler = function (event)
-    --     if event.rmb ~= nil then            
-    --         Functions.setAdbrixTag("buy",tostring(g_payShowRMB[event.rmb]))
-    --     end 
-    -- end
-    -- NetWork:addNetWorkListener({ 25, 7 }, adbrixHandler)
+    Functions.callAnySdkFuc(function( )
+        local onServerRequest = function (event)
+            for i = VipData.eventAttr.m_vipLevel+1, event.vipLevel do
+                VipData.eventAttr.m_vipReward[i+1] = true
+            end
+            VipData.eventAttr.m_vipLevel = event.vipLevel
+            VipData.eventAttr.m_recharge = event.recharge
+            PlayerData.eventAttr.m_gold = event.gold    
+            PlayerData.eventAttr.m_vipFirstFlag = event.firstFlag
+            VipData:updateVipRewardFlag()    
+
+            GameState.storeAttr.curNonce_s = ""
+            GameState.storeAttr.paymentSeq_s = ""
+            GameState.storeAttr.curProductCode_s = ""
+            
+            local tipsStr = string.format(LanguageConfig.language_task_speaker_12,event.curPayGold)
+            PromptManager:openSpeakerPrompt(tipsStr,nil,LanguageConfig.language_task_15)
+        end
+        NetWork:addNetWorkListener({25,2}, Functions.createNetworkListener(onServerRequest, true, "ret")) 
+    end)
 end
 --发送vip等级领奖请求
 function VipData:RequestVipLevelReward(curVipLevel,handler)

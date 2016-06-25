@@ -681,7 +681,8 @@ g_csOpen = {
 	heroShilianOpen  = {level=28,},	--英雄试炼
 	GonghuiOpen      = {level=26,},	--公会
 	StrengthenOpen   = {level=10,}, --士兵强化
-	ZhuChengOpen     = {level=20,}  --主城
+	ZhuChengOpen     = {level=20,},  --主城
+	GvgOpen          = {level=35,}  --公会战
 }
 
 --等级提升提示
