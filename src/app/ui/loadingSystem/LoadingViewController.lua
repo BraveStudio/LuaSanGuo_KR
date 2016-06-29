@@ -350,8 +350,19 @@ function LoadingViewController:startGame_()
     Functions.setAdbrixTag("firstTimeExperience","update_complete")
     Functions.clearGameData()
 
-    -- PromptManager:closeLoadingPrompt()
-    Functions.EnterGame() 
+
+    local channelId = ""
+    Functions.callAnySdkFuc(function( )
+        channelId = PluginChannel:getChannelId()
+    end)
+    if channelId ~= "000255" then 
+        Functions.EnterGame() 
+    else
+        require("app.common.GameStaticInit")
+        require("app.common.GameInit")
+        require("app.configs.server.init")
+    end          
+    
 end
 
 return LoadingViewController

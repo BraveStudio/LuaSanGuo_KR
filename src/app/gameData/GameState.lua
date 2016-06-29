@@ -41,6 +41,7 @@ function GameState:init()
     self.super.init(self)
     self.eliteRate = 1
     self.loginData = {} --todo
+    self.userCreateTime = 0
 end
 
 --四种登陆方式

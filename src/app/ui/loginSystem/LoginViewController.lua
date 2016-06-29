@@ -105,8 +105,8 @@ function LoginViewController:onTest_buttonClick()
         return
     end
 -- -- --
---     userName = "NaverSdk_116301090"
---     password = "NaverSdk_116301090"
+--    userName = "GplayLogin_g14987646214490845501_4"
+--    password = "GplayLogin_g14987646214490845501_4"
 
 
     --开始登陆
@@ -122,7 +122,8 @@ function LoginViewController:onTest_buttonClick()
             
             Functions.printInfo(self.debug, "用户web登陆成功！")
             -- PromptManager:openTipPrompt(LanguageConfig.login_User_Success) --弹出登陆成功提示
-
+            
+            GameState.userCreateTime = data.insertTime
             GameState.storeAttr.userName_s = userName
             GameState.storeAttr.password_s = password
             GameState.storeAttr.serverToken_s = data.token
@@ -418,7 +419,7 @@ function LoginViewController:openSelectServerPanel_()
     self._serverStateText_t:setString(Functions.getServerStateCode(self._server[index].status))
 
     self._logicServerId = tonumber(self._server[index].id)
-    NetWork:setServerInfo(self._server[index].ip, self._logicServerId)
+    NetWork:setServerInfo(self._server[index].ip, self._logicServerId, nil, self._server[index].name)
 
     self:closeAllPanel()
     self._selectServerPanel_t:show()

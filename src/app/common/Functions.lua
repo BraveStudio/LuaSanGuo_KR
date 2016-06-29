@@ -2545,15 +2545,31 @@ end
 --@target
 --@prizedata:{{1,4,2},,,}
 --@prizeNum:需要显示的礼包个数
-function Functions.createPrizeNode(target,prizeData,prizeNum)
+function Functions.createPrizeNode(target,prizeData,isShowInf)
     local prizeNode1 = target:getChildByName("prize1")
     local prizeNode2 = target:getChildByName("prize2")
     local awardItemDistance = prizeNode2:getPositionX() - prizeNode1:getPositionX()
     local awardFirstPos = { x = prizeNode1:getPositionX(), y = prizeNode1:getPositionY() }
     local awardItemScale = prizeNode1:getScale()
-    local num = prizeNum or #prizeData
+    local num = #prizeData
     for i=1, num do           
         local disNode = Functions.createPartNode({ nodeId = prizeData[i][1], nodeType = prizeData[i][2], count = prizeData[i][3]})
+        if isShowInf ~= nil then 
+            local onDisNodeClick = function()
+                PromptManager:openInfPrompt({type = prizeData[i][2],id = prizeData[i][1],target = disNode},true)
+            end
+            local touchObj = nil 
+            if prizeData[i][2] == ItemType.CardFragment or prizeData[i][2] == ItemType.HeroCard then
+                touchObj = disNode:getChildByName("model"):getChildByName("frame")
+                -- touchObj:getChildByName("frame"):setTouchEnabled(false)
+            elseif prizeData[i][2] == ItemType.Prop then 
+                touchObj = disNode:getChildByName("disImage")
+            end   
+            if touchObj ~= nil then 
+                Functions.setEnabledWidget(touchObj, true)
+                touchObj:onTouch(Functions.createClickListener(onDisNodeClick, ""))
+            end
+        end
         disNode:setTag(i)  
         disNode:setVisible(true)
         if disNode ~= nil then                      
@@ -3194,10 +3210,16 @@ function Functions.EnterGame(data)
     require("app.common.GameInit")
     require("app.configs.server.init")
     
-    if G_IsUseSDK then
+    if G_IsUseSDK then       
+        -- local channelId = ""
+        -- Functions.callAnySdkFuc(function( )
+        --     channelId = PluginChannel:getChannelId()
+        -- end)
+        -- if channelId ~= "000255" then 
         GameCtlManager:goTo("app.ui.startupSceneSystem.StartupSceneViewController", data)
-    else
-        GameCtlManager:goTo("app.ui.loginSystem.LoginViewController", data)
+        -- end        
+    else       
+        GameCtlManager:goTo("app.ui.loginSystem.LoginViewController", data)        
     end
 
     -- ResManager:loadCommonRes(function()
@@ -3237,6 +3259,7 @@ function Functions.sdkLoginHandler(userId)
             Functions.setAdbrixTag("firstTimeExperience","login_complete")
 
             g_ServerList = data.server
+            GameState.userCreateTime = data.insertTime
             GameCtlManager:goTo("app.ui.loginSystem.LoginViewController",
              { server = g_ServerList, loginType = LoginType.Sdk_Login })
         else

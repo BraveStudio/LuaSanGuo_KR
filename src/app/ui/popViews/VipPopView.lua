@@ -351,7 +351,7 @@ function VipPopView:displayPage(page,index,model)
     local prizePanel = page:getChildByName("prizePanel")
     prizePanel:setTouchEnabled(false)
     -- self:disPlayPrize(prizePanel,index)
-    Functions.createPrizeNode(prizePanel,g_VipCgf.VipLevelPrize[index]) 
+    Functions.createPrizeNode(prizePanel,g_VipCgf.VipLevelPrize[index],true) 
 
     --领取礼包按钮
     local rewardBt = page:getChildByName("rewardBt")
@@ -429,6 +429,7 @@ function VipPopView:displayPage(page,index,model)
     end
     Functions.bindListWithData(page:getChildByName("listView"), g_vipConfig.vipPrivilege[index], PrivilegeHandler) 
 end
+
 --添加VIP礼包
 function VipPopView:addVipPrize(prizeData)
 	for i=1, #prizeData do	        

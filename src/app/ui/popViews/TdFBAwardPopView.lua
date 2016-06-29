@@ -89,7 +89,7 @@ function TdFBAwardPopView:refreshAwardList(event)
     local tdAwardItems = {}
     for k, v in ipairs(event.data.list) do 
         tdAwardItems[#tdAwardItems+1] = Factory:createTdFbAwardItem(v)
-        if k == event.data.reqinfo.idx then
+        if event.data.reqinfo.order ~= 0 and k == event.data.reqinfo.idx then
             tdAwardItems[#tdAwardItems].eventAttr.isApply = true 
         end
     end

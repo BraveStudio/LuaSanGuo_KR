@@ -73,11 +73,12 @@ end
 --ItemType.Prop,
 --time显示提示时间默认1.5
 --target相对显示位置的目标
-function PromptManager:openInfPrompt(data)
+function PromptManager:openInfPrompt(data,isShowCloseBt)
     if data.type == ItemType.HeroCard or data.type == ItemType.Prop or data.type == ItemType.CardFragment then
         if data.id > 0 then
             if not self.tipPanel3View then
                 self.tipPanel3View = CommonWidgets:getInfPanel()
+                 self.tipPanel3View:setTouchEnabled(true)
                 if data.target ~= nil then
                     local pos = data.target:getParent():convertToWorldSpace({ x = data.target:getPositionX(), y = data.target:getPositionY()})
                     local newPos = cc.p(0,0)
@@ -97,13 +98,23 @@ function PromptManager:openInfPrompt(data)
                 local name = infTips:getChildByName("name")
                 local inf = infTips:getChildByName("inf")
                 local state = infTips:getChildByName("state")
+
                 if data.type == ItemType.HeroCard then     
                     local head = infTips:getChildByName("head")    
                     local headObj = infTips:getChildByName("head"):getChildByName("model"):getChildByName("head")  
                     headObj:ignoreContentAdaptWithSize(true)
                     Functions.getHeroHead(head,{id = data.id},1,true)            
                     name:setString(ConfigHandler:getHeroNameOfId(data.id))             
-                    inf:setString(ConfigHandler:getHeroDescriptionId(data.id))             
+                    inf:setString(ConfigHandler:getHeroDescriptionId(data.id))    
+
+                    local touchObj = infTips:getChildByName("head"):getChildByName("model"):getChildByName("frame") 
+                    Functions.setEnabledWidget(touchObj, true) 
+                    touchObj:onTouch(Functions.createClickListener(function( )
+                        self.tipPanel3View:removeFromParent()
+                        self.tipPanel3View = nil
+                        GameCtlManager.currentController_t:openChildView("app.ui.popViews.CardInfoPopView", { data = { data.id, 3}})     
+                    end, ""))    
+
                     local heroNum = #HeroCardData:getAllHeroData(handler(HeroCardData,HeroCardData.filterHeroOfSameId),data.id)
                     if heroNum > 0 then
                         state:setString(string.format(LanguageConfig.language_2_13,heroNum))
@@ -129,8 +140,17 @@ function PromptManager:openInfPrompt(data)
                     local headObj = infTips:getChildByName("head"):getChildByName("model"):getChildByName("head")  
                     headObj:ignoreContentAdaptWithSize(true)
                     local piece = infTips:getChildByName("head"):getChildByName("model"):getChildByName("piece") 
-                    piece:setVisible(true)
-                    Functions.getHeroHead(head,{id = data.id},1,true)            
+                    piece:setVisible(true)                    
+                    Functions.getHeroHead(head,{id = data.id},1,true)   
+
+                    local touchObj = infTips:getChildByName("head"):getChildByName("model"):getChildByName("frame") 
+                    Functions.setEnabledWidget(touchObj, true) 
+                    touchObj:onTouch(Functions.createClickListener(function( )
+                        self.tipPanel3View:removeFromParent()
+                        self.tipPanel3View = nil
+                        GameCtlManager.currentController_t:openChildView("app.ui.popViews.CardInfoPopView", { data = { data.id, 3}})     
+                    end, ""))
+
                     name:setString(ConfigHandler:getHeroNameOfId(data.id) .. "(" .. LanguageConfig.language_8_60 .. ")")             
                     inf:setString(ConfigHandler:getHeroDescriptionId(data.id)) 
                     local fragmentNum = 0
@@ -149,12 +169,21 @@ function PromptManager:openInfPrompt(data)
                 if data.time ~= nil then
                     time = data.time
                 end 
-
-                transition.execute(self.tipPanel3View, cc.DelayTime:create(time), {
-                    onComplete = function()
+                if isShowCloseBt ~= nil and isShowCloseBt then 
+                    local closeBt = infTips:getChildByName("closeBt")
+                    closeBt:loadTextures("tyj/dynamicUI_res/close.png","tyj/dynamicUI_res/close.png","tyj/dynamicUI_res/close.png")
+                    closeBt:setVisible(true)
+                    closeBt:onTouch(Functions.createClickListener(function( )
                         self.tipPanel3View:removeFromParent()
                         self.tipPanel3View = nil
-                    end})
+                    end, ""))
+                else
+                    transition.execute(self.tipPanel3View, cc.DelayTime:create(time), {
+                        onComplete = function()
+                            self.tipPanel3View:removeFromParent()
+                            self.tipPanel3View = nil
+                        end})
+                end
                 Functions.setCenterOfNode(self.tipPanel3View)
                 -- GameCtlManager:getCurrentController().rootScene_t:addChild(self.tipPanel3View)
                 GameCtlManager:addCurBottomLayer(self.tipPanel3View)

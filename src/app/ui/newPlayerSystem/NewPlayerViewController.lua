@@ -109,7 +109,9 @@ function NewPlayerViewController:onSurebtClick()
         PlayerData.eventAttr.m_introSec = self._selectSex
         PlayerData.eventAttr.m_imgID = event.img
         PlayerData.eventAttr.m_sex = self._selectSex
-
+        Functions.callAnySdkFuc(function( )
+            PluginChannel:submitLoginGameRole("2")
+        end)
         --sdk
         Functions.setAdbrixTag("firstTimeExperience","loading_2_try")
 

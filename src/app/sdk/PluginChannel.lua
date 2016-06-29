@@ -1,5 +1,5 @@
 PluginChannel = {}
-require("cocos.cocos2d.json")
+local cjson = cjson.new()
 local NoticeManager = require("app.ui.noticeSystem.NoticeManager")
 local scheduler = require("app.common.scheduler")  
 local user_plugin = nil    --获取用户插件
@@ -15,6 +15,10 @@ function PluginChannel:onUserResult( plugin, code, msg )
         if customParam.showToolBar ~= nil and tonumber(customParam.showToolBar) == 1 then
             self:showToolBar() 
         end
+        local channelId = self:getChannelId()
+        if channelId == "000255" then 
+            self:login()
+        end
     elseif code == UserActionResultCode.kInitFail then
         PromptManager:openTipPrompt("sdk初始化失败！")
     elseif code == UserActionResultCode.kLoginSuccess then
@@ -28,15 +32,22 @@ function PluginChannel:onUserResult( plugin, code, msg )
             end)
         end)
     elseif code == UserActionResultCode.kLoginNetworkError then
-        PromptManager:openTipPrompt("网络错误,请重试！")
+       if GameCtlManager.currentController_t.class.__cname ~= "StartupSceneViewController" then
+            GameCtlManager:goTo("app.ui.startupSceneSystem.StartupSceneViewController")
+       end
     elseif code == UserActionResultCode.kLoginNoNeed then
-       PromptManager:openTipPrompt("不需要登录！")
+
     elseif code == UserActionResultCode.kLoginFail then
-       PromptManager:openTipPrompt("登录失败！")
+       if GameCtlManager.currentController_t.class.__cname ~= "StartupSceneViewController" then
+            GameCtlManager:goTo("app.ui.startupSceneSystem.StartupSceneViewController")
+       end
     elseif code == UserActionResultCode.kLoginCancel then
-       PromptManager:openTipPrompt("登录取消")
+       if GameCtlManager.currentController_t.class.__cname ~= "StartupSceneViewController" then
+            GameCtlManager:goTo("app.ui.startupSceneSystem.StartupSceneViewController")
+       end
     elseif code == UserActionResultCode.kLogoutSuccess then
        Player:logout(true)
+       self:login()
     elseif code == UserActionResultCode.kLogoutFail then
        PromptManager:openTipPrompt("注销失败")
     elseif code == UserActionResultCode.kPlatformEnter then
@@ -46,7 +57,14 @@ function PluginChannel:onUserResult( plugin, code, msg )
     elseif code == UserActionResultCode.kPausePage then
         --do
     elseif code == UserActionResultCode.kExitPage then
-        --do
+        Functions.callAnySdkFuc(function()
+            Analytics:stopSession()
+            self:submitLoginGameRole("4")
+            local scheduler = require("app.common.scheduler")  
+            scheduler.performWithDelayGlobal(function ( )
+                cc.Director:getInstance():endToLua() 
+            end, 0.2)
+        end)
     elseif code == UserActionResultCode.kAntiAddictionQuery then
         --do
     elseif code == UserActionResultCode.kRealNameRegister then
@@ -65,22 +83,27 @@ function PluginChannel:onPayResult( code, msg, info )
     print("code:"..code..",msg:"..msg)
     -- NoticeManager:openTips(GameCtlManager.currentController_t, {title = "iap-code:"..code..",msg:"..msg ,type = 5}) 
     PromptManager:closeHttpLinkPrompt() 
+    local customParam = self:getCustomParam()
     if code == PayResultCode.kPaySuccess then
-        NoticeManager:openTips(GameCtlManager.currentController_t, {title = LanguageConfig.language_0_48 ,type = 5,isShowNpc = "npc/NPC_lb_gold.png"}) 
+        -- NoticeManager:openTips(GameCtlManager.currentController_t, {title = LanguageConfig.language_0_48 ,type = 5,isShowNpc = "npc/NPC_lb_gold.png"}) 
+        Analytics:onChargeSuccess()
     elseif code == PayResultCode.kPayFail then
         PromptManager:openTipPrompt("支付失败！")
+        Analytics:onChargeFail()
     elseif code == PayResultCode.kPayCancel then
-        PromptManager:openTipPrompt(LanguageConfig.language_9_79)
+        NoticeManager:debugDisplay(customParam.debug, tostring(self:getOrderId()), function()
+            PromptManager:openTipPrompt(LanguageConfig.language_9_79)
+        end)
     elseif code == PayResultCode.kPayNetworkError then
         PromptManager:openTipPrompt("网络错误,请重试！")
     elseif code == PayResultCode.kPayProductionInforIncomplete then
-        --do
+
     elseif code == PayResultCode.kPayInitSuccess then
-        PromptManager:openTipPrompt("支付初始化成功！")
+
     elseif code == PayResultCode.kPayInitFail then
         --do
     elseif code == PayResultCode.kPayNowPaying then
-        --do
+
     elseif code == PayResultCode.kPayRechargeSuccess then
 
     end
@@ -118,6 +141,13 @@ function PluginChannel:login()
     if user_plugin ~= nil then
         user_plugin:setActionListener(handler(self,self.onUserResult))
         user_plugin:login()
+    end
+end
+
+function PluginChannel:exit()
+    local user_plugin = agent:getUserPlugin();
+    if nil ~= user_plugin and user_plugin:isFunctionSupported("exit") then
+        user_plugin:callFuncWithParam("exit");
     end
 end
 function PluginChannel:getCustomParam()
@@ -194,10 +224,25 @@ function PluginChannel:antiAddictionQuery()
     end
 end
 
-function PluginChannel:submitLoginGameRole()
+function PluginChannel:submitLoginGameRole(dataType)
     if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("submitLoginGameRole") then
-            local data = PluginParam:create({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
+
+            local roleLevelTime = ""
+            local gongHuiId = ""
+            if dataType == "1" or dataType == "2" then
+                roleLevelTime = "-1"
+            else
+                roleLevelTime = tostring(TimerManager:getCurrentSecond())
+            end
+            if PlayerData.eventAttr.m_tongID ~= 0 then 
+                gongHuiId = tostring(PlayerData.eventAttr.m_tongID)
+            end
+            local data = PluginParam:create({roleId=tostring(PlayerData.eventAttr.m_uid),
+                roleName=PlayerData.eventAttr.m_name,roleLevel=tostring(PlayerData.eventAttr.m_level),
+                zoneId=tostring(NetWork.serverId),zoneName=NetWork.serverName,dataType=dataType,vipLevel = tostring(VipData.eventAttr.m_vipLevel),
+                roleCTime = GameState.userCreateTime,roleLevelMTime = roleLevelTime,
+                balance = tostring(PlayerData.eventAttr.m_gold),partyName = gongHuiId })
             user_plugin:callFuncWithParam("submitLoginGameRole", data)
         end
     end
@@ -235,8 +280,8 @@ function PluginChannel:pay(index,data)
         end
         local info = {
                 Product_Price = data.money, 
-                Product_Id = self:getProductId(index) or "",  
-                Product_Name = self:getProductName(index) or "",  
+                Product_Id = self:getProductId(index) or "10000",  
+                Product_Name = self:getProductName(index) or "10000",  
                 Server_Id = NetWork.serverId,  
                 Product_Count = "1",    
                 Role_Id = tostring(PlayerData.eventAttr.m_uid),  
@@ -249,8 +294,19 @@ function PluginChannel:pay(index,data)
             print("value: " .. type(value))
             value:payForProduct(info)
             scheduler.performWithDelayGlobal(function ( )
+               Analytics:onChargeRequest(index,data)
+            end, 1)
+            scheduler.performWithDelayGlobal(function ( )
                ProtocolIAP:resetPayState()
             end, 3)
+        end
+    end
+end
+function PluginChannel:getOrderId()
+    if iap_plugin_maps ~= nil then
+        for key, value in pairs(iap_plugin_maps) do
+            local order_id = value:getOrderId()
+            return order_id
         end
     end
 end

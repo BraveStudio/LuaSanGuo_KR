@@ -30,7 +30,7 @@ function TimerManager:init()
     
     --服务器时间更新监听
     local onServerTime = function(event)
-        TimerManager.currentTime = event.st
+        TimerManager.currentTime = math.floor(event.st)
         TimerManager.currentWday = event.wday
     end
     NetWork:addNetWorkListener({ 2, 0 },onServerTime)
@@ -56,7 +56,7 @@ function TimerManager:getCurrentWday()
 end
 --同步时间
 function TimerManager:setCurrentSecond(time)
-    TimerManager.currentTime = time
+    TimerManager.currentTime = math.floor(time)
 end
 
 --格式化时间

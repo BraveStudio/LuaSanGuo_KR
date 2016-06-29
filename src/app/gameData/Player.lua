@@ -118,11 +118,7 @@ function Player:onLogin()
             GameCtlManager:goTo("app.ui.mainSystem.MainViewController")
         end  
 
-        if G_isFirstStartApp then 
-            Functions.callAnySdkFuc(function( )
-                Analytics:setAccount()
-            end)
-        end
+
         return true
     end
 

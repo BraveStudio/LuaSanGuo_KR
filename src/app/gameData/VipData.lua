@@ -59,7 +59,7 @@ function VipData:init()
             local tipsStr = string.format(LanguageConfig.language_task_speaker_12,event.curPayGold)
             PromptManager:openSpeakerPrompt(tipsStr,nil,LanguageConfig.language_task_15)
         end
-        NetWork:addNetWorkListener({25,2}, Functions.createNetworkListener(onServerRequest, true, "ret")) 
+        NetWork:addNetWorkListener({25,2}, Functions.createNetworkListener(onServerRequest, false, "ret")) 
     end)
 end
 --发送vip等级领奖请求

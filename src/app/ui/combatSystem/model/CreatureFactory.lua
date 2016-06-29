@@ -89,9 +89,11 @@ function CreatureFactory:createHero(heroInfo, partHeros, equipInfos, campType, v
     creature:updateAttrExOfZx(combatType, heroZxID, campType)
 
     -- 天梯战斗中，放大基础血量倍数
-    if combatType == CombatCenter.CombatType.RB_PVPPlayerData or combatType == CombatCenter.CombatType.RB_PVPHistoryData then
-        creature:setHp(creature:getHp() + g_pvpFightHpScale*pm_GetCardHp({ heroInfo = { id = heroInfo.id,
-            level = heroInfo.level, class = heroInfo.class }}))
+    if G_CurrentLanguage ~= "ch" then
+        if combatType == CombatCenter.CombatType.RB_PVPPlayerData or combatType == CombatCenter.CombatType.RB_PVPHistoryData then
+            creature:setHp(creature:getHp() + g_pvpFightHpScale*pm_GetCardHp({ heroInfo = { id = heroInfo.id,
+                level = heroInfo.level, class = heroInfo.class }}))
+        end
     end
 
 

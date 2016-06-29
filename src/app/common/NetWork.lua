@@ -189,12 +189,14 @@ function NetWork:logoutServer()
 end
 
 --网络交互
-function NetWork:setServerInfo(serverIp, serverId, port)
+function NetWork:setServerInfo(serverIp, serverId, port, name)
     if GetNetConfig() == NetWork.NetWorkType.Socket then
         self.serverId = serverId
+        self.serverName = name
         SetServerIp(serverIp, serverId)
     else
         self.serverId = serverId
+        self.serverName = name
         SetServerIp(serverIp, port, serverId)
     end
 end

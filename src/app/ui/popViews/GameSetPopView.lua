@@ -86,7 +86,13 @@ function GameSetPopView:onLogoutbtClick()
     Functions.printInfo(self.debug,"Logoutbt button is click!")
     if not self.logouting then
         self.logouting = true
-        Player:logout(true)
+        if G_IsUseSDK and G_SDKType == 6 then 
+            Functions.callAnySdkFuc(function( )
+                PluginChannel:logout()
+            end)
+        else
+            Player:logout(true)
+        end
         -- Player:reEnterGame()
     end
 end
@@ -175,8 +181,14 @@ function GameSetPopView:onDisplayView()
     self.naverText = self.csbNode:getChildByName("Panel_1"):getChildByName("naverText")
 
     if G_CurrentLanguage == "ch" then
-        self._logoutBt_t:setVisible(false)
-        self._changeServerBt_t:setPositionX(self._changeServerBt_t:getParent():getSize().width/2)
+        local currentChannel = ""
+        Functions.callAnySdkFuc(function( )
+            currentChannel = PluginChannel:getChannelId()
+        end)
+        if currentChannel ~= "000550" then 
+            self._logoutBt_t:setVisible(false)
+            self._changeServerBt_t:setPositionX(self._changeServerBt_t:getParent():getSize().width/2)
+        end      
     end
 
     if GameState:getLoginType() == "NaverSdk" then

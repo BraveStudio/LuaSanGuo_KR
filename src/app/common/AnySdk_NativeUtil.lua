@@ -12,22 +12,13 @@ function NativeUtil:init()
 
     GameEventCenter:addEventListener("ENTER_MAINVIEW_EVENT_NAME", function ( ) 
        VipData:needToConsumProduct()
-        if isOpenPopup then  
-            isOpenPopup = false
-            Functions.callJavaFuc(function( )
-               self:javaCallHanler({command = "initNaverIAP"})
-               self:javaCallHanler({command = "initNaverCafe",playerName = PlayerData.eventAttr.m_name})
-                if PlayerData.eventAttr.m_guideStageId == 0 then
-                   -- for i = 1,#SDKConfig.popUpKey do 
-                    self:javaCallHanler({command = "openPopUp",popUpKey = "lobby"})
-                    if G_isFirstStartApp then 
-                        self:javaCallHanler({command = "openCafeHome"})
-                        G_isFirstStartApp = false
-                    end 
-                   -- end
-               end
+       if G_isFirstStartApp then 
+            Functions.callAnySdkFuc(function( )
+                Analytics:setAccount()
+                PluginChannel:submitLoginGameRole("1")
+                G_isFirstStartApp = false
             end)
-        end
+        end  
     end)
 end
 
@@ -170,23 +161,26 @@ function NativeUtil._JniBackCall(msg)
             
             elseif v == "exitApp" then
                 if not GameCtlManager.isViewLoading then
-                    local handler = function()
-                        -- NativeUtil:javaCallHanler({command = "exitApp"})
-                        Functions.callAnySdkFuc(function()
-                            Analytics:stopSession()
-                        end)
-                        cc.Director:getInstance():endToLua() 
-                    end 
-                    local handler1 = function()
-                        isHavePopup = false
-                    end
-                    if not isHavePopup then
-                        isHavePopup = true
-                        Functions.setPopupKey("appclosing_end")
-                        scheduler.performWithDelayGlobal(function ( )
-                            NoticeManager:openExitTips({title = LanguageConfig.language_0_45,handler = handler,handler1 = handler1,isShowNpc = "npc/NPC_sy_exit.png"}) 
-                        end, 0.3)
-                    end
+                    -- local handler = function()
+                    --     -- NativeUtil:javaCallHanler({command = "exitApp"})
+                    --     Functions.callAnySdkFuc(function()
+                    --         Analytics:stopSession()
+                    --         PluginChannel:submitLoginGameRole("4")
+                    --     end)
+                    --     cc.Director:getInstance():endToLua() 
+                    -- end 
+                    PluginChannel:exit()
+                    -- local handler1 = function()
+                    --     isHavePopup = false
+                    -- end
+                    -- if not isHavePopup then
+                    --     isHavePopup = true
+                    --     Functions.setPopupKey("appclosing_end")
+
+                    --     scheduler.performWithDelayGlobal(function ( )
+                    --         NoticeManager:openExitTips({title = LanguageConfig.language_0_45,handler = handler,handler1 = handler1,isShowNpc = "npc/NPC_sy_exit.png"}) 
+                    --     end, 0.3)
+                    -- end
                 end
             elseif v == "needToLoginAppStore" then 
                 local handler = function()

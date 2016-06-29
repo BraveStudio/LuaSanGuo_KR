@@ -65,16 +65,16 @@ function Analytics:setAccount()
 	end
 end
 
-function Analytics:onChargeRequest()
+function Analytics:onChargeRequest(index,data)
 	if analytics_plugin ~= nil then
 		if analytics_plugin:isFunctionSupported("onChargeRequest") then
 			local paramMap = {
-					Order_Id = "123456",
-					Product_Name = "60钻石",
-					Currency_Amount = "6",
+					Order_Id = PluginChannel:getOrderId(),
+					Product_Name = PluginChannel:getProductName(index) or "10000",
+					Currency_Amount = tostring(data.money),
 					Currency_Type = "CNY",
 					Payment_Type = "1",
-					Virtual_Currency_Amount = "6",
+					Virtual_Currency_Amount = tostring(data.gold),
 				}
 			local data = PluginParam:create(paramMap)
 			analytics_plugin:callFuncWithParam("onChargeRequest", data)
@@ -82,13 +82,13 @@ function Analytics:onChargeRequest()
 	end
 end
 
-function Analytics:onChargeOnlySuccess()
+function Analytics:onChargeOnlySuccess(productInf)
 	if analytics_plugin ~= nil then
 		if analytics_plugin:isFunctionSupported("onChargeOnlySuccess") then
 			local paramMap = {
-					Order_Id = "123456",
-					Product_Name = "test",
-					Currency_Amount = tostring(2.0),
+					Order_Id = productInf.Order_Id,
+					Product_Name = productInf.Product_Name,
+					Currency_Amount = productInf.Product_Name.Currency_Amount,
 					Currency_Type = "CNY",
 					Payment_Type = "1",
 					Virtual_Currency_Amount = tostring(100),
@@ -102,7 +102,7 @@ end
 function Analytics:onChargeSuccess()
 	if analytics_plugin ~= nil then
 		if analytics_plugin:isFunctionSupported("onChargeSuccess") then
-			local data = PluginParam:create("123456")
+			local data = PluginParam:create(PluginChannel:getOrderId())
 			analytics_plugin:callFuncWithParam("onChargeSuccess", data)
 		end
 	end
@@ -112,8 +112,8 @@ function Analytics:onChargeFail()
 	if analytics_plugin ~= nil then
 		if analytics_plugin:isFunctionSupported("onChargeFail") then
 			local paramMap = {
-					Order_Id = "123456",
-					Fail_Reason = "test",
+					Order_Id = PluginChannel:getOrderId(),
+					Fail_Reason = "default",
 				}
 			local data = PluginParam:create(paramMap)
 			analytics_plugin:callFuncWithParam("onChargeFail", data)
