@@ -45,15 +45,20 @@ function GameState:init()
 end
 
 --四种登陆方式
--- defaultLogin NaverSdk CstoreLogin GplayLogin AstoreLogin
+-- defaultLogin NaverSdk CstoreLogin GplayLogin AstoreLogin 
 function GameState:getLoginType()
 	local loginPlatformData= string.split(GameState.storeAttr.NaverUserId_s,"_")
     local loginName = ""
+
     if GameState.storeAttr.NaverUserId_s == "" then
         loginName = "defaultLogin"
     else
         loginName = loginPlatformData[1]
     end
+
+    Functions.callAnySdkFuc(function()
+        loginName = PluginChannel:getChannelId()
+    end)
     
     return loginName
 end

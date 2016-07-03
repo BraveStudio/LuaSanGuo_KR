@@ -246,13 +246,13 @@ function CreatureModel:getMvSpd()
     return self.m_raw_mv_spd
 end
 
-function CreatureModel:updateAttrExOfZx(combatType, zxId, campType)
+function CreatureModel:updateAttrExOfZx(combatType, zxId, campType, time)
 
     if combatType ~= CombatCenter.CombatType.RB_GVG then
         local zxType  = ConfigHandler:getZxEffectType(zxId)
         local zxValue = ConfigHandler:getZxEffectValue(zxId)
 
-        local _, doubleBuffName = Functions.getTianTiBuffZX()
+        local _, doubleBuffName = Functions.getTianTiBuffZX(time)
         local isDouble =  doubleBuffName == "language_" .. ConfigHandler:getZxNameOfId(zxId)
         if campType and (combatType == CombatCenter.CombatType.RB_PVPPlayerData or 
             combatType == CombatCenter.CombatType.RB_PVPHistoryData) and isDouble then

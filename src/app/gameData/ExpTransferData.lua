@@ -50,7 +50,7 @@ function ExpTransferData:SendExpTransfer(datas, listener)
         
         --埋点
         Functions.callAnySdkFuc(function()
-            Analytics:logEvent("CS", {level = toString(PlayerData.eventAttr.m_level), proportion = toString(self:getMaiDianNum())})
+            Analytics:logEvent("CS", {level = tostring(PlayerData.eventAttr.m_level), proportion = tostring(self:getMaiDianNum())})
         end)
     end
 

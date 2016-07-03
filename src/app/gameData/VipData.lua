@@ -51,7 +51,7 @@ function VipData:init()
             PlayerData.eventAttr.m_gold = event.gold    
             PlayerData.eventAttr.m_vipFirstFlag = event.firstFlag
             VipData:updateVipRewardFlag()    
-
+            Analytics:onChargeSuccess()
             GameState.storeAttr.curNonce_s = ""
             GameState.storeAttr.paymentSeq_s = ""
             GameState.storeAttr.curProductCode_s = ""

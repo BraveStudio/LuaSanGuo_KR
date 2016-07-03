@@ -68,8 +68,9 @@ end
 function Analytics:onChargeRequest(index,data)
 	if analytics_plugin ~= nil then
 		if analytics_plugin:isFunctionSupported("onChargeRequest") then
+			GameState.storeAttr.paymentSeq_s = PluginChannel:getOrderId()
 			local paramMap = {
-					Order_Id = PluginChannel:getOrderId(),
+					Order_Id = GameState.storeAttr.paymentSeq_s,
 					Product_Name = PluginChannel:getProductName(index) or "10000",
 					Currency_Amount = tostring(data.money),
 					Currency_Type = "CNY",
@@ -102,23 +103,25 @@ end
 function Analytics:onChargeSuccess()
 	if analytics_plugin ~= nil then
 		if analytics_plugin:isFunctionSupported("onChargeSuccess") then
-			local data = PluginParam:create(PluginChannel:getOrderId())
+			local data = PluginParam:create(GameState.storeAttr.paymentSeq_s)
 			analytics_plugin:callFuncWithParam("onChargeSuccess", data)
 		end
 	end
+	GameState.storeAttr.paymentSeq_s = ""
 end
 --充值失败时
 function Analytics:onChargeFail()
 	if analytics_plugin ~= nil then
 		if analytics_plugin:isFunctionSupported("onChargeFail") then
 			local paramMap = {
-					Order_Id = PluginChannel:getOrderId(),
+					Order_Id = GameState.storeAttr.paymentSeq_s,
 					Fail_Reason = "default",
 				}
 			local data = PluginParam:create(paramMap)
 			analytics_plugin:callFuncWithParam("onChargeFail", data)
 		end
 	end
+	GameState.storeAttr.paymentSeq_s = ""
 end
 --item = {3,4,2} currency:单价  消耗元宝时
 function Analytics:onPurchase(item,currency)

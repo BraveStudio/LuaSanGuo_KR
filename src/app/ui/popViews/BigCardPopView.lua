@@ -64,7 +64,7 @@ function BigCardPopView:onPanel_leftClick()
     if self.pageIdx <= 1 then
         self._Button_left_t:setVisible(false)--返回到第一个界面时没有调用self:insertPage()，所以要提前做判断
     end
-    if self.pageIdx < 7 then
+    if self.pageIdx < 10 then
         self._Button_right_t:setVisible(true)
     end
 end
@@ -79,7 +79,7 @@ function BigCardPopView:onPanel_rightClick()
     end
     ----------------------临时修改现代武将只显示一张高清大图
     
-    if self.pageIdx >= 7 then
+    if self.pageIdx >= 10 then
         self._Button_right_t:setVisible(false)
         return
     end
@@ -87,7 +87,7 @@ function BigCardPopView:onPanel_rightClick()
 --        --弹出报错信息
 --        PromptManager:openTipPrompt(LanguageConfig.language_BigCard_1)
 --    end
-    if 7 > self.pageIdx then--self._card.m_class
+    if 10 > self.pageIdx then--self._card.m_class
         self.pageIdx = self.pageIdx + 1
         self:insertPage()
         --弹出动作
@@ -180,6 +180,7 @@ function BigCardPopView:insertPage()
     local newPage = self._ScrollView_card_t
     local text =  "Panel_card_"..tostring(iIdx)
     local spr = nil
+    local opopo = self.num
     if iIdx > self.num  then
         local Sprite = "Spt_"..tostring(iIdx)
         local words = "Text_"..tostring(iIdx)
@@ -212,7 +213,7 @@ function BigCardPopView:insertPage()
         spr:setScale(1)
     end
     
-    if self.pageIdx >= 7 then
+    if self.pageIdx >= 10 then
         self._Button_right_t:setVisible(false)
     end
     if self.pageIdx <= 1 then

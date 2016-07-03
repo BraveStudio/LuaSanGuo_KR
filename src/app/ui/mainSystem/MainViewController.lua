@@ -818,11 +818,14 @@ function MainViewController:initUiTitleState_()
 				Functions.setGraySprite(self._mainCityTitil_t, not ModelManager:isModelOpenOfName("city"))
 			end)
 
-	--工会战
-	Functions.setGraySprite(self._gvgTitle_t, not ModelManager:isModelOpenOfName("guildBattle"))
-	Functions.bindUiWithModelAttr(self._gvgTitle_t, PlayerData, "m_level", function()
-				Functions.setGraySprite(self._gvgTitle_t, not ModelManager:isModelOpenOfName("guildBattle"))
-			end)
+   	if G_CurrentLanguage == "ch" then
+		--工会战
+		Functions.setGraySprite(self._gvgTitle_t, not ModelManager:isModelOpenOfName("guildBattle"))
+		Functions.bindUiWithModelAttr(self._gvgTitle_t, PlayerData, "m_level", function()
+					Functions.setGraySprite(self._gvgTitle_t, not ModelManager:isModelOpenOfName("guildBattle"))
+				end)
+	end
+	
 end
 
 function MainViewController:moveBtCenter(button)

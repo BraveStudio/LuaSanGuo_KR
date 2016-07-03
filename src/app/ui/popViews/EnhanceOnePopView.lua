@@ -679,7 +679,7 @@ function EnhanceOnePopView:sendCardUPLevel()
 
         --埋点
         Functions.callAnySdkFuc(function()
-            Analytics:logEvent("WJSJ", {level = toString(PlayerData.eventAttr.m_level)})
+            Analytics:logEvent("WJSJ", {level = tostring(PlayerData.eventAttr.m_level)})
         end)
     end
     local met = EnhanceData.DeputyData

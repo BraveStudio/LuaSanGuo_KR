@@ -233,7 +233,7 @@ function SoldiersPopView:onButton_up_levelClick()
             self:showSoldiersBZ()
             --埋点
             Functions.callAnySdkFuc(function()
-                Analytics:logEvent("XBSJ", {level = toString(PlayerData.eventAttr.m_level)})
+                Analytics:logEvent("XBSJ", {level = tostring(PlayerData.eventAttr.m_level)})
             end)
         else
             --弹出报错信息
@@ -295,7 +295,7 @@ function SoldiersPopView:onButton_ladderClick()
         self:showSoldiersBZ()
         --埋点
         Functions.callAnySdkFuc(function()
-            Analytics:logEvent("XBJJ", {level = toString(PlayerData.eventAttr.m_level)})
+            Analytics:logEvent("XBJJ", {level = tostring(PlayerData.eventAttr.m_level)})
         end)
     end
 

@@ -827,7 +827,7 @@ local languageConfig_ch =
 
         ui_xueZhan_1 = "剩余",
 
-        ui_payInf_1 = "首充任意金额3倍赠送",
+        ui_payInf_1 = "首充任意金额2倍赠送",
         --tyj----end
         --lk--
         language_City_1 = "任务次数已用完",

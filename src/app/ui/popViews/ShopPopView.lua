@@ -132,7 +132,7 @@ function ShopPopView:onDisplayView(data)
         
         self._Text_pop_cargo_name_t:setText(ConfigHandler:getHeroNameOfId(self.shopModel.m_ItemID))
         Functions.initLabelOfString(self._Text_Pop_info_t, ConfigHandler:getHeroDescriptionId(self.shopModel.m_ItemID))
-        have_count = HeroCardData:getHaveHeroNum(self.shopModel.m_ItemID)
+        have_count = HeroCardData:getHaveHero(self.shopModel.m_ItemID)
     elseif self.shopModel.m_ItemType == 5 then--1为武将卡碎片
         heroNode = Functions.createPartNode({nodeType = ItemType.CardFragment, nodeId = data.m_ItemID})
         
@@ -175,7 +175,7 @@ function ShopPopView:sendBuyShop()
         --埋点
         if PlayerData.eventAttr.m_gold > event.gold then
             Functions.callAnySdkFuc(function()
-                Analytics:onPurchase({event.goodID, event.goodtype ,event.goodcount}, toString(math.floor((PlayerData.eventAttr.m_gold - event.gold)/event.goodcount)))
+                Analytics:onPurchase({event.goodID, event.goodtype ,event.goodcount}, tostring(math.floor((PlayerData.eventAttr.m_gold - event.gold)/event.goodcount)))
             end)
         end
         PlayerData.eventAttr.m_gold = event.gold

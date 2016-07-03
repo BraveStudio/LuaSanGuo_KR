@@ -266,7 +266,7 @@ function EmbattleViewController:openBgMusic()
 end
 function EmbattleViewController:onDisplayView()
     Functions.printInfo(self.debug_b," EmbattleViewController view enter display!")
-    
+
     Functions.setPopupKey("embattle")
     --新手引导相关
     self._mainHeroBt_t = self._mainHero_t:getChildByName("model")

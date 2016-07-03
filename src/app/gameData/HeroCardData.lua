@@ -630,7 +630,19 @@ function HeroCardData:getHaveHeroNum(id)
     local card = self.HeroDatas
     local num = 0
     for k, v in pairs(card) do
-        if v.m_id == id and v.m_atkFormFlagTemp == 0 and v.m_defFormFlagTemp then
+        if v.m_id == id and v.m_atkFormFlagTemp == 0 and v.m_defFormFlagTemp == 0 then
+            num = num + 1
+        end
+    end
+    return num
+end
+
+--获取相同id武将个数
+function HeroCardData:getHaveHero(id)
+    local card = self.HeroDatas
+    local num = 0
+    for k, v in pairs(card) do
+        if v.m_id == id then
             num = num + 1
         end
     end

@@ -248,7 +248,7 @@ function EnhanceTwoPopView:send_up_ladderClick()
         HeroCardData:cardsDataChange(EnhanceData.MasterData[1].m_mark)
         --埋点
         Functions.callAnySdkFuc(function()
-            Analytics:logEvent("WJJJ", {level = toString(PlayerData.eventAttr.m_level)})
+            Analytics:logEvent("WJJJ", {level = tostring(PlayerData.eventAttr.m_level)})
         end)
     end
 

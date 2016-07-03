@@ -472,10 +472,11 @@ function CombatCenter:getFightHeroInfo()
 end
 
 --fight相关
-function CombatCenter:initCombat(heroCombatInfos, enemyCombatInfos, combatType)
-
-    self:initCombatOfInfo_(heroCombatInfos, true, combatType)
-    self:initCombatOfInfo_(enemyCombatInfos, false, combatType)
+function CombatCenter:initCombat(heroCombatInfos, enemyCombatInfos, combatType, combatTime)
+    self.heroList = {}
+    self.enemyList = {}
+    self:initCombatOfInfo_(heroCombatInfos, true, combatType, self.heroList, combatTime)
+    self:initCombatOfInfo_(enemyCombatInfos, false, combatType, self.enemyList, combatTime)
     self.curCombatType = combatType
     if combatType == CombatCenter.CombatType.RB_PVPPlayerData or combatType == CombatCenter.
         CombatType.RB_PVPHistoryData then
@@ -544,7 +545,7 @@ function CombatCenter:addSoldierDataHandler_(heroDatas, param, heroType, isFrdly
 end
 
 --@param : creatureInfo = { { name, type, x, y, level }...} 
-function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType)
+function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType, heroList, combatTime)
     
     local beforeInfo = {}
     
@@ -557,6 +558,7 @@ function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType)
     local equipInfos  = creatureInfos.equipInfos
     local leadCount   = 1
     local heroZxID = 0
+
     for i=1, #peopleInfos do
         local heroId = tonumber(peopleInfos[i].id)
         if heroId > 0 then
@@ -573,7 +575,7 @@ function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType)
                         equipInfo = equipInfos[1]
                     end
                     creature = CreatureFactory:createHero(peopleInfos[i], partHeros, equipInfo, isFrdly,
-                        CreatureModel.viewType.lord, self:createPos({ x = peopleInfos[i].x, y = peopleInfos[i].y }, 0, isFrdly), combatType, heroZxID)
+                        CreatureModel.viewType.lord, self:createPos({ x = peopleInfos[i].x, y = peopleInfos[i].y }, 0, isFrdly), combatType, heroZxID, combatTime)
 
                     if combatType == CombatCenter.CombatType.RB_PVPHistoryData or 
                         combatType == CombatCenter.CombatType.RB_PVPPlayerData then
@@ -605,7 +607,7 @@ function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType)
                 end
                 if not peopleInfos[i].isDeath then
                     creature = CreatureFactory:createHero(peopleInfos[i], partHeros, equipInfo, isFrdly,
-                        CreatureModel.viewType.lieutenant, self:createPos({ x = peopleInfos[i].x, y = peopleInfos[i].y }, 0, isFrdly), combatType, heroZxID)
+                        CreatureModel.viewType.lieutenant, self:createPos({ x = peopleInfos[i].x, y = peopleInfos[i].y }, 0, isFrdly), combatType, heroZxID, combatTime)
                     
                     beforeInfo.heros[#beforeInfo.heros + 1] = creature
                 end
@@ -619,7 +621,7 @@ function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType)
                 
                 if not peopleInfos[i].isDeath then
                     creature = CreatureFactory:createHero(peopleInfos[i], partHeros, equipInfo, isFrdly,
-                        CreatureModel.viewType.lieutenant, self:createPos({ x = peopleInfos[i].x, y = peopleInfos[i].y }, 0, isFrdly), combatType, heroZxID)
+                        CreatureModel.viewType.lieutenant, self:createPos({ x = peopleInfos[i].x, y = peopleInfos[i].y }, 0, isFrdly), combatType, heroZxID, combatTime)
                     
                     beforeInfo.heros[#beforeInfo.heros + 1] = creature
                 end
@@ -628,6 +630,7 @@ function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType)
             if creature then
                 m_lead_enemy = creature.m_num + m_lead_enemy
                 self:addCreature(creature)
+                heroList[#heroList + 1] = creature
             end
         end
     end
@@ -642,7 +645,7 @@ function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType)
     for i=1, #peopleInfos do
         if peopleInfos[i].type == "soldier" then
             creatures = CreatureFactory:createSoldiers(tonumber(peopleInfos[i].id), peopleInfos[i].level, isFrdly,
-                { x = peopleInfos[i].x, y = peopleInfos[i].y }, leadCount, m_lead_enemy, handler(self, self.createPos), combatType, heroZxID, peopleInfos[i].gainValue )
+                { x = peopleInfos[i].x, y = peopleInfos[i].y }, leadCount, m_lead_enemy, handler(self, self.createPos), combatType, heroZxID, peopleInfos[i].gainValue, combatTime)
         end
 
         self:addCreatures(creatures)
@@ -706,7 +709,33 @@ function CombatCenter:getAiCreatureList()
 end
 
 function CombatCenter:getHeroHpList()
-    local data = AiGetHpList()
+    -- local data = AiGetHpList()
+    local data = {}
+
+    for i=1, 3 do
+        if self.heroList[i] then
+            if self.heroList[i].m_raw_hp_max > self.heroList[i].eventAttr.m_hp then
+                data[i] = self.heroList[i].m_raw_hp_max - self.heroList[i].eventAttr.m_hp
+            else
+                data[i] = 0
+            end
+        else
+            data[i] = 0
+        end
+
+    end
+    for i=4, 6 do
+        if self.enemyList[i-3] then
+            if self.enemyList[i-3].m_raw_hp_max >= self.enemyList[i-3].eventAttr.m_hp then
+                data[i] = self.enemyList[i-3].m_raw_hp_max - self.enemyList[i-3].eventAttr.m_hp
+            else
+                data[i] = 0
+            end
+        else
+            data[i] = 0
+        end
+
+    end
     return data
 end
 

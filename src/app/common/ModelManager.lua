@@ -14,7 +14,9 @@ function ModelManager:init()
     self.modelLevelMap["shiLian"] = g_csOpen.heroShilianOpen.level
     self.modelLevelMap["union"] = g_csOpen.GonghuiOpen.level
     self.modelLevelMap["city"] = g_csOpen.ZhuChengOpen.level
-    self.modelLevelMap["guildBattle"] = g_csOpen.GvgOpen.level
+    if G_CurrentLanguage == "ch" then
+        self.modelLevelMap["guildBattle"] = g_csOpen.GvgOpen.level
+    end
     
     self:_init()
 end

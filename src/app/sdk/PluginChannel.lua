@@ -15,8 +15,7 @@ function PluginChannel:onUserResult( plugin, code, msg )
         if customParam.showToolBar ~= nil and tonumber(customParam.showToolBar) == 1 then
             self:showToolBar() 
         end
-        local channelId = self:getChannelId()
-        if channelId == "000255" then 
+        if self:isAutoLogin( ) then 
             self:login()
         end
     elseif code == UserActionResultCode.kInitFail then
@@ -47,7 +46,9 @@ function PluginChannel:onUserResult( plugin, code, msg )
        end
     elseif code == UserActionResultCode.kLogoutSuccess then
        Player:logout(true)
-       self:login()
+       if PluginChannel:isAutoLogin() then
+           self:login()
+       end
     elseif code == UserActionResultCode.kLogoutFail then
        PromptManager:openTipPrompt("注销失败")
     elseif code == UserActionResultCode.kPlatformEnter then
@@ -86,7 +87,7 @@ function PluginChannel:onPayResult( code, msg, info )
     local customParam = self:getCustomParam()
     if code == PayResultCode.kPaySuccess then
         -- NoticeManager:openTips(GameCtlManager.currentController_t, {title = LanguageConfig.language_0_48 ,type = 5,isShowNpc = "npc/NPC_lb_gold.png"}) 
-        Analytics:onChargeSuccess()
+        
     elseif code == PayResultCode.kPayFail then
         PromptManager:openTipPrompt("支付失败！")
         Analytics:onChargeFail()
@@ -94,8 +95,10 @@ function PluginChannel:onPayResult( code, msg, info )
         NoticeManager:debugDisplay(customParam.debug, tostring(self:getOrderId()), function()
             PromptManager:openTipPrompt(LanguageConfig.language_9_79)
         end)
+        GameState.storeAttr.paymentSeq_s = ""
     elseif code == PayResultCode.kPayNetworkError then
         PromptManager:openTipPrompt("网络错误,请重试！")
+        GameState.storeAttr.paymentSeq_s = ""
     elseif code == PayResultCode.kPayProductionInforIncomplete then
 
     elseif code == PayResultCode.kPayInitSuccess then
@@ -152,12 +155,7 @@ function PluginChannel:exit()
 end
 function PluginChannel:getCustomParam()
     local customParam = agent:getCustomParam()
-    local msgTable = json.decode(customParam)
-    -- if msgTable.debug then 
-    --     PromptManager:openTipPrompt("true")
-    -- else
-    --     PromptManager:openTipPrompt("false")
-    -- end
+    local msgTable = cjson.decode(customParam)
     return msgTable
 end
 function PluginChannel:getChannelId()
@@ -166,6 +164,27 @@ end
 function PluginChannel:getChannelName()
     local customParam = self:getCustomParam()
     return customParam.channelName or "test"
+end
+--是否用sdk自带退出界面
+function PluginChannel:isUseSdkExit( )
+    local customeParam = self:getCustomParam()
+    local isUseSdkExit = false
+    if customeParam.isUseSdkExit ~= nil and customeParam.isUseSdkExit == 1 then 
+        isUseSdkExit = true
+    end
+    if self:getChannelId() == "000255" then 
+        isUseSdkExit = true
+    end
+    return isUseSdkExit
+end
+--是否支持自动登陆
+function PluginChannel:isAutoLogin( )
+    local customeParam = self:getCustomParam()
+    local isAutoLogin = false
+    if customeParam.isAutoLogin ~= nil and customeParam.isAutoLogin == 1 then 
+        isAutoLogin = true
+    end
+    return isAutoLogin
 end
 function PluginChannel:logout()
     if user_plugin ~= nil then

@@ -27,6 +27,7 @@ end
 function BasePopView:loadCsbNode(csbFilePath)
     DebugHoldTime("BasePopView:loadCsbNode: " .. tostring(csbFilePath))
     local csbNode = cc.CSLoader:createNode(csbFilePath)
+    self.csbFilePath = csbFilePath
     DebugDelayTime("BasePopView:loadCsbNode: " .. tostring(csbFilePath))
     --对csb Node 进行统一处理
     return csbNode

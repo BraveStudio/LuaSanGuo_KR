@@ -19,6 +19,7 @@ function BaseView:loadCsbNode(csbFilePath)
 
     DebugHoldTime("BaseView:loadCsbNode: " .. tostring(csbFilePath))
     local csbNode = cc.CSLoader:createNode(csbFilePath)
+    self.csbFilePath = csbFilePath
     DebugDelayTime("BaseView:loadCsbNode: " .. tostring(csbFilePath))
     
     --如果有背景，背景居中

@@ -161,26 +161,28 @@ function NativeUtil._JniBackCall(msg)
             
             elseif v == "exitApp" then
                 if not GameCtlManager.isViewLoading then
-                    -- local handler = function()
-                    --     -- NativeUtil:javaCallHanler({command = "exitApp"})
-                    --     Functions.callAnySdkFuc(function()
-                    --         Analytics:stopSession()
-                    --         PluginChannel:submitLoginGameRole("4")
-                    --     end)
-                    --     cc.Director:getInstance():endToLua() 
-                    -- end 
-                    PluginChannel:exit()
-                    -- local handler1 = function()
-                    --     isHavePopup = false
-                    -- end
-                    -- if not isHavePopup then
-                    --     isHavePopup = true
-                    --     Functions.setPopupKey("appclosing_end")
-
-                    --     scheduler.performWithDelayGlobal(function ( )
-                    --         NoticeManager:openExitTips({title = LanguageConfig.language_0_45,handler = handler,handler1 = handler1,isShowNpc = "npc/NPC_sy_exit.png"}) 
-                    --     end, 0.3)
-                    -- end
+                    local handler = function()
+                        -- NativeUtil:javaCallHanler({command = "exitApp"})
+                        Functions.callAnySdkFuc(function()
+                            Analytics:stopSession()
+                            PluginChannel:submitLoginGameRole("4")
+                        end)
+                        cc.Director:getInstance():endToLua() 
+                    end 
+                    local handler1 = function()
+                        isHavePopup = false
+                    end
+                    if  PluginChannel:isUseSdkExit( ) then 
+                        PluginChannel:exit()
+                    else
+                        if not isHavePopup then
+                            isHavePopup = true
+                            Functions.setPopupKey("appclosing_end")
+                            scheduler.performWithDelayGlobal(function ( )
+                                NoticeManager:openExitTips({title = LanguageConfig.language_0_45,handler = handler,handler1 = handler1,isShowNpc = "npc/NPC_sy_exit.png"}) 
+                            end, 0.3)
+                        end
+                    end
                 end
             elseif v == "needToLoginAppStore" then 
                 local handler = function()

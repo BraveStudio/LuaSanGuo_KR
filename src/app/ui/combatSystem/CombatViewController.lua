@@ -27,16 +27,16 @@ CombatViewController.Touch_Move_Min = 5
 local scheduler = require("app.common.scheduler")
 
 --@Pre loading
-CombatViewController.spriteFrameNames = 
+CombatViewController.spriteFrameNames =
     {
         "playerHeadRes","headPilistRes"
     }
 
-CombatViewController.animaNames = 
+CombatViewController.animaNames =
     {
         "Ani_baoqi", "Ani_herohit", "Ani_bubinhit", "Ani_qibinghit", "Ani_gongbinghit", "Ani_fireball", "Ani_fireballB","Ani_skillRelease"
     }
-    
+
 
 --@auto code uiInit
 --add spriteFrames
@@ -60,9 +60,9 @@ function CombatViewController:onDidLoadView()
 	self._fbinfo_Panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel")
 	self._fbInfo_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel"):getChildByName("fbInfo")
 	self._shield_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("shield_panel")
-	
+
     --label list
-    
+
     --button list
     self._handleFightBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("handleFightBt")
 	self._handleFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onHandlefightbtClick), ""))
@@ -107,7 +107,7 @@ end
 --@auto code Pausebt btFunc
 function CombatViewController:onPausebtClick()
     Functions.printInfo(self.debug,"Pausebt button is click!")
-    
+
     if not self.isPause then
         self._pauseBt_t:setVisible(false)
         self._resumeBt_t:setVisible(true)
@@ -175,7 +175,7 @@ end
 --@auto code view display func
 function CombatViewController:onCreate()
     Functions.printInfo(self.debug_b," CombatViewController controller create!")
-    
+
     self.viewInfos = {}
     self.bulletViews = {}
 end
@@ -206,10 +206,10 @@ end
 
 function CombatViewController:onDisplayView()
     Functions.printInfo(self.debug_b," CombatViewController view enter display!")
-    
+
     --战斗加速
     -- self._speed1Bt_t:setVisible(true)
-    
+
     --绑定自动按钮动画
     -- local aniSprite1 = Functions.createSprite()
     -- self._handleFightBt_t:addChild(aniSprite1)
@@ -243,20 +243,20 @@ function CombatViewController:onDisplayView()
 
     centerPos.x = centerPos.x + centerPos.y * math.cos(math.pi*2/3)
     centerPos.y = centerPos.y * math.sin(math.pi*2/3)
-    
+
     local angle = Functions.getAngle(centerPos) + CombatViewController.fightAngle
-    local dist  = Functions.getDistance({ x = 0, y = 0 }, centerPos) 
-    
+    local dist  = Functions.getDistance({ x = 0, y = 0 }, centerPos)
+
     centerPos.x = dist * math.cos(angle)
     centerPos.y = dist * math.sin(angle)
-    
+
     local size  = self._combatPanel_t:getContentSize()
 
     self.combatMapOffset = {
         x = size.width/2 - centerPos.x,
         y = size.height/2 - centerPos.y
     }
-    
+
     self:zoomCombatMap(0.8)
 
     --初始化自动战斗
@@ -269,7 +269,7 @@ function CombatViewController:onDisplayView()
     --初始化战斗地图
     self:initCombatMap()
 
-    local combatTypeFuncs = 
+    local combatTypeFuncs =
     {
         [CombatCenter.CombatType.RB_PVE]            = handler(self, self.onFbPveCombat),
         [CombatCenter.CombatType.RB_ElitePVE]       = handler(self, self.onEliteFbPveCombat),
@@ -280,11 +280,11 @@ function CombatViewController:onDisplayView()
         [CombatCenter.CombatType.RB_PVPHistoryData] = handler(self, self.onPVPHistoryData),
         [CombatCenter.CombatType.RB_GVG]            = handler(self, self.onGVGCombat)
     }
-    
+
     if self.combatInfo.combatType == CombatCenter.CombatType.RB_Guide then
         self:onGuideFunc()
     else
-        --获取本方攻击战斗信息    
+        --获取本方攻击战斗信息
         EmbattleData:getEmbattleInfos(EmbattleData.EmbattleTypeEnum.attack, function(data)
            combatTypeFuncs[self.combatInfo.combatType](data)
         end)
@@ -341,7 +341,7 @@ function CombatViewController:onGuideFunc()
     self._pauseBt_t:setVisible(false)
     --sdk
     Functions.setAdbrixTag("firstTimeExperience","loading_1_complete")
-    
+
     --sdk
     Functions.setAdbrixTag("firstTimeExperience","tutorial_combat_try")
 
@@ -352,7 +352,7 @@ function CombatViewController:onGuideFunc()
 
     self.heroCombatBeforInfo, self.heroCombatInfo = CombatCenter:getFbCombatInfosOfId(7, 20000)
     self.enemyCombatBeforInfo, self.enemyCombatInfo = CombatCenter:getFbCombatInfosOfId(7, 20001)
-    
+
     self.heroCombatBeforInfo.headId = 1
     self.heroCombatBeforInfo.level  = 99
     self.heroCombatBeforInfo.name   = LanguageConfig.ui_CombatView_shu
@@ -365,15 +365,15 @@ function CombatViewController:onGuideFunc()
 end
 
 function CombatViewController:onFbPveCombat(data, combatType)
-    
+
     self.isFirstFight = BiographyData:isFirstOfGk(self.combatInfo.littleLevels)
-    
+
     --获取本方战斗信息
     self.heroCombatBeforInfo = CombatCenter:getCombatBeforeHeroInfos(data)
     self.heroCombatInfo = CombatCenter:getCombatHeroInfos(data)
-    
+
     self.enemyCombatBeforInfo, self.enemyCombatInfo = CombatCenter:getFbCombatInfosOfId(self.combatInfo.majorHurdles, self.combatInfo.littleLevels, nil, combatType)
-    
+
     --副本信息显示
     self._fbinfo_Panel_t:setVisible(true)
     self._fbinfo_Panel_t:getChildByName("fbInfo"):setString(self.enemyCombatBeforInfo.fbName)
@@ -391,23 +391,23 @@ function CombatViewController:onFbPveCombat(data, combatType)
                 Analytics:startLevel( tostring(BiographyData.eventAttr.curSelectFbId) .. "_" .. tostring(BiographyData.eventAttr.curSelectIndex))
             end)
         end
-            
+
         NetWork:addNetWorkListener({ 1, 1 }, Functions.createNetworkListener(onPveFightRequetReturn, true, _, handler(self, self.quitCombat) ))
-        
+
         local temp = self.combatInfo.littleLevels % 10
         if temp == 0 then
-            temp = 10 
+            temp = 10
         end
-        NetWork:sendToServer({ idx = { 1, 1}, btype = self.combatInfo.combatType, data = { lpassid = self.combatInfo.majorHurdles, spassid = temp }})    
+        NetWork:sendToServer({ idx = { 1, 1}, btype = self.combatInfo.combatType, data = { lpassid = self.combatInfo.majorHurdles, spassid = temp }})
     end
 
     local onPveBegin = function()
         BiographyData:excuteFightSpeak(self.combatInfo.littleLevels, BiographyData.DialogueType.Begin, onFightCall)
     end
-    
+
     self:openChildView("app.ui.popViews.CombatBeforePopView", { isRemove = false, data = { heroInfo = self.heroCombatBeforInfo,
         enemyInfo = self.enemyCombatBeforInfo , fightCall = onPveBegin } })
-          
+
 end
 
 function CombatViewController:recoverySpeed()
@@ -422,30 +422,30 @@ function CombatViewController:onTanduiFbCombat(data)
     --获取本方战斗信息
     self.heroCombatBeforInfo = CombatCenter:getCombatBeforeHeroInfos(data)
     self.heroCombatInfo = CombatCenter:getCombatHeroInfos(data)
-    
+
     self.enemyCombatBeforInfo, self.enemyCombatInfo = CombatCenter:getFbCombatInfosOfId(self.combatInfo.majorHurdles, self.combatInfo.littleLevels, nil, CombatCenter.CombatType.RB_Tandui)
-    
+
     local onFightCall= function()
         local onPveFightRequetReturn = function(event)
             CombatCenter:setRand(event.seed)
             local preHps = event.bloody
-            
-            self.enemyCombatBeforInfo, self.enemyCombatInfo = 
+
+            self.enemyCombatBeforInfo, self.enemyCombatInfo =
             CombatCenter:getFbCombatInfosOfId(self.combatInfo.majorHurdles, self.combatInfo.littleLevels, preHps, CombatCenter.CombatType.RB_Tandui)
 
             self:combatResLoad()
         end
-            
+
         NetWork:addNetWorkListener({ 1, 1 }, Functions.createNetworkListener(onPveFightRequetReturn, true, _, handler(self, self.quitCombat)) )
-        
+
         local temp = self.combatInfo.littleLevels % 10;
         if temp == 0 then
             temp = 10
         end
-        NetWork:sendToServer({ idx = { 1, 1}, btype = self.combatInfo.combatType, data = { lpassid = self.combatInfo.majorHurdles, spassid = temp }})    
-        
+        NetWork:sendToServer({ idx = { 1, 1}, btype = self.combatInfo.combatType, data = { lpassid = self.combatInfo.majorHurdles, spassid = temp }})
+
     end
-    
+
     self:openChildView("app.ui.popViews.CombatBeforePopView", { isRemove = false, data = { heroInfo = self.heroCombatBeforInfo,
         enemyInfo = self.enemyCombatBeforInfo , fightCall = onFightCall } })
 end
@@ -453,7 +453,7 @@ function CombatViewController:onHeroTrialCombat(data)
     --获取本方战斗信息
     self.heroCombatBeforInfo = CombatCenter:getCombatBeforeHeroInfos(data)
     self.enemyCombatBeforInfo = CombatCenter:getHeroTrialInfos(self.combatInfo.majorHurdles, self.combatInfo.littleLevels, self.combatInfo.enemyHeroIDs)
-    
+
     local onFightCall= function()
 
         local onHeroTrialBegin = function(event)
@@ -467,16 +467,16 @@ function CombatViewController:onHeroTrialCombat(data)
             for k,v in pairs(self.enemyCombatInfo.peopleInfos) do
                 if v.type ~= "soldier" or (v.type == "soldier" and event.data.diff <= 100)then
                     v.gainValue = event.data.diff
-                end 
+                end
             end
             self:combatResLoad()
         end
         NetWork:addNetWorkListener({ 1, 1 }, Functions.createNetworkListener(onHeroTrialBegin, true, _, handler(self, self.quitCombat) ))
         NetWork:sendToServer({ idx = { 1, 1}, btype = self.combatInfo.combatType,
-            data = { trail_type = self.combatInfo.majorHurdles, level = self.combatInfo.littleLevels }})    
+            data = { trail_type = self.combatInfo.majorHurdles, level = self.combatInfo.littleLevels }})
 
     end
-    
+
     self:openChildView("app.ui.popViews.CombatBeforePopView", { isRemove = false, data = { heroInfo = self.heroCombatBeforInfo,
         enemyInfo = self.enemyCombatBeforInfo , fightCall = onFightCall } })
 
@@ -485,15 +485,15 @@ end
 function CombatViewController:onBloodyBattle(data)
     --获取本方战斗信息
     self.heroCombatBeforInfo = CombatCenter:getCombatBeforeHeroInfos(data)
-    
+
     --获取敌方血战数据
     local onBloodyBattleDataReturn = function(data)
         self.enemyCombatBeforInfo = data.enemyCombatBeforInfo
         self:combatBeginRequire()
     end
-    
+
     CombatCenter:getBloodyBattleData(self.combatInfo.majorHurdles, self.combatInfo.littleLevels, onBloodyBattleDataReturn)
-    
+
 end
 
 function CombatViewController:onPVPPlayerData(data)
@@ -512,7 +512,7 @@ function CombatViewController:onPVPPlayerData(data)
     local onFightCall= function()
 
             local onPVPPlayerBegin = function(event)
-                
+
                 --修改天梯挑战次数
                 TianTiData.eventAttr.m_tianTiCount = TianTiData.eventAttr.m_tianTiCount - 1
 
@@ -524,13 +524,13 @@ function CombatViewController:onPVPPlayerData(data)
             end
             NetWork:addNetWorkListener({ 1, 1 }, Functions.createNetworkListener(onPVPPlayerBegin, true, _, handler(self, self.quitCombat)))
             NetWork:sendToServer({ idx = { 1, 1}, btype = self.combatInfo.combatType,
-            data = { uid = self.combatInfo.playerData.id  }})    
+            data = { uid = self.combatInfo.playerData.id  }})
 
         end
 
     self:openChildView("app.ui.popViews.CombatBeforePopView", { isRemove = false, data = { heroInfo = self.heroCombatBeforInfo,
         enemyInfo = self.enemyCombatBeforInfo , fightCall = onFightCall } })
-    
+
 end
 
 function CombatViewController:combatBeginRequire()
@@ -553,7 +553,7 @@ function CombatViewController:combatBeginRequire()
             end
             NetWork:addNetWorkListener({ 1, 1 }, Functions.createNetworkListener(onHeroTrialBegin, true) )
             NetWork:sendToServer({ idx = { 1, 1}, btype = self.combatInfo.combatType,
-                data = { diff = self.combatInfo.majorHurdles  }})    
+                data = { diff = self.combatInfo.majorHurdles  }})
 
         end
 
@@ -562,9 +562,9 @@ function CombatViewController:combatBeginRequire()
 end
 
 function CombatViewController:onPVPHistoryData(data)
-    
+
     self._control_panel_t:setVisible(false) --隐藏控制层
-    
+
     if self.combatInfo.playerData.passive == 0 then
         --获取本方战斗信息
         self.heroCombatBeforInfo = CombatCenter:getCombatBeforeHeroInfos(data)
@@ -586,16 +586,17 @@ function CombatViewController:onPVPHistoryData(data)
         self.heroCombatBeforInfo.power  = self.combatInfo.playerData.power
         self.heroCombatBeforInfo.name   = self.combatInfo.playerData.name
     end
-    
+
     local onPVPHistoryDataBegin = function(event)
                                 CombatCenter:setRand(event.data.seed)
 
                                 self.curEvtList = event.data.evt_list
                                 --添加事件
                                 CombatCenter:addAiEvent(event.data.evt_list)
-                                
+
                                 self.heroCombatInfo  = CombatCenter:getCombatHeroInfos(event.data.sform)
                                 self.enemyCombatInfo = CombatCenter:getCombatHeroInfos(event.data.tform)
+                                self.combatTime = self.combatInfo.playerData.time
 
                                 self.heroAutoFight = false
                                 self.enemyAutoFight = false
@@ -610,7 +611,7 @@ end
 
 --公会战斗
 function CombatViewController:onGVGCombat(data)
-    
+
     --获取本方战斗信息
     self.heroCombatBeforInfo = CombatCenter:getCombatBeforeHeroInfos(data)
 
@@ -620,9 +621,9 @@ function CombatViewController:onGVGCombat(data)
     self.enemyCombatBeforInfo.headId = self.combatInfo.playerData.headId
     self.enemyCombatBeforInfo.power  = self.combatInfo.playerData.power
     self.enemyCombatBeforInfo.name   = self.combatInfo.playerData.name
-    
+
     local onGVGBegin = function(event)
-        
+
         --修改天梯挑战次数
         CombatCenter:setRand(event.data.seed)
         self.heroCombatInfo  = CombatCenter:getGVGCombatHeroInfos(event.data.sform)
@@ -653,8 +654,8 @@ function CombatViewController:combatResLoad()
 
     PromptManager:openLoadingPrompt("",true)
     CombatCenter:init(self)
-    
-    CombatCenter:initCombat(self.heroCombatInfo, self.enemyCombatInfo, self.combatInfo.combatType)
+
+    CombatCenter:initCombat(self.heroCombatInfo, self.enemyCombatInfo, self.combatInfo.combatType, self.combatTime)
 
     if self.combatInfo.combatType == CombatCenter.CombatType.RB_PVPHistoryData then
         CombatCenter:setReload()
@@ -671,7 +672,7 @@ function CombatViewController:combatResLoad()
     local models = CombatCenter:getCombatCreatures()
 
     self:loadCombatRes(self.heroInfos, models, handler(self, self.startFight))
-    
+
 end
 
 function CombatViewController:startFight()
@@ -684,7 +685,7 @@ function CombatViewController:startFight()
             self:addCombatView_(model)
             endCallBack()
         end, function() --所有模型加载完成函数
-        
+
             --初始化ui
             self:initCombatUI()
             self:updateViewAnima()
@@ -707,7 +708,7 @@ function CombatViewController:startFight()
                        onComplete = function()
                            CombatCenter:combatStart()
                            self:updateViewMoveAnima()
-                           
+
                             if self.combatInfo.combatType == CombatCenter.CombatType.RB_Guide or
                             self.combatInfo.combatType == CombatCenter.CombatType.RB_Guide then
                                 self._video_panel_t:setVisible(true)
@@ -727,11 +728,11 @@ function CombatViewController:startFight()
 end
 
 function CombatViewController:initCombatUI()
-    
+
     --初始化英雄组件
     for i=1, 3 do
         local heroCom = self._right_down_panel_t:getChildByName("combatHead" .. tostring(i))
-        local model = self.heroInfos.heroInfo.heros[i] 
+        local model = self.heroInfos.heroInfo.heros[i]
         if model then
             self:initCombatHeroCom_(heroCom, model)
             heroCom:setVisible(true)
@@ -745,20 +746,20 @@ function CombatViewController:initCombatUI()
         end
     end
     Functions.bindEventListener(self.view_t, GameEventCenter, CreatureModel.SI_FANG_SPELL_EVENT, onSpellAttack)
-    
+
     --初始化本方显示
     self:initCombatDisHeroCom_(self._left_top_panel_t, self.heroInfos.heroInfo, self.heroCombatBeforInfo)
-    
+
     --初始化敌方显示
     self:initCombatDisHeroCom_(self._right_top_panel_t, self.heroInfos.enemyInfo, self.enemyCombatBeforInfo)
-    
+
     self.timeSprite = Functions.createSprite()
     self.view_t:addChild(self.timeSprite)
 
     --初始化时间
     self.curTime = g_Combat_Time
     Functions.initLabelOfString(self._time_t, g_Combat_Time)
-    
+
     local timeChange = function()
 
         local time = math.floor(CombatCenter.FrameTimeCount/60)
@@ -771,7 +772,7 @@ function CombatViewController:initCombatUI()
         if self.curTime <= 0 then
             self.combatTimeOut = true
             self:forceQuitCombat()
-        end 
+        end
     end
     Functions.bindEventListener(self.timeSprite, GameEventCenter, CombatCenter.GAME_UPDATE, timeChange)
 
@@ -779,7 +780,7 @@ function CombatViewController:initCombatUI()
 end
 
 function CombatViewController:timeOutCreatureState()
-    
+
 end
 
 function CombatViewController:setHeroAuto(isAuto)
@@ -797,36 +798,36 @@ function CombatViewController:setAddSpeed(isAddSpeed)
     BiographyData.isAddSpeed = isAddSpeed
 end
 
- 
+
 
 function CombatViewController:initCombatDisHeroCom_(comView, combatHeros, combatInfo)
-    
+
     local name = comView:getChildByName("name_panel"):getChildByName("heroName")
     name:setString(combatInfo.name)
-    
+
     local level = comView:getChildByName("heroLevel"):getChildByName("level")
     level:setString(combatInfo.level)
-    
+
     --绑定血条
     local hp = comView:getChildByName("hp_panel"):getChildByName("hp")
     local hp_text = comView:getChildByName("hp_panel"):getChildByName("hp_text")
-    
+
     --获取总血量
     local allHp = 0
     local heros = combatHeros.heros
     for i=1, #heros do
         allHp = allHp + heros[i].m_raw_hp
     end
-    
+
     --添加监听
     for k, v in pairs(heros) do
         local onHpChange = function(event)
-            
+
             local curHp = 0
             for i=1, #heros do
                 curHp = curHp + heros[i].eventAttr.m_hp
             end
-            
+
             curHp = math.floor(curHp)
             allHp = math.floor(allHp)
 
@@ -839,21 +840,21 @@ function CombatViewController:initCombatDisHeroCom_(comView, combatHeros, combat
         onHpChange()
         Functions.bindUiWithModelAttr(hp, v, "m_hp", onHpChange)
     end
-    
+
     --初始化显示头像
     local heroHead = comView:getChildByName("heroHeadImage")
     Functions.loadImageWithWidget(heroHead, Functions.getDisHeadImagePathOfId(combatInfo.headId))
     heroHead:setVisible(true)
-    
+
 end
 
 function CombatViewController:initCombatHeroCom_(comView, model)
-    
+
     --初始化英雄头像
     local heroHead = comView:getChildByName("headCom")
     Functions.initHeadComOfId(heroHead, model.m_pid, model.m_class)
     Functions.getHeroHead(heroHead, { id = model.m_pid , class = model.m_class})
-    
+
     --初始化技能名称
     local skillName = comView:getChildByName("skillName")
     skillName:setString(model.m_spells.skillDatas[1].m_skillName)
@@ -871,12 +872,12 @@ function CombatViewController:initCombatHeroCom_(comView, model)
             model.m_raw_hp = event.data
         end
         hp:setPercent(event.data/model.m_raw_hp*100)
-        if event.data == 0 then 
+        if event.data == 0 then
             print("hero is death!")
         end
     end
     Functions.bindUiWithModelAttr(hp, model, "m_hp", onHpChange)
-    
+
 end
 
 function CombatViewController:onScrollCombat(event)
@@ -886,12 +887,12 @@ function CombatViewController:onScrollCombat(event)
 
             local touchPos = event.target:getTouchBeganPosition()
             self.curScrollPos_ = { x = touchPos.x, y = touchPos.y }
-            
+
         elseif event.name == "moved" then
-            
+
             local touchPos = event.target:getTouchMovePosition()
-            
-            local diffX = touchPos.x - self.curScrollPos_.x 
+
+            local diffX = touchPos.x - self.curScrollPos_.x
             local diffY = touchPos.y - self.curScrollPos_.y
 
             if math.abs(diffX) > CombatViewController.Touch_Move_Min or math.abs(diffY) > CombatViewController.Touch_Move_Min then
@@ -939,19 +940,19 @@ function CombatViewController:forceQuitCombat()
     CombatCenter:forceShutdown()
 end
 
---hero view move center 
+--hero view move center
 function CombatViewController:moveCenterOfHero(heroView, moveEndCall)
 
     local oldPos = { x = heroView:getPositionX(), y = heroView:getPositionY() }
     oldPos = heroView:getParent():convertToWorldSpace(oldPos)
-    
+
     local movePos = { x = display.cx - oldPos.x, y = display.cy - oldPos.y }
-    
+
     local cmbp_x = self._combatPanel_t:getPositionX()
     local cmbp_y = self._combatPanel_t:getPositionY()
-    
+
     local minX, maxX, minY, maxY = self:getCombatPanelCoordLimit()
-    
+
     --x轴限制
     if movePos.x > 0 then
         if (cmbp_x + movePos.x) > maxX then
@@ -959,10 +960,10 @@ function CombatViewController:moveCenterOfHero(heroView, moveEndCall)
         end
     else
         if (cmbp_x + movePos.x) < minX then
-            movePos.x = minX - cmbp_x 
+            movePos.x = minX - cmbp_x
         end
     end
-    
+
     --y轴限制
     if movePos.y > 0 then
         if (cmbp_y + movePos.y) > maxY then
@@ -973,17 +974,17 @@ function CombatViewController:moveCenterOfHero(heroView, moveEndCall)
             movePos.y = minY - cmbp_y
         end
     end
-    
+
     self._combatPanel_t:moveBy({  x = movePos.x,
                                   y = movePos.y,
                                   time = 0.3,
                                   onComplete = moveEndCall
                               })
-    
+
 end
 
 function CombatViewController:getCombatPanelCoordLimit()
-    
+
     local size = self._combatPanel_t:getContentSize()
     local offsetX = size.width/2*self.curScale - display.cx
     local offsetY = size.height/2*self.curScale - display.cy
@@ -991,7 +992,7 @@ function CombatViewController:getCombatPanelCoordLimit()
     local maxX = display.cx + offsetX
     local minY = display.cy - offsetY
     local maxY = display.cy + offsetY
-    
+
     return minX, maxX, minY, maxY
 end
 
@@ -1023,10 +1024,10 @@ end
 
 --技能释放暂停
 function CombatViewController:skillPause(heroView)
-    
+
     --打开黑色遮挡
     self:setColorLayer(true)
-    
+
     CombatCenter:combatPause()
     for _,v in pairs(self.viewInfos) do
         if not v.isDeath and v.target ~= heroView then
@@ -1107,20 +1108,20 @@ end
 function CombatViewController:loadCombatRes(heroInfo, models, backCall)
     assert(heroInfo.heroInfo and heroInfo.heroInfo.heros, "not hero data!")
     assert(heroInfo.enemyInfo and heroInfo.enemyInfo.heros, "not hero data!")
-    
+
     --收集战场技能特效
     self.skillAnimaNames = {}
     local heros = {}
     table.insertto(heros, heroInfo.heroInfo.heros)
     table.insertto(heros, heroInfo.enemyInfo.heros)
-    
+
     --根据战斗英雄，添加技能特效
     for k,v in pairs(heros) do
         local animaName = v.skillAnimaName
         if animaName and #animaName > 0 and animaName ~= "0" and animaName ~= "nil" and not table.hasValue(self.skillAnimaNames, animaName) then
             self.skillAnimaNames[#self.skillAnimaNames + 1] = animaName
         end
-        
+
         local skillDatas = v.m_spells.skillDatas
         for k, v in pairs(skillDatas) do
             local animaName = v.m_SkillRes
@@ -1146,7 +1147,7 @@ function CombatViewController:loadCombatRes(heroInfo, models, backCall)
             self.skillAnimaNames[#self.skillAnimaNames + 1] = temp
         end
     end
-    
+
     --加载技能特效动画资源
     if #self.skillAnimaNames > 0 then
        local onAnimaLoad = function(data)
@@ -1190,8 +1191,8 @@ function CombatViewController:fightOver(result)
     if self.combatInfo.combatType == CombatCenter.CombatType.RB_PVPHistoryData then --战斗录像,直接退出，不显示战斗结果
         self:quitCombat()
     -- elseif self.combatInfo.combatType == CombatCenter.CombatType.RB_GVG then
-        
-    else 
+
+    else
          --显示战斗结果回调
         local onFightOverCall = function()
             self.combatResult = result
@@ -1238,7 +1239,7 @@ function CombatViewController:firstCombatGuide()
     self:clearFightRes()
     -- PromptManager:openDialoguePrompt(20000, function()
             GameCtlManager:push("app.ui.imagePlayerSystem.ImagePlayerViewController",{ data = { jumpData = { levelId = 2, callBack = function()
-                
+
                 --sdk
                 Functions.setAdbrixTag("firstTimeExperience","cartoon_1_3_complete")
 
@@ -1259,7 +1260,7 @@ function CombatViewController:coordinateSystem(pos)
     pos.y = pos.y * math.sin(math.pi*2/3)
 
     local angle = Functions.getAngle(pos) + CombatViewController.fightAngle
-    local dist = Functions.getDistance({ x = 0, y = 0 }, pos) 
+    local dist = Functions.getDistance({ x = 0, y = 0 }, pos)
 
     pos.x = dist * math.cos(angle)
     pos.y = dist * math.sin(angle)

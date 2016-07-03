@@ -5,7 +5,7 @@ CreatureFactory.debug = true
 local CreatureModel = require("app.ui.combatSystem.model.CreatureModel")
 
 
-function CreatureFactory:createHero(heroInfo, partHeros, equipInfos, campType, viewType, pos, combatType, heroZxID)
+function CreatureFactory:createHero(heroInfo, partHeros, equipInfos, campType, viewType, pos, combatType, heroZxID, combatTime)
 
     if heroInfo.id == 0 then return end
     
@@ -85,8 +85,8 @@ function CreatureFactory:createHero(heroInfo, partHeros, equipInfos, campType, v
                                 passiveSkills  = ConfigHandler:getPspellsOfId(heroInfo.id, heroInfo.class),
                                 skillAnimaName = heroData.effectRes,
                                 heroSound      = heroData.heroSound
-                            })
-    creature:updateAttrExOfZx(combatType, heroZxID, campType)
+                            }) 
+    creature:updateAttrExOfZx(combatType, heroZxID, campType, combatTime)
 
     -- 天梯战斗中，放大基础血量倍数
     if G_CurrentLanguage ~= "ch" then
@@ -100,7 +100,7 @@ function CreatureFactory:createHero(heroInfo, partHeros, equipInfos, campType, v
     return creature
 end
 
-function CreatureFactory:createSoldiers(heroId, level, campType, pos, count, leadPower, posFunc, combatType, zxId, gain)
+function CreatureFactory:createSoldiers(heroId, level, campType, pos, count, leadPower, posFunc, combatType, zxId, gain, combatTime)
     if heroId == 0 then return end
     
     local gainValue = 1
@@ -170,7 +170,7 @@ function CreatureFactory:createSoldiers(heroId, level, campType, pos, count, lea
                                                     }
                                                 }
                                            })
-        soldier:updateAttrExOfZx(combatType, zxId, campType)
+        soldier:updateAttrExOfZx(combatType, zxId, campType, combatTime)
         soldiers[#soldiers + 1] = soldier
     end
     

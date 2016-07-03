@@ -351,17 +351,17 @@ function LoadingViewController:startGame_()
     Functions.clearGameData()
 
 
-    local channelId = ""
-    Functions.callAnySdkFuc(function( )
-        channelId = PluginChannel:getChannelId()
-    end)
-    if channelId ~= "000255" then 
+    -- local channelId = ""
+    -- Functions.callAnySdkFuc(function( )
+    --     channelId = PluginChannel:getChannelId()
+    -- end)
+    -- if channelId ~= "000255" then 
         Functions.EnterGame() 
-    else
-        require("app.common.GameStaticInit")
-        require("app.common.GameInit")
-        require("app.configs.server.init")
-    end          
+    -- else
+    --     require("app.common.GameStaticInit")
+    --     require("app.common.GameInit")
+    --     require("app.configs.server.init")
+    -- end          
     
 end
 
