@@ -27,6 +27,7 @@ function HeroCardData:init()
     self.yiHeroDatas = {}
     self.WillSellHeroDatas = {} --准备出售卡片数据
     self.shangZhenCard = {} --上阵的卡片
+    self.FeiJieHeroDatas = {} --准备分解的卡片数据
 
     self.shangZhenGong = {} --攻击阵型卡片
     self.shangZhenFang = {} --防御阵型卡片
@@ -612,6 +613,28 @@ function HeroCardData:getWillSellHeroData(card)
         end
     end
     return self.WillSellHeroDatas
+end
+
+--获取准备分解武将
+function HeroCardData:getFeiJieHeroData(card)
+    self.FeiJieHeroDatas = {}
+    for k, v in pairs(card) do
+        --不为上阵武将，不为正在做主城任务和卡，才能加数量
+        local taskHreo = CityData:getTaskHoreInfo()
+        local _task = true
+        for q,w in pairs(taskHreo) do
+            if v.m_mark == w then
+                _task = fasle
+                break
+            end
+        end
+        local ppp = v.m_mark
+        if _task and ((card[k].m_atkFormFlagTemp == 0) and (card[k].m_defFormFlagTemp == 0)) and ConfigHandler:getHeroStarCountOfId(card[k].m_id) >= 4 
+        and not EmbattleData:isHeroInEmabttleOfMark(v.m_mark) then
+            self.FeiJieHeroDatas[#self.FeiJieHeroDatas+1] = v
+        end
+    end
+    return self.FeiJieHeroDatas
 end
 
 --获取背包最大容量

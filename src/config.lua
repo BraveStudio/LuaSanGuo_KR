@@ -26,7 +26,7 @@ CC_DESIGN_RESOLUTION = {
 }
 
 -- 是否是运营维护apk 
-G_IsDebugClient = true 
+G_IsDebugClient = true
 
 -- update
 -- true 使用更新功能， fales 不使用更新功能,用于当前代码调试
@@ -37,7 +37,7 @@ G_IsUseSDK = false
 
 
 --SDK类型：1：NStore,2:TStore 3:CStore 4:gplay 5:ios-store
-G_SDKType = 3
+G_SDKType = 1
 
 -- NetWork 是否连接内网，true: 连接内网，false: 连接外网
 G_IsLinkLoaclIp = false
@@ -48,8 +48,8 @@ G_ServerId = 4
 
 --是否自动获取当前链接的服务器和更新地址
 G_IsAutoGetUrl = false
-G_AutoPatchUrl = "http://14.63.163.47:8095/sanguoGM/sanguoGMSomeFunc/GetOneItemInfo"
--- G_AutoPatchUrl = "http://171.212.112.50:8095/sanguoGM/sanguoGMSomeFunc/GetOneItemInfo"
+--G_AutoPatchUrl = "http://review.dstamp.net:8095/sanguoGM/sanguoGMSomeFunc/GetOneItemInfo"
+ G_AutoPatchUrl = "http://14.63.163.47:8095/sanguoGM/sanguoGMSomeFunc/GetOneItemInfo"
 
 --当前设备类型： 1 android, 2 ios 
 G_DeviceType = 1
@@ -72,8 +72,8 @@ G_IsHaveLanchImage = false
 G_isFirstStartApp = true 
 --当前版本
 CurrentBigVersion = 3
-CurrentMidVersion = 4
-CurrentMinVersion = 3
+CurrentMidVersion = 7
+CurrentMinVersion = 6
 
 --输出内存信息
 DEBUG_MEM = false

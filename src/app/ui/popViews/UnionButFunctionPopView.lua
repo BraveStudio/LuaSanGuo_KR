@@ -74,7 +74,7 @@ end
 function UnionButFunctionPopView:onButton_but_function_3Click()
     Functions.printInfo(self.debug,"Button_but_function_3 button is click!")
     --修改公告
-    self._controller_t:openChildView("app.ui.popViews.UnionNoticePopView")
+    self._controller_t:openChildView("app.ui.popViews.UnionNoticePopView", {data = {type = 1}})
 end
 --@auto code Button_but_function_3 btFunc end
 
@@ -90,7 +90,7 @@ end
 function UnionButFunctionPopView:onButton_but_function_5Click()
     Functions.printInfo(self.debug,"Button_but_function_5 button is click!")
     --全员邮件
-    self._controller_t:openChildView("app.ui.popViews.UnionMailPopView")
+    self._controller_t:openChildView("app.ui.popViews.UnionMailPopView", {data = {type = 1}})
 end
 --@auto code Button_but_function_5 btFunc end
 

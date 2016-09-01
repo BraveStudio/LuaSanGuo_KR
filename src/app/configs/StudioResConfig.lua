@@ -239,6 +239,10 @@ CityUI_Text = {
 	plistPath = "commonUI/res/lk/CityUI/CityUI_Text.plist",
 	imagePath = "commonUI/res/lk/CityUI/CityUI_Text.png" 
 },
+WarUI_Text = {
+    plistPath = "commonUI/res/lk/WarUI/WarUI_Text.plist",
+    imagePath = "commonUI/res/lk/WarUI/WarUI_Text.png" 
+},
 RankUI_Text = {
     plistPath = "commonUI/res/lk/RankUI/RankUI_Text.plist",
     imagePath = "commonUI/res/lk/RankUI/RankUI_Text.png" 
@@ -303,6 +307,12 @@ ShopUI_Text = {
 	plistPath = "commonUI/res/lk/ShopUI/ShopUI_Text.plist",
 	imagePath = "commonUI/res/lk/ShopUI/ShopUI_Text.png" 
 },
+
+HeroKillUI_Text = {
+    plistPath = "commonUI/res/lk/HeroKillUI/HeroKillUI_Text.plist",
+    imagePath = "commonUI/res/lk/HeroKillUI/HeroKillUI_Text.png" 
+},
+        
 SoldiersPopUI_Text = {
 	plistPath = "commonUI/res/lk/SoldiersPopUI/SoldiersPopUI_Text.plist",
 	imagePath = "commonUI/res/lk/SoldiersPopUI/SoldiersPopUI_Text.png" 
@@ -460,6 +470,14 @@ MainUI_BG = {
 	plistPath = "cs/ui_res/MainUI/MainUI_BG.plist",
 	imagePath = "cs/ui_res/MainUI/MainUI_BG.png" 
 },
+MainUI_icon1 = {
+	plistPath = "cs/ui_res/MainUI/MainUI_icon1.plist",
+	imagePath = "cs/ui_res/MainUI/MainUI_icon1.png" 
+},
+Main_icon2 = {
+	plistPath = "cs/ui_res/MainUI/Main_icon2.plist",
+	imagePath = "cs/ui_res/MainUI/Main_icon2.png" 
+},
 NewPlayerUI = {
 	plistPath = "cs/ui_res/NewPlayerUI/NewPlayerUI.plist",
 	imagePath = "cs/ui_res/NewPlayerUI/NewPlayerUI.png" 
@@ -479,6 +497,10 @@ ChatBgUI = {
 ChatUI = {
 	plistPath = "lk/ui_res/ChatUI/ChatUI.plist",
 	imagePath = "lk/ui_res/ChatUI/ChatUI.png" 
+},
+HeroKillGuanKaUI = {
+    plistPath = "lk/ui_res/HeroKillGuanKaUI/HeroKillGuanKaUI.plist",
+    imagePath = "lk/ui_res/HeroKillGuanKaUI/HeroKillGuanKaUI.png" 
 },
 CityUI = {
 	plistPath = "lk/ui_res/CityUI/CityUI.plist",
@@ -515,6 +537,10 @@ IntegralShopUI = {
 MailOnePopUI = {
 	plistPath = "lk/ui_res/MailOnePopUI/MailOnePopUI.plist",
 	imagePath = "lk/ui_res/MailOnePopUI/MailOnePopUI.png" 
+},
+WarUI = {
+    plistPath = "lk/ui_res/WarUI/WarUI.plist",
+    imagePath = "lk/ui_res/WarUI/WarUI.png" 
 },
 ExpTransferUI = {
     plistPath = "lk/ui_res/ExpTransferUI/ExpTransferUI.plist",
@@ -627,6 +653,10 @@ SelectActivityHeroPopUI_Text = {
 CBO_gvgOverBg = {
 	plistPath = "commonUI/res/board/CBO_gvgOverBg.plist",
 	imagePath = "commonUI/res/board/CBO_gvgOverBg.png" 
+},
+CountryFightUI_Text = {
+	plistPath = "commonUI/res/cs/CountryFightPopUI/CountryFightUI_Text.plist",
+	imagePath = "commonUI/res/cs/CountryFightPopUI/CountryFightUI_Text.png" 	
 }
 }
 

@@ -304,7 +304,9 @@ function NetWork:loginUserServer(userName, userPassword, onSuccess)
         
         Functions.printInfo(self.debug_b, "return {"..  xhr.response .. " }")  
         local reposeData = loadstring("return {"..  xhr.response .. " }")
-        onSuccess(reposeData())
+        if onSuccess then
+            onSuccess(reposeData())
+        end
     end  
 
     -- 注册脚本回调方法  

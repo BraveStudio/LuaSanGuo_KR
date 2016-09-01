@@ -624,7 +624,29 @@ function BiographyData:getSweepData(sweepNum, callBack)
     NetWork:sendToServer(msg)
 
 end
+function BiographyData:getSweepDataforKillHero(sweepData,callBack)
 
+    local onSweepReturn = function(data)
+        for k, v in ipairs(data.result) do
+
+            --添加资源
+            PlayerData.eventAttr.m_money = PlayerData.eventAttr.m_money + v.reward.money
+            PlayerData.eventAttr.m_nengliang = v.m_nengliang 
+
+            --添加道具
+            Functions.addItemsToData(Functions.rewardDataHandler(v.reward.item))
+        end
+        callBack(data)
+        sweepData.handler(data)
+    end
+    NetWork:addNetWorkListener({ 1, 2}, Functions.createNetworkListener(onSweepReturn))
+
+    local msg = {idx = {1, 2}, btype = 13 , data = { lpassid = sweepData.bigId,
+    spassid = sweepData.smallID, times = sweepData.sweepNum } }
+    
+    NetWork:sendToServer(msg)
+
+end
 function BiographyData:excuteFightSpeak(gkId, dialogueType, callback)
     
     if self:isFirstOfGk(gkId) then

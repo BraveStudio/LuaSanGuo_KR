@@ -6,7 +6,7 @@ local Functions = require("app.common.Functions")
 
 GuildBattleMapViewController.debug = true
 GuildBattleMapViewController.modulePath = ...
-GuildBattleMapViewController.studioSpriteFrames = {"GvgUI_Text","GuildBattleMapUI","UnionUI" }
+GuildBattleMapViewController.studioSpriteFrames = {"GvgUI_Text","GuildBattleMapUI" }
 --@auto code head end
 
 --@Pre loading
@@ -319,7 +319,7 @@ end
 function GuildBattleMapViewController:onDisplayView(data)
     self.ID = GuildBattleData:getBidInfo().id
 	Functions.printInfo(self.debug_b," GuildBattleMapViewController view enter display!")
-    Functions.loadImageWithWidget(self._Image_guild_map_t,"res/map/battle_map.png")
+    Functions.loadImageWithWidget(self._Image_guild_map_t,"map/battle_map.png")
     self.switch = true
     self.titleInit_X = self._Text_occupy_name_1_t:getPositionX()
     

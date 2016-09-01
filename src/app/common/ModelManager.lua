@@ -17,6 +17,9 @@ function ModelManager:init()
     if G_CurrentLanguage == "ch" then
         self.modelLevelMap["guildBattle"] = g_csOpen.GvgOpen.level
     end
+
+    self.modelLevelMap["heroKill"] = g_csOpen.HeroKillOpen.level
+    self.modelLevelMap["war"] = g_csOpen.GuoZhanOpen.level
     
     self:_init()
 end

@@ -6,7 +6,7 @@ local Functions = require("app.common.Functions")
 
 IntegralShopPopView.csbResPath = "lk/csb"
 IntegralShopPopView.debug = true
-IntegralShopPopView.studioSpriteFrames = {"IntegralShopUI_Text" }
+IntegralShopPopView.studioSpriteFrames = {"IntegralShopUI_Text","ShopUI_Text" }
 --@auto code head end
 --@Pre loading
 IntegralShopPopView.spriteFrameNames = 
@@ -51,6 +51,12 @@ function IntegralShopPopView:onInitUI()
 
 	self._Button_add_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Sprite_integral_Pop_bg"):getChildByName("Button_add")
 	self._Button_add_t:onTouch(Functions.createClickListener(handler(self, self.onButton_addClick), "zoom"))
+
+	self._Button_miu_10_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Sprite_integral_Pop_bg"):getChildByName("Button_miu_10")
+	self._Button_miu_10_t:onTouch(Functions.createClickListener(handler(self, self.onButton_miu_10Click), "zoom"))
+
+	self._Button_add_10_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Sprite_integral_Pop_bg"):getChildByName("Button_add_10")
+	self._Button_add_10_t:onTouch(Functions.createClickListener(handler(self, self.onButton_add_10Click), "zoom"))
 end
 --@auto code uiInit end
 
@@ -109,6 +115,34 @@ function IntegralShopPopView:onButton_addClick()
 --    self._Text_buy_cost_num_t:setText(tostring(self.itemData[self.param[1]].m_DebrisPrice * self.itemData[self.param[1]].m_DebrisCount))
 end
 --@auto code Button_add btFunc end
+
+--@auto code Button_miu_10 btFunc
+function IntegralShopPopView:onButton_miu_10Click()
+    Functions.printInfo(self.debug,"Button_miu_10 button is click!")
+    if self.itemData[self.param[1]].m_DebrisCount > 10 then
+        self.itemData[self.param[1]].m_DebrisCount = self.itemData[self.param[1]].m_DebrisCount - 10
+    else
+        self.itemData[self.param[1]].m_DebrisCount = 1
+        --弹出报错信息
+        PromptManager:openTipPrompt(LanguageConfig.language_IntegralShop_2)
+    end
+    self:showText(self.itemData[self.param[1]].m_DebrisPrice, self.itemData[self.param[1]].m_DebrisCount)
+end
+--@auto code Button_miu_10 btFunc end
+
+--@auto code Button_add_10 btFunc
+function IntegralShopPopView:onButton_add_10Click()
+    Functions.printInfo(self.debug,"Button_add_10 button is click!")
+    local count = math.floor(TianTiData:geTianTiScore() / self.itemData[self.param[1]].m_DebrisPrice)
+    if self.itemData[self.param[1]].m_DebrisCount + 10 <= count then
+        self.itemData[self.param[1]].m_DebrisCount = self.itemData[self.param[1]].m_DebrisCount + 10
+    else
+        --弹出报错信息
+        PromptManager:openTipPrompt(LanguageConfig.language_IntegralShop_1)
+    end
+    self:showText(self.itemData[self.param[1]].m_DebrisPrice, self.itemData[self.param[1]].m_DebrisCount)
+end
+--@auto code Button_add_10 btFunc end
 
 --@auto button backcall end
 

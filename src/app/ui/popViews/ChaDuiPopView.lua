@@ -29,27 +29,27 @@ function ChaDuiPopView:onInitUI()
 
     --output list
     self._ListView_din_t = self.csbNode:getChildByName("Panel_1"):getChildByName("ListView_din")
-    self._ProjectNode_1_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_6"):getChildByName("ProjectNode_1")
-    self._Text_Distribution_2_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Text_Distribution_2")
-    self._Panel_2_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_2")
-    self._Text_Distribution_3_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_2"):getChildByName("Text_Distribution_3")
-    self._Panel_3_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_3")
-    self._Text_Distribution_6_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_3"):getChildByName("Text_Distribution_6")
-    self._Panel_4_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4")
-    self._Text_2_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4"):getChildByName("Panel_5"):getChildByName("Text_2")
-    self._Text_4_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4"):getChildByName("Panel_5"):getChildByName("Text_4")
-    
+	self._ProjectNode_1_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_6"):getChildByName("ProjectNode_1")
+	self._Text_Distribution_2_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Text_Distribution_2")
+	self._Panel_2_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_2")
+	self._Text_Distribution_3_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_2"):getChildByName("Text_Distribution_3")
+	self._Panel_3_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_3")
+	self._Text_Distribution_6_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_3"):getChildByName("Text_Distribution_6")
+	self._Panel_4_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4")
+	self._Text_2_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4"):getChildByName("Panel_5"):getChildByName("Text_2")
+	self._Text_4_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4"):getChildByName("Panel_5"):getChildByName("Text_4")
+	
     --label list
     
     --button list
     self._Button_cha_dui_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Button_cha_dui")
-    self._Button_cha_dui_t:onTouch(Functions.createClickListener(handler(self, self.onButton_cha_duiClick), "zoom"))
+	self._Button_cha_dui_t:onTouch(Functions.createClickListener(handler(self, self.onButton_cha_duiClick), "zoom"))
 
-    self._Button_no_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4"):getChildByName("Panel_5"):getChildByName("Button_no")
-    self._Button_no_t:onTouch(Functions.createClickListener(handler(self, self.onButton_noClick), "zoom"))
+	self._Button_no_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4"):getChildByName("Panel_5"):getChildByName("Button_no")
+	self._Button_no_t:onTouch(Functions.createClickListener(handler(self, self.onButton_noClick), "zoom"))
 
-    self._Button_ok_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4"):getChildByName("Panel_5"):getChildByName("Button_ok")
-    self._Button_ok_t:onTouch(Functions.createClickListener(handler(self, self.onButton_okClick), "zoom"))
+	self._Button_ok_t = self.csbNode:getChildByName("Panel_1"):getChildByName("Panel_4"):getChildByName("Panel_5"):getChildByName("Button_ok")
+	self._Button_ok_t:onTouch(Functions.createClickListener(handler(self, self.onButton_okClick), "zoom"))
 end
 --@auto code uiInit end
 

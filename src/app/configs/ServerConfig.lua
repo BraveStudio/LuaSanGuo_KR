@@ -29,7 +29,7 @@ ServerConfig.LanServer =
         updateUrl = "http://114.215.211.22:8100/sanguoGM/luaupdate/"
     },
     [5] = {
-        PUBLICE_AND = "http://14.63.170.172:8085/sanguoGM/" ,--live
+        PUBLICE_AND = "http://login.dstamp.net:8085/sanguoGM/" ,--live
         updateUrl = "http://szjp-patch-kr.dstamp.net/live/"
     },
     [6] = {

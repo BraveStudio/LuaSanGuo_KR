@@ -44,8 +44,11 @@ end
 function UnionNoticePopView:onButton_notice_okClick()
     Functions.printInfo(self.debug,"Button_notice_ok button is click!")
     -- 修改公告
-    self:sendNotice()
-    
+    if self.type == 2 then
+        self:sendWarNotice()
+    elseif self.type == 1 then
+        self:sendNotice()
+    end
 end
 --@auto code Button_notice_ok btFunc end
 
@@ -57,8 +60,9 @@ function UnionNoticePopView:getPopAction()
 	Functions.printInfo(self.debug,"pop actionFunc is call")
 end
 
-function UnionNoticePopView:onDisplayView()
+function UnionNoticePopView:onDisplayView(data)
 	Functions.printInfo(self.debug,"pop action finish ")
+    self.type = data.type
     self._TextField_Notice_t:setPlaceHolder(LanguageConfig.ui_Union_35)
 end
 
@@ -79,6 +83,20 @@ function UnionNoticePopView:sendNotice()
     end
     NetWork:addNetWorkListener({ 7, 1 }, Functions.createNetworkListener(onSendNotice,true,"ret"))
     NetWork:sendToServer({ idx = { 7, 1 }, reqtype = 11, data = { notice = self._TextField_Notice_t:getString() } })
+end
+
+-- 修改公告
+function UnionNoticePopView:sendWarNotice()
+
+    local onWarNotice =function(event)
+        WarData:setNotice(self._TextField_Notice_t:getString())
+        GameEventCenter:dispatchEvent({ name = WarData.NOTICE_EVENT, data = {} })
+        self._controller_t:closeChildView(self)
+    end
+    NetWork:addNetWorkListener({30,12}, Functions.createNetworkListener(onWarNotice,true,"ret"))
+    local msg = {idx = {30, 12}, data = { notice = self._TextField_Notice_t:getString() }}
+    NetWork:sendToServer(msg)
+    
 end
 
 return UnionNoticePopView

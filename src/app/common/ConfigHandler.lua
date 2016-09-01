@@ -24,8 +24,28 @@ function ConfigHandler:init()
     self.heroAnimaInfos = CsvReader.parserFile("configs/combat/heroResource.csv", 2)
     self.soldierAnimaInfos = CsvReader.parserFile("configs/combat/soldierResource.csv", 2)
     self.skillInfos = TextReader.parserFile("data/spellconfig.txt",true)
+    self.xueZhanPrizeInfos = TextReader.parserFile("data/xzreward.txt")
 end
-
+--获取血战关卡奖励配置
+function ConfigHandler:getXueZhanPassPrize(passType,passLevle)
+    local selectedData = {}
+    for k, v in pairs(self.xueZhanPrizeInfos) do
+        if v["难度"] == passType and v["关卡"] == passLevle then 
+            selectedData = v
+        end
+    end
+    return selectedData
+end
+--获得额外奖励
+function ConfigHandler:getXueZhanPassExtPrize(passType,passLevle)
+    local levelPrize = self:getXueZhanPassPrize(passType,passLevle)
+    local extPrize = {}
+    if levelPrize["额外"] ~= nil then 
+        local script = " local extPrize = " .. levelPrize["额外"] .. "  return extPrize"
+        extPrize = assert(loadstring(script))() 
+    end
+    return extPrize
+end
 --获取试炼相关配置
 function ConfigHandler:getTrialHeroConfigOfLevel(level)
     if not self.heroTrialConfigs then
@@ -34,6 +54,27 @@ function ConfigHandler:getTrialHeroConfigOfLevel(level)
 
     assert(self.heroTrialConfigs[level], "hero trial config is error hero level is " .. tostring(level))
     return self.heroTrialConfigs[level]
+end
+
+--获取过关斩将的战斗配置
+function ConfigHandler:getKillHeroConfig(big, small)
+    local id = big*10 + small
+    if not self.killHeroConfigs then
+        self.killHeroConfigs = TextReader.parserFile("data/gcldfbconfig.txt", true)   
+    end
+
+    assert(self.killHeroConfigs[id], "hero trial config is error hero level is " .. tostring(id))
+    return self.killHeroConfigs[id]
+end
+
+--获取过关斩将的奖励配置
+function ConfigHandler:getKillHeroRewardOfId(id)
+    if not self.killHeroRewardConfigs then
+        self.killHeroRewardConfigs = TextReader.parserFile("data/gcldconfig.txt", true)
+    end
+
+    assert(self.killHeroRewardConfigs[id], "hero trial config is error hero level is " .. tostring(id))
+    return self.killHeroRewardConfigs[id]
 end
 
 --获取士兵升级资源数量

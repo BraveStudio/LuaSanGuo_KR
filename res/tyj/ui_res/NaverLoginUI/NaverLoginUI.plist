@@ -136,6 +136,28 @@
 				<key>sourceSize</key>
 				<string>{646,94}</string>
 			</dict>
+			<key>tyj/ui_res/NaverLoginUI/guest_button.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{649,337},{317,86}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{317,86}</string>
+			</dict>
+			<key>tyj/ui_res/NaverLoginUI/guest_button_down.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1,433},{317,86}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{317,86}</string>
+			</dict>
 		</dict>
 		<key>metadata</key>
 		<dict>

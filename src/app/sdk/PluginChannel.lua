@@ -177,6 +177,15 @@ function PluginChannel:isUseSdkExit( )
     end
     return isUseSdkExit
 end
+--是否支持注销
+function PluginChannel:isSupportLogout()
+    local isSupportLogout = false
+    local customParam = self:getCustomParam()
+    if customParam.accountCenter ~= nil and customParam.accountCenter == "logout" then
+        isSupportLogout = true
+    end
+    return isSupportLogout
+end
 --是否支持自动登陆
 function PluginChannel:isAutoLogin( )
     local customeParam = self:getCustomParam()

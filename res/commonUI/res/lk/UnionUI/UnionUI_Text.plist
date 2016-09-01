@@ -7,7 +7,7 @@
 			<key>commonUI/res/lk/UnionUI/chazhao.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{372,267},{52,31}}</string>
+				<string>{{477,203},{52,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -29,7 +29,7 @@
 			<key>commonUI/res/lk/UnionUI/chengyuan.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{540,204},{76,22}}</string>
+				<string>{{647,216},{76,22}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -40,7 +40,7 @@
 			<key>commonUI/res/lk/UnionUI/chuangjian.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{378,212},{53,31}}</string>
+				<string>{{563,180},{53,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -84,11 +84,11 @@
 			<key>commonUI/res/lk/UnionUI/gonghuiID.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{574,147},{78,21}}</string>
+				<string>{{483,180},{78,21}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<true />
+				<false />
 				<key>sourceSize</key>
 				<string>{78,21}</string>
 			</dict>
@@ -128,18 +128,18 @@
 			<key>commonUI/res/lk/UnionUI/gonghuixuanyan.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{244,279},{54,23}}</string>
+				<string>{{503,236},{54,23}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false />
+				<true />
 				<key>sourceSize</key>
 				<string>{54,23}</string>
 			</dict>
 			<key>commonUI/res/lk/UnionUI/jiaru.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{426,297},{52,31}}</string>
+				<string>{{555,235},{52,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -161,7 +161,7 @@
 			<key>commonUI/res/lk/UnionUI/mobai.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{483,147},{56,31}}</string>
+				<string>{{672,177},{56,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -205,11 +205,11 @@
 			<key>commonUI/res/lk/UnionUI/xiugai.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{477,213},{53,31}}</string>
+				<string>{{444,186},{53,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false />
+				<true />
 				<key>sourceSize</key>
 				<string>{53,31}</string>
 			</dict>
@@ -271,7 +271,7 @@
 			<key>commonUI/res/lk/UnionSetPopUI/xiugai.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{444,242},{53,31}}</string>
+				<string>{{411,211},{53,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -348,24 +348,13 @@
 			<key>commonUI/res/lk/UnionMailPopUI/fasong.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{396,300},{55,24}}</string>
+				<string>{{477,236},{55,24}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<true />
 				<key>sourceSize</key>
 				<string>{55,24}</string>
-			</dict>
-			<key>commonUI/res/lk/UnionMailPopUI/gonghuiquanyuan.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{672,177},{83,22}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false />
-				<key>sourceSize</key>
-				<string>{83,22}</string>
 			</dict>
 			<key>commonUI/res/lk/UnionMembersPopUI/chengyuanguanli.png</key>
 			<dict>
@@ -469,7 +458,7 @@
 			<key>commonUI/res/lk/Union_CY_PopUI/chexiaozhanglao.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{541,147},{55,31}}</string>
+				<string>{{730,177},{55,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -502,7 +491,7 @@
 			<key>commonUI/res/lk/Union_CY_PopUI/tichugonghui.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{483,180},{55,31}}</string>
+				<string>{{672,210},{55,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -513,7 +502,7 @@
 			<key>commonUI/res/lk/UnionApplyPopUI/gonghuichengyuanshuliang.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{372,300},{69,22}}</string>
+				<string>{{531,203},{69,22}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -524,11 +513,11 @@
 			<key>commonUI/res/lk/UnionApplyPopUI/jujue.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{477,246},{53,31}}</string>
+				<string>{{378,212},{53,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false />
+				<true />
 				<key>sourceSize</key>
 				<string>{53,31}</string>
 			</dict>
@@ -546,11 +535,11 @@
 			<key>commonUI/res/lk/UnionApplyPopUI/tongyi.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{444,186},{54,31}}</string>
+				<string>{{483,147},{54,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<true />
+				<false />
 				<key>sourceSize</key>
 				<string>{54,31}</string>
 			</dict>
@@ -689,11 +678,11 @@
 			<key>commonUI/res/lk/UnionGodPopUI/lingqujiangli.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{477,279},{53,31}}</string>
+				<string>{{596,217},{53,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<false />
+				<true />
 				<key>sourceSize</key>
 				<string>{53,31}</string>
 			</dict>
@@ -788,11 +777,11 @@
 			<key>commonUI/res/lk/UnionDonatePopUI/juanxian.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{411,211},{54,31}}</string>
+				<string>{{539,147},{54,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
-				<true />
+				<false />
 				<key>sourceSize</key>
 				<string>{54,31}</string>
 			</dict>
@@ -843,13 +832,24 @@
 			<key>commonUI/res/lk/UnionDonatePopUI/xiaohao.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{211,301},{36,19}}</string>
+				<string>{{503,292},{36,19}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<true />
 				<key>sourceSize</key>
 				<string>{36,19}</string>
+			</dict>
+			<key>commonUI/res/lk/UnionMailPopUI/suoyouchengyuan.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{528,274},{42,22}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{42,22}</string>
 			</dict>
 		</dict>
 		<key>metadata</key>

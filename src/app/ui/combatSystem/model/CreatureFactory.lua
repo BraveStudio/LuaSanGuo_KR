@@ -86,7 +86,10 @@ function CreatureFactory:createHero(heroInfo, partHeros, equipInfos, campType, v
                                 skillAnimaName = heroData.effectRes,
                                 heroSound      = heroData.heroSound
                             }) 
-    creature:updateAttrExOfZx(combatType, heroZxID, campType, combatTime)
+                            
+    if combatType ~= CombatCenter.CombatType.RB_Tandui or campType then
+        creature:updateAttrExOfZx(combatType, heroZxID, campType, combatTime)
+    end
 
     -- 天梯战斗中，放大基础血量倍数
     if G_CurrentLanguage ~= "ch" then

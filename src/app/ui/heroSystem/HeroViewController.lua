@@ -40,6 +40,7 @@ function HeroViewController:onDidLoadView()
 	self._Image_sell_1_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_sell"):getChildByName("Image_sell_1")
 	self._Image_sell_2_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_sell"):getChildByName("Image_sell_2")
 	self._Panel_sell_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell")
+	self._Image_money_sell_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell"):getChildByName("Image_money_sell")
 	self._Text_money_sell_num_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell"):getChildByName("Image_money_sell"):getChildByName("Text_money_sell_num")
 	self._Panel_all_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_all")
 	self._Panel_li_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_main"):getChildByName("Panel_li")
@@ -63,6 +64,9 @@ function HeroViewController:onDidLoadView()
 	self._Button_Pokedex_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_Pokedex")
 	self._Button_Pokedex_t:onTouch(Functions.createClickListener(handler(self, self.onButton_pokedexClick), "zoom"))
 
+	self._Button_fenjie_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_10"):getChildByName("Button_fenjie")
+	self._Button_fenjie_t:onTouch(Functions.createClickListener(handler(self, self.onButton_fenjieClick), "zoom"))
+
 	self._Button_Selected_1_t = self.view_t.csbNode:getChildByName("main"):getChildByName("Panel_sell"):getChildByName("Button_Selected_1")
 	self._Button_Selected_1_t:onTouch(Functions.createClickListener(handler(self, self.onButton_selected_1Click), "zoom"))
 
@@ -78,6 +82,14 @@ end
 --@auto code Button_back btFunc
 function HeroViewController:onButton_backClick()
     Functions.printInfo(self.debug,"Button_back button is click!")
+    if self.sellType == 1  then
+        self._Button_fenjie_t:setVisible(true)
+        self._Button_Selected_1_t:setVisible(true)
+    end
+
+    if self.sellType == 2  then
+    	self._Button_fenjie_t:setVisible(true)
+    end
     if EnhanceData.HeroShowType == 0 then
         for k,v in pairs(self.sell_Card) do 
             if v.seleceted ~= nil then
@@ -129,6 +141,9 @@ end
 --@auto code Button_sell btFunc
 function HeroViewController:onButton_sellClick()
     Functions.printInfo(self.debug,"Button_sell button is click!")
+    --出售类型
+    self.sellType = 2 
+    
     if EnhanceData.HeroShowType == 2 then
         --武将背包数据中加入主卡
         HeroCardData:addCardData(EnhanceData.MasterData)
@@ -140,6 +155,8 @@ function HeroViewController:onButton_sellClick()
         self._Button_Pokedex_t:setVisible(false)
         self._Button_sell_t:setVisible(false)
         self._Panel_sell_t:setVisible(true)
+        self._Image_money_sell_t:setVisible(true)
+        self._Button_fenjie_t:setVisible(false)
         
         --出售状态
         self.sellState = true
@@ -197,13 +214,29 @@ end
 --@auto code Button_ok btFunc
 function HeroViewController:onButton_okClick()
     Functions.printInfo(self.debug,"Button_ok button is click!")
-    
-    local sellMark = {}
-    for k, v in pairs(self.sellTable) do
-        sellMark[#sellMark+1] = v.m_mark
-    end
+    if self.sellType == 1 then
+    	local switch = false
+    	local pppp = self.sellTable
+        for k, v in pairs(self.sellTable) do
+            if v.m_class > 1 or v.m_level > 1 then
+                switch = true
+                break
+            end
+        end
+        if switch then
+            --弹出框
+            NoticeManager:openTips(self, { handler = handler(self,self.sendSellCard), title = LanguageConfig.language_Enhance_17})
+            return
+        end
+        self:sendSellCard()
+    else
+        local sellMark = {}
+        for k, v in pairs(self.sellTable) do
+            sellMark[#sellMark+1] = v.m_mark
+        end
 
-    EmbattleData:removeHeroBeforeToCheck(sellMark,handler(self,self.sendSellCard))
+        EmbattleData:removeHeroBeforeToCheck(sellMark,handler(self,self.sendSellCard))
+    end
 
 end
 --@auto code Button_ok btFunc end
@@ -223,6 +256,47 @@ function HeroViewController:onButton_helpClick()
     NoticeManager:openNotice(self, {type = NoticeManager.SELL_CARD_INFO})
 end
 --@auto code Button_help btFunc end
+
+--@auto code Button_fenjie btFunc
+function HeroViewController:onButton_fenjieClick()
+    Functions.printInfo(self.debug,"Button_fenjie button is click!")
+    
+    --出售类型
+    self.sellType = 1 
+    
+    if EnhanceData.HeroShowType == 2 then
+        --武将背包数据中加入主卡
+        HeroCardData:addCardData(EnhanceData.MasterData)
+        --数据更新监听
+        GameEventCenter:dispatchEvent({ name = EnhanceData.ENHANCE_SHENG_JI_FU, data = data })
+        GameCtlManager:pop(self, { data = EnhanceData.DeputyData })
+    else
+        self._Button_ok_t:setVisible(true)
+        self._Button_Pokedex_t:setVisible(false)
+        self._Button_sell_t:setVisible(false)
+        self._Panel_sell_t:setVisible(true)
+        self._Image_money_sell_t:setVisible(false)
+        self._Button_fenjie_t:setVisible(false)
+        self._Button_Selected_1_t:setVisible(false)
+
+        --出售状态
+        self.sellState = true
+        --排序（倒序）
+        HeroCardData:sortReverse()
+        local reverseCard = HeroCardData:getAllHeroData()
+        --准备出售卡
+        self.sell_Card = HeroCardData:getFeiJieHeroData(reverseCard)
+        --选择的祭品武将不能在退回武将界面后，出售时还是选中状态（所以在出售前先把所有状态清空）
+        for k, v in pairs(self.sell_Card) do
+            if nil ~= v.seleceted then
+                v.seleceted = false
+            end
+        end
+        --没上阵的卡才能显示
+        self:showCard(self.sell_Card)
+    end
+end
+--@auto code Button_fenjie btFunc end
 
 --@auto button backcall end
 
@@ -256,6 +330,7 @@ function HeroViewController:onDisplayView()
     end
     if EnhanceData.HeroShowType ~= 0 then
         self._Button_Pokedex_t:setVisible(false)
+        self._Button_fenjie_t:setVisible(false)
     end
     if EnhanceData.HeroShowType == 2 then 
         --主卡的删除
@@ -400,14 +475,47 @@ function HeroViewController:sendSellCard()
         self.sellSoul = 0
         self._Text_money_sell_num_t:setText(tostring(self.sellMoney))
     end
+    
+    --分解数据
+    local onFenJie = function(event)
+        local data = event.data
+        local item = data.goods
+        PlayerData.eventAttr.m_soul = PlayerData.eventAttr.m_soul + data.soul
+        PlayerData.eventAttr.m_hunjing = PlayerData.eventAttr.m_hunjing + data.hunjing
+        for k, v in pairs(item) do
+            local items = {id = v[1] , type = v[2], count = v[3], slot = v[4]}
+            Functions:addItemResources( items )
+        end
+        
+        self:sellData()
+        HeroCardData:getSellHeroData(self.sellTable)
+        --显示卡
+        self:showCard(self.sell_Card)
+
+        --出售完了要清空
+        self.sellTable = {}
+        --self._Text_money_num_t:setText(tostring(PlayerData.eventAttr.m_hunjing))
+        self._Text_hero_num_t:setText(tostring(#(HeroCardData:getAllHeroData()).."/"..tostring(HeroCardData:getBagBaseSize())))
+        self.sellMoney = 0
+        self.sellSoul = 0
+        self._Text_money_sell_num_t:setText(tostring(self.sellMoney))
+    end
 
     local sellMark = {}
     for k, v in pairs(self.sellTable) do
         sellMark[#sellMark+1] = v.m_mark
     end
+    
 
-    NetWork:addNetWorkListener({ 13, 1 }, Functions.createNetworkListener(onSellCard,true,"ret"))
-    NetWork:sendToServer({ idx = { 13, 1 }, slots = sellMark })
+    if self.sellType == 1 then
+        NetWork:addNetWorkListener({ 5, 32 }, Functions.createNetworkListener(onFenJie,true,"ret"))
+        NetWork:sendToServer({ idx = { 5, 32 }, slots = sellMark })
+    else
+        NetWork:addNetWorkListener({ 13, 1 }, Functions.createNetworkListener(onSellCard,true,"ret"))
+        NetWork:sendToServer({ idx = { 13, 1 }, slots = sellMark })
+    end
+    
+
 end
 
 function HeroViewController:showCard(show_Card)

@@ -36,7 +36,6 @@ function MainViewController:onDidLoadView()
     --output list
     self._ScrollView_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView")
 	self._MainBackPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainBackPanel")
-	self._MainMidPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMidPanel")
 	self._MainMid1Panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel")
 	self._rankTile_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("rankTile")
 	self._tiantTitle_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("tiantTitle")
@@ -48,6 +47,7 @@ function MainViewController:onDidLoadView()
 	self._sevenStarTitle_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("sevenStarTitle")
 	self._fire_anima_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("fire_anima")
 	self._gvgTitle_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("gvgTitle")
+	self._guoZhanTitile_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("guoZhanTitile")
 	self._MainFrontPanel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel")
 	self._tinkerText_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("tinkerText")
 	self._mailTitil_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("mailTitil")
@@ -57,6 +57,7 @@ function MainViewController:onDidLoadView()
 	self._stars_anima_1_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("stars_anima_1")
 	self._stars_anima_2_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("stars_anima_2")
 	self._lantern_anima_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("lantern_anima")
+	self._heroKillTitile_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("heroKillTitile")
 	self._czbx_anima_t = self.view_t.csbNode:getChildByName("main"):getChildByName("czbxBt"):getChildByName("czbx_anima")
 	self._czbx_time_t = self.view_t.csbNode:getChildByName("main"):getChildByName("czbxBt"):getChildByName("czbx_time")
 	self._coinText_t = self.view_t.csbNode:getChildByName("main"):getChildByName("tipBtPanel"):getChildByName("Resource_12"):getChildByName("coinText")
@@ -99,6 +100,9 @@ function MainViewController:onDidLoadView()
 	self._gvgBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("gvgBt")
 	self._gvgBt_t:onTouch(Functions.createClickListener(handler(self, self.onGvgbtClick), "movedis"))
 
+	self._guoZhanBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainMid1Panel"):getChildByName("guoZhanBt")
+	self._guoZhanBt_t:onTouch(Functions.createClickListener(handler(self, self.onGuozhanbtClick), "movedis"))
+
 	self._tinkerBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("tinkerBt")
 	self._tinkerBt_t:onTouch(Functions.createClickListener(handler(self, self.onTinkerbtClick), "movedis"))
 
@@ -113,6 +117,9 @@ function MainViewController:onDidLoadView()
 
 	self._xuezhanBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("xuezhanBt")
 	self._xuezhanBt_t:onTouch(Functions.createClickListener(handler(self, self.onXuezhanbtClick), "movedis"))
+
+	self._heroKillBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("ScrollView"):getChildByName("MainFrontPanel"):getChildByName("heroKillBt")
+	self._heroKillBt_t:onTouch(Functions.createClickListener(handler(self, self.onHerokillbtClick), "movedis"))
 
 	self._czbxBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("czbxBt")
 	self._czbxBt_t:onTouch(Functions.createClickListener(handler(self, self.onCzbxbtClick), "zoom"))
@@ -253,7 +260,7 @@ end
 function MainViewController:onMaincitybtClick()
     Functions.printInfo(self.debug,"Maincitybt button is click!")
     
-	GameCtlManager:push("app.ui.citySystem.CityViewController")
+    GameCtlManager:push("app.ui.citySystem.CityViewController")
     
 end
 --@auto code Maincitybt btFunc end
@@ -511,6 +518,21 @@ function MainViewController:onBtchongsClick()
 end
 --@auto code Btchongs btFunc end
 
+--@auto code Guozhanbt btFunc
+function MainViewController:onGuozhanbtClick()
+    Functions.printInfo(self.debug,"Guozhanbt button is click!")
+    GameCtlManager:push("app.ui.warSystem.WarViewController")
+    --PromptManager:openTipPrompt("국가전 시스템은 개발 작업 중입니다.")
+end
+--@auto code Guozhanbt btFunc end
+
+--@auto code Herokillbt btFunc
+function MainViewController:onHerokillbtClick()
+    Functions.printInfo(self.debug,"Herokillbt button is click!")
+    GameCtlManager:push("app.ui.heroKillSystem.HeroKillViewController")
+end
+--@auto code Herokillbt btFunc end
+
 --@auto button backcall end
 
 
@@ -523,6 +545,10 @@ function MainViewController:onDisplayView()
     if G_CurrentLanguage == "ch" then
     	-- 隐藏韩国帮助按钮
     	self._serviceBt_t:setVisible(false)
+    	self._cafeBt_t:setVisible(false)
+    else
+    	self._serviceBt_t:setVisible(true)
+    	self._cafeBt_t:setVisible(true)
     end
     
     --sdk
@@ -569,7 +595,7 @@ function MainViewController:onDisplayView()
     self.midPanelSpeed = 0.5
     self.mid1PanelSpeed = 0.3
 
-    self.old_midPanelPos = self._MainMidPanel_t:getPositionX()
+--    self.old_midPanelPos = self._MainMidPanel_t:getPositionX()
     self.old_mid1PanelPos = self._MainMid1Panel_t:getPositionX()
     self.old_BackPanelPos = self._MainBackPanel_t:getPositionX()
 
@@ -581,7 +607,7 @@ function MainViewController:onDisplayView()
     self._ScrollView_t:onEvent(onScrollView)
 
     --initScrollView
-    self._ScrollView_t:getInnerContainer():setPositionX(-220)
+    self._ScrollView_t:getInnerContainer():setPositionX(-800)
     self:updateScrollViewFunc()
 
     --初始化ui动画
@@ -825,6 +851,19 @@ function MainViewController:initUiTitleState_()
 					Functions.setGraySprite(self._gvgTitle_t, not ModelManager:isModelOpenOfName("guildBattle"))
 				end)
 	end
+
+	--过关斩将
+   	Functions.setGraySprite(self._heroKillTitile_t, not ModelManager:isModelOpenOfName("heroKill"))
+   	Functions.bindUiWithModelAttr(self._heroKillTitile_t, PlayerData, "m_level", function()
+				Functions.setGraySprite(self._heroKillTitile_t, not ModelManager:isModelOpenOfName("heroKill"))
+			end)
+
+   	--过关斩将
+   	Functions.setGraySprite(self._guoZhanTitile_t, not ModelManager:isModelOpenOfName("war"))
+   	Functions.bindUiWithModelAttr(self._guoZhanTitile_t, PlayerData, "m_level", function()
+				Functions.setGraySprite(self._guoZhanTitile_t, not ModelManager:isModelOpenOfName("war"))
+			end)
+
 	
 end
 
@@ -845,7 +884,7 @@ end
 function MainViewController:updateScrollViewFunc()
     local pos = self._ScrollView_t:getInnerContainer():getPositionX()
     self._MainBackPanel_t:setPositionX(self.old_BackPanelPos+ -1*pos*self.backPanelSpeed)
-    self._MainMidPanel_t:setPositionX(self.old_midPanelPos+ -1*pos*self.midPanelSpeed)
+--    self._MainMidPanel_t:setPositionX(self.old_midPanelPos+ -1*pos*self.midPanelSpeed)
     self._MainMid1Panel_t:setPositionX(self.old_mid1PanelPos+ -1*pos*self.mid1PanelSpeed)
 end
 

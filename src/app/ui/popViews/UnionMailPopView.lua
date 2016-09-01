@@ -48,7 +48,12 @@ end
 function UnionMailPopView:onButton_mail_okClick()
     Functions.printInfo(self.debug,"Button_mail_ok button is click!")
     --发送邮件
-    self:sendMail()
+    if self.mailType == 2 then
+        self:sendWarMail()
+    elseif self.mailType == 1 then
+    	self:sendMail()
+    end
+    
 end
 --@auto code Button_mail_ok btFunc end
 
@@ -67,8 +72,9 @@ function UnionMailPopView:getPopAction()
 	Functions.printInfo(self.debug,"pop actionFunc is call")
 end
 
-function UnionMailPopView:onDisplayView()
+function UnionMailPopView:onDisplayView(data)
 	Functions.printInfo(self.debug,"pop action finish ")
+	self.mailType = data.type
     self._TextField_mail_1_t:setPlaceHolder(LanguageConfig.ui_Union_33)
     self._TextField_mail_2_t:setPlaceHolder(LanguageConfig.ui_Union_34)
 end
@@ -78,7 +84,7 @@ function UnionMailPopView:onCreate()
 end
 --@auto code output func end
 
--- 发送邮件
+-- 发送公会邮件
 function UnionMailPopView:sendMail()
     Functions.printInfo(self.debug,"sendMail")
     local onSendMail = function(event)
@@ -97,6 +103,27 @@ function UnionMailPopView:sendMail()
         NetWork:sendToServer({ idx = { 7, 1 }, reqtype = 9, data = { title = mail1, content = mail2} })
     end
 
+end
+
+-- 发送国家邮件
+function UnionMailPopView:sendWarMail()
+    Functions.printInfo(self.debug,"sendWarMail")
+    local onWarMail = function(event)
+        
+            --弹出报错信息
+        ConfigHandler:getServerErrorCode(event.ret)
+            --PromptManager:openTipPrompt(g_csErrorString[event.ret])
+        self._controller_t:closeChildView(self)
+        
+    end
+    local mail1 = self._TextField_mail_1_t:getString()
+    local mail2 = self._TextField_mail_2_t:getString()
+
+    if mail1 and mail2 then
+        NetWork:addNetWorkListener({30,11}, Functions.createNetworkListener(onWarMail,true,"ret"))
+        local msg = {idx = {30, 11}, data = { title = mail1, content = mail2}}
+        NetWork:sendToServer(msg)
+    end
 end
 
 return UnionMailPopView

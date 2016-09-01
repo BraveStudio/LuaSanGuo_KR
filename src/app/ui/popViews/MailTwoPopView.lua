@@ -53,6 +53,12 @@ function MailTwoPopView:onInitUI()
 	self._Panel_jifen_6_t = self.csbNode:getChildByName("Panel_two_page"):getChildByName("Panel_jifen_6")
 	self._Sprite_jifen_6_t = self.csbNode:getChildByName("Panel_two_page"):getChildByName("Panel_jifen_6"):getChildByName("Sprite_jifen_6")
 	self._Text_jifen_num_6_t = self.csbNode:getChildByName("Panel_two_page"):getChildByName("Panel_jifen_6"):getChildByName("Text_jifen_num_6")
+	self._Panel_nengliang_7_t = self.csbNode:getChildByName("Panel_two_page"):getChildByName("Panel_nengliang_7")
+	self._Sprite_nenliang_7_t = self.csbNode:getChildByName("Panel_two_page"):getChildByName("Panel_nengliang_7"):getChildByName("Sprite_nenliang_7")
+	self._Text_nengliang_num_7_t = self.csbNode:getChildByName("Panel_two_page"):getChildByName("Panel_nengliang_7"):getChildByName("Text_nengliang_num_7")
+	self._Panel_fenglu_8_t = self.csbNode:getChildByName("Panel_two_page"):getChildByName("Panel_fenglu_8")
+	self._Sprite_fenglu_8_t = self.csbNode:getChildByName("Panel_two_page"):getChildByName("Panel_fenglu_8"):getChildByName("Sprite_fenglu_8")
+	self._Text_fenglu_num_8_t = self.csbNode:getChildByName("Panel_two_page"):getChildByName("Panel_fenglu_8"):getChildByName("Text_fenglu_num_8")
 	
     --label list
     
@@ -230,6 +236,14 @@ function MailTwoPopView:onDisplayView(data)
                     self.MicroItem = self.MicroItem + 1
                     self._Panel_jifen_6_t:setVisible(true)
                     self._Text_jifen_num_6_t:setText(item.count)
+                elseif item.id == -8 then --能量 todo
+                    self.MicroItem = self.MicroItem + 1
+                    self._Panel_nengliang_7_t:setVisible(true)
+                    self._Text_nengliang_num_7_t:setText(item.count)
+                elseif item.id == -9 then--国战的俸禄
+                    self.MicroItem = self.MicroItem + 1
+                    self._Panel_fenglu_8_t:setVisible(true)
+                    self._Text_fenglu_num_8_t:setText(item.count)
                 else
                     --道具
                     self.card = self.card + 1
@@ -299,10 +313,18 @@ function MailTwoPopView:showItem(items)
                 self.MicroItem = self.MicroItem - 1
                 self._Panel_hunjin_5_t:setPosition(self.itemX, self.itemY)
                 self._Text_hunjin_num_5_t:setText(item.count)
-            elseif item.id == -7 then--魂精
+            elseif item.id == -7 then--积分
                 self.MicroItem = self.MicroItem - 1
                 self._Panel_jifen_6_t:setPosition(self.itemX, self.itemY)
                 self._Text_jifen_num_6_t:setText(item.count)
+            elseif item.id == -8 then --精力  --todo
+                self.MicroItem = self.MicroItem - 1
+                self._Panel_nengliang_7_t:setPosition(self.itemX, self.itemY)
+                self._Text_nengliang_num_7_t:setText(item.count)
+            elseif item.id == -9 then--国战的俸禄
+                self.MicroItem = self.MicroItem - 1
+                self._Panel_fenglu_8_t:setPosition(self.itemX, self.itemY)
+                self._Text_fenglu_num_8_t:setText(item.count)
             else
                 local item = Functions.createPartNode({ nodeType = 4, nodeId = item.id, count = item.count })
                 item:setPosition(c_iItemBigX, c_iItemBigY)

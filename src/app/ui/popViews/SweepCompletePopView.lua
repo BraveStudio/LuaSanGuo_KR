@@ -39,10 +39,11 @@ function SweepCompletePopView:onOkbtClick()
     Functions.printInfo(self.debug,"Okbt button is click!")
 
     local controller = self:getController()
-    
-    if self.lvlCh.old < self.lvlCh.new then
-        controller:openChildView("app.ui.popViews.LevelUpPopView", { isRemove = false, data = { oldLevel = self.lvlCh.old,
-         newLevel =  self.lvlCh.new, upLevelAward = self.upLevelAward } })
+    if self.lvlCh ~= nil then
+        if self.lvlCh.old < self.lvlCh.new  then
+            controller:openChildView("app.ui.popViews.LevelUpPopView", { isRemove = false, data = { oldLevel = self.lvlCh.old,
+             newLevel =  self.lvlCh.new, upLevelAward = self.upLevelAward } })
+        end
     end
 
     controller:closeChildView("SweepPopView")
@@ -56,69 +57,79 @@ end
 
 --@auto code output func
 function SweepCompletePopView:getPopAction()
-	Functions.printInfo(self.debug,"pop actionFunc is call")
-	
+    Functions.printInfo(self.debug,"pop actionFunc is call")
+    
 end
 
 function SweepCompletePopView:onDisplayView(data)
-	Functions.printInfo(self.debug,"pop action finish ")
-	--local data = {{coin = 100,exp = 200,soul = 300},{coin = 101,exp = 201,soul = 301},{coin = 102,exp = 202,soul = 302}}
-	
+    Functions.printInfo(self.debug,"pop action finish ")
+    --local data = {{coin = 100,exp = 200,soul = 300},{coin = 101,exp = 201,soul = 301},{coin = 102,exp = 202,soul = 302}}
+    
     self._sweepSucOkBt_t = self._okBt_t
     self.lvlCh = data.lvlCh
-	self.upLevelAward = data.upLevelAward
+    self.upLevelAward = data.upLevelAward
     data = data.prizeTabel
     table.insert(data, {})
-	local handler = function(index,widget,data,model )
+    local handler = function(index,widget,data,model )
         if not table.empty(data) then
-			local coin = widget:getChildByName("rewardPanel"):getChildByName("coinLabel")
-			Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("coinLabel"),widget:getChildByName("rewardPanel"):getChildByName("coinLabel"))
-			coin:setString(tostring(data.coin))
-			local exp = widget:getChildByName("rewardPanel"):getChildByName("expLabel")
-			Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("expLabel"),widget:getChildByName("rewardPanel"):getChildByName("expLabel"))
-			exp:setString(tostring(data.exp))
+            local coin = widget:getChildByName("rewardPanel"):getChildByName("coinLabel")
+            Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("coinLabel"),widget:getChildByName("rewardPanel"):getChildByName("coinLabel"))
+            coin:setString(tostring(data.coin))
+            if data.exp ~= nil then 
+                local exp = widget:getChildByName("rewardPanel"):getChildByName("expLabel")
+                Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("expLabel"),widget:getChildByName("rewardPanel"):getChildByName("expLabel"))
+                exp:setString(tostring(data.exp))
+            else
+                 widget:getChildByName("rewardPanel"):getChildByName("expLabel"):setVisible(false)
+                 widget:getChildByName("rewardPanel"):getChildByName("expIcon"):setVisible(false)
+            end
             -- self._expLoadingBar_t:setPercent(oldExp/g_roleUplevelExp[PlayerData.eventAttr.m_level]*100)
             -- exp:setString(tostring(oldExp) .. "/" .. tostring(g_roleUplevelExp[PlayerData.eventAttr.m_level]))
+            if data.soul ~= nil then 
+                local soul = widget:getChildByName("rewardPanel"):getChildByName("soulLabel")
+                Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("soulLabel"),widget:getChildByName("rewardPanel"):getChildByName("soulLabel"))
+                soul:setString(tostring(data.soul))
+            else
+                widget:getChildByName("rewardPanel"):getChildByName("soulLabel"):setVisible(false)
+                widget:getChildByName("rewardPanel"):getChildByName("soulIcon"):setVisible(false)
+            end
 
-			local soul = widget:getChildByName("rewardPanel"):getChildByName("soulLabel")
-			Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("soulLabel"),widget:getChildByName("rewardPanel"):getChildByName("soulLabel"))
-			soul:setString(tostring(data.soul))
-			local indexLabel = widget:getChildByName("rewardPanel"):getChildByName("indexLabel")
-			indexLabel:setString(tostring(index))
-			Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("indexLabel"),widget:getChildByName("rewardPanel"):getChildByName("indexLabel"))
-			local tipsLabel = widget:getChildByName("rewardPanel"):getChildByName("prizePanel"):getChildByName("tipsLabel")
+            local indexLabel = widget:getChildByName("rewardPanel"):getChildByName("indexLabel")
+            indexLabel:setString(tostring(index))
+            Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("indexLabel"),widget:getChildByName("rewardPanel"):getChildByName("indexLabel"))
+            local tipsLabel = widget:getChildByName("rewardPanel"):getChildByName("prizePanel"):getChildByName("tipsLabel")
             tipsLabel:setString(LanguageConfig.language_4_17)
             Functions.initTextColor(model:getChildByName("rewardPanel"):getChildByName("prizePanel"):getChildByName("tipsLabel"),widget:getChildByName("rewardPanel"):getChildByName("prizePanel"):getChildByName("tipsLabel"))
             if not table.empty(data.prize) then
-				local tips = widget:getChildByName("rewardPanel"):getChildByName("prizePanel"):getChildByName("tipsLabel"):setVisible(false)
+                local tips = widget:getChildByName("rewardPanel"):getChildByName("prizePanel"):getChildByName("tipsLabel"):setVisible(false)
                 local prizePanel = widget:getChildByName("rewardPanel"):getChildByName("prizePanel")  
 
                 local itmes = Functions.rewardDataHandler(data.prize)              
-			    for i=1, #itmes do			    	
-			    	   --初始化掉落物显示相关参数
+                for i=1, #itmes do                  
+                       --初始化掉落物显示相关参数
                     local prizeNode = prizePanel:getChildByName("prizeNode")
                     local prizeNode1 = prizePanel:getChildByName("prizeNode1")
-					local awardItemDistance = prizeNode1:getPositionX() - prizeNode:getPositionX()
-					local awardFirstPos = { x = prizeNode:getPositionX(), y = prizeNode:getPositionY() }
-					local awardItemScale = prizeNode:getScale()
-			        local disNode = Functions.createPartNode({ nodeId = itmes[i].id, nodeType = itmes[i].type,count = itmes[i].count })
-			        disNode:setTag(i)  
-			        disNode:setVisible(false)
-			        if disNode ~= nil then			            
-			            local pos = { x = awardFirstPos.x + awardItemDistance*(i-1), y = awardFirstPos.y }
-			            disNode:setScale(awardItemScale)
-			            disNode:setPosition(pos)
+                    local awardItemDistance = prizeNode1:getPositionX() - prizeNode:getPositionX()
+                    local awardFirstPos = { x = prizeNode:getPositionX(), y = prizeNode:getPositionY() }
+                    local awardItemScale = prizeNode:getScale()
+                    local disNode = Functions.createPartNode({ nodeId = itmes[i].id, nodeType = itmes[i].type,count = itmes[i].count })
+                    disNode:setTag(i)  
+                    disNode:setVisible(false)
+                    if disNode ~= nil then                      
+                        local pos = { x = awardFirstPos.x + awardItemDistance*(i-1), y = awardFirstPos.y }
+                        disNode:setScale(awardItemScale)
+                        disNode:setPosition(pos)
                         prizePanel:addChild(disNode)
-			        end
-			    end
-			end
-		else
-			widget:getChildByName("completePanel"):setVisible(true)
-			--widget:getChildByName("rewardPanel"):setVisible(false)
-		end
+                    end
+                end
+            end
+        else
+            widget:getChildByName("completePanel"):setVisible(true)
+            --widget:getChildByName("rewardPanel"):setVisible(false)
+        end
     end
-	Functions.bindListWithData( self._listView_t, data, handler)
-	local innerContainer = self._listView_t:getInnerContainer()
+    Functions.bindListWithData( self._listView_t, data, handler)
+    local innerContainer = self._listView_t:getInnerContainer()
 
     local playPrizeAction  --播放掉落物动画
     playPrizeAction = function(prizeTable,prizeNum)
@@ -137,9 +148,9 @@ function SweepCompletePopView:onDisplayView(data)
     local totalNum = #data --总共扫荡多少次
     local playItemAction
     playItemAction = function(itemTable,prizeNumTable,itemNum)
-	    if itemNum == 0 then 
-	       return
-	    end 
+        if itemNum == 0 then 
+           return
+        end 
         itemTable[#itemTable - itemNum + 1]:setVisible(true)
         local rewardPanel = itemTable[#itemTable - itemNum + 1]:getChildByName("rewardPanel")
         rewardPanel:setVisible(true) 
@@ -169,21 +180,21 @@ function SweepCompletePopView:onDisplayView(data)
         
         local play2= cc.Sequence:create({play,cc.DelayTime:create(0.3*(#prizeTable+2)),cc.CallFunc:create(function() playItemAction(itemTable,prizeNumTable,itemNum - 1) end)})
         transition.execute(rewardPanel,play2)
-	end
+    end
 
     local itemTable = {}
     local prizeNumTable = {}
-	for i = 1,#data-1 do 
+    for i = 1,#data-1 do 
         itemTable[#itemTable + 1] = self._listView_t:getItem(i-1)
         prizeNumTable[#prizeNumTable + 1] = #data[i].prize
-	end
-	-- if #itemTable > 2 then
+    end
+    -- if #itemTable > 2 then
         playItemAction(itemTable,prizeNumTable,#itemTable)
     -- end
 end
 
 function SweepCompletePopView:onCreate()
-	Functions.printInfo(self.debug,"child class create call ")
+    Functions.printInfo(self.debug,"child class create call ")
 end
 --@auto code output func end
 

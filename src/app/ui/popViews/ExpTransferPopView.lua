@@ -6,7 +6,7 @@ local Functions = require("app.common.Functions")
 
 ExpTransferPopView.csbResPath = "lk/csb"
 ExpTransferPopView.debug = true
-ExpTransferPopView.studioSpriteFrames = {"UnionUI","CB_bgup","EnhanceTwoPopUI_Text","EnhanceOnePopUI_Text","CBO_cardglow","CBO_infor" }
+ExpTransferPopView.studioSpriteFrames = {"CB_bgup","EnhanceTwoPopUI_Text","EnhanceOnePopUI_Text","CBO_cardglow","CBO_infor" }
 --@auto code head end
 
 ExpTransferPopView.spriteFrameNames = 

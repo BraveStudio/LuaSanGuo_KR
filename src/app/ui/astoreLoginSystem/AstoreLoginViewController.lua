@@ -36,6 +36,9 @@ function AstoreLoginViewController:onDidLoadView()
     self._astoreLoginBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("loginPanle"):getChildByName("astoreLoginBt")
 	self._astoreLoginBt_t:onTouch(Functions.createClickListener(handler(self, self.onAstoreloginbtClick), ""))
 
+	self._guestBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("loginPanle"):getChildByName("guestBt")
+	self._guestBt_t:onTouch(Functions.createClickListener(handler(self, self.onGuestbtClick), ""))
+
 end
 --@auto code uiInit end
 
@@ -54,11 +57,42 @@ end
 --@auto code Astoreloginbt btFunc
 function AstoreLoginViewController:onAstoreloginbtClick()
     Functions.printInfo(self.debug,"Astoreloginbt button is click!")
-     Functions.callJavaFuc(function()
-        NativeUtil:GameCenterLogin()
-    end) 
+    -- if G_isFirstStartApp then
+    --     Functions.callJavaFuc(function()
+    --         G_isFirstStartApp = false
+    --         NativeUtil:GameCenterLogin()
+    --     end)
+    -- else
+    --     Functions.callJavaFuc(function()
+    --         NativeUtil:syncGameCenter()
+    --     end)
+    -- end
+    Functions.callJavaFuc(function()
+        NativeUtil:NaverLogin()
+    end)
 end
 --@auto code Astoreloginbt btFunc end
+
+--@auto code Guestbt btFunc
+function AstoreLoginViewController:onGuestbtClick()
+    Functions.printInfo(self.debug,"Guestbt button is click!")
+    local NoticeManager = require("app.ui.noticeSystem.NoticeManager")
+    NoticeManager:openTips(GameCtlManager.currentController_t, {title = "Guest 계정으로 로그인 후 게임을 삭제하시면 계정 정보가 저장되지 않습니다.",handler = function()
+        local handler = function(event)
+            GameState.storeAttr.isGusetLogin_b = true
+            GameState.storeAttr.isLoginNaver_b = true
+            GameState.storeAttr.NaverUserId_s = event.userName
+            GameState.storeAttr.NaverUserName_s = event.userName
+        end
+        print("UserID：" .. GameState.storeAttr.NaverUserId_s)
+        if GameState.storeAttr.NaverUserId_s ~= "" then 
+            Functions.oneKeyLogin({userName = GameState.storeAttr.NaverUserId_s,cb = handler})
+        else
+            Functions.oneKeyLogin({cb = handler})
+        end
+    end}) 
+end
+--@auto code Guestbt btFunc end
 
 --@auto button backcall end
 

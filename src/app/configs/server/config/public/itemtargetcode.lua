@@ -47,6 +47,9 @@ g_ITCode =
 	strEngGet = 42,				--强化装备获得
 	compoundGet = 43,			--合成装备增加
 	gvgGet = 44,				--公会战获得
+	gcldGet = 45,				--攻城掠地获得
+	g_guildShopGet = 46,		--公会商店获得
+	gzBuy		   = 47,		--国战商店购买
 
 	--失去物品
 	TrainLost = 200,			--培养白卡失去
@@ -75,7 +78,7 @@ g_ITCode =
 	RefreshLost = 223,		--洗练装备失去
 	SellItem = 224,			--贩卖道具
 	ExpMove = 225,			--经验转移失去
-	
+	Resolve = 226,			--卡牌分解
 }
 
 g_GMCode =
@@ -103,6 +106,7 @@ g_GMCode =
 	ShopGetMoney = 418,				--商店获取
 	LevelUpGetMoney = 419,			--升级获取
 	SellItemM = 420,				--卖道具
+	gcldget = 421,					--攻城掠地
 	
 	--失去金钱
 	TrainLostMoney = 500,			--培养白卡失去
@@ -141,6 +145,7 @@ g_GMCode =
 	OnlineGetGold = 617,				-- 在线领奖获取
 	ShopGetGold = 618,					-- 商店获得
 	payFavorableGet = 619,				--充值优惠
+	testreturn = 620,						--内侧返还
 	
 	--失去元宝
 	SampleLost = 700,				--抽卡失去
@@ -165,6 +170,7 @@ g_GMCode =
 	RefreshEquipLostG = 719,  --洗练装备
 	ActifLostG		  = 720,  --公会捐献
 	gvgBugLive 		  = 721,  --公会战复活
+	addGZ 			  = 722,  --再次加入国战
 	
 
 	
@@ -190,6 +196,10 @@ g_GMCode =
 	UseBoxGetH = 950,			--开宝箱获得
 	--事件
 	OnlineGet = 910,			--在线领奖
+	--获得能量
+	UseBoxGetNL = 1000,			--开宝箱获得
+	--较少能量
+	gcldLose = 1050,			--攻城掠地减少
 	
 	
 	
@@ -235,7 +245,7 @@ g_evtCode =
 	XssjSample = 36,	--限时神将抽卡
 	TTZBbalance = 37,	--天梯争霸结算奖励
 	TTbalance = 38,		--天梯结算奖励
-	XZLYbalance = 39,	--血战洛阳结算奖励
+	XZLYbalance = 39,   --血战洛阳结算奖励
 	structurebalance = 40,	--领取主城任务奖励
 	heroTrail = 41,		--领取英雄试炼奖励
 	xssjbalance = 42,	--限时神将结算
@@ -253,4 +263,17 @@ g_evtCode =
 	ExpMove = 54,			--经验转移
 	AddRoleCardExpToJJD = 55,	--增加角色经验卡 通过经验丹
 	payfail = 56,			--充值失败 客户端掉线
+	joingvgToActif = 57,	--参加工会战给奖励
+	roleResolve = 58,		--分解
+	zlreward = 59,			--国战占城奖励
+	yjreward = 60,			--援军奖励
+	offerreward = 61,		--职位奖励
+	hurtreward = 62,		--伤害奖励
+	agreeboost = 63,		--同意援军加入
+	upoffer = 64,			--升官
+	downoffer = 65,			--罢官
+	exitCamp = 66,			--退出阵营
+	addCamp = 67,			--加入阵营
+	citychange = 68,		--城池改变
+	gzover = 69,			--国战结算
 }

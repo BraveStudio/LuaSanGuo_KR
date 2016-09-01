@@ -90,6 +90,10 @@ XueZhanData:init()
 CompoundData = require("app.gameData.CompoundData")
 CompoundData:init()
 
+--初始化国家
+WarData = require("app.gameData.WarData")
+WarData:init()
+
 --初始化积分商城
 IntegralShopData = require("app.gameData.IntegralShopData")
 IntegralShopData:init()
@@ -117,6 +121,10 @@ SoldiersData:init()
 --主城任务
 CityData = require("app.gameData.CityData")
 CityData:init()
+
+--主城任务
+HeroKillData = require("app.gameData.HeroKillData")
+HeroKillData:init()
 
 --初使化图鉴
 PokedexData = require("app.gameData.PokedexData")

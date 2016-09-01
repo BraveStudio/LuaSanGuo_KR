@@ -159,6 +159,10 @@ function PropData:addProp(prop)
                 PlayerData.eventAttr.m_soul = PlayerData.eventAttr.m_soul + prop.m_count
             elseif prop.m_id == -6 then
                 PlayerData.eventAttr.m_hunjing = PlayerData.eventAttr.m_hunjing + prop.m_count
+            elseif prop.m_id == -8 then
+                PlayerData.eventAttr.m_nengliang = PlayerData.eventAttr.m_nengliang + prop.m_count
+            elseif prop.m_id == -9 then
+                PlayerData.eventAttr.m_fenglu = PlayerData.eventAttr.m_fenglu + prop.m_count
             end
         else            
             local pos = self:getPropPositoon(prop.m_id)

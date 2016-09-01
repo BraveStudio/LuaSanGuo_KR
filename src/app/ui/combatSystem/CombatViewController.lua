@@ -60,9 +60,9 @@ function CombatViewController:onDidLoadView()
 	self._fbinfo_Panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel")
 	self._fbInfo_t = self.view_t.csbNode:getChildByName("main"):getChildByName("right_top_panel"):getChildByName("fbinfo_Panel"):getChildByName("fbInfo")
 	self._shield_panel_t = self.view_t.csbNode:getChildByName("main"):getChildByName("shield_panel")
-
+	
     --label list
-
+    
     --button list
     self._handleFightBt_t = self.view_t.csbNode:getChildByName("main"):getChildByName("control_panel"):getChildByName("right_panel"):getChildByName("handleFightBt")
 	self._handleFightBt_t:onTouch(Functions.createClickListener(handler(self, self.onHandlefightbtClick), ""))
@@ -278,7 +278,9 @@ function CombatViewController:onDisplayView()
         [CombatCenter.CombatType.RB_BloodyBattle]   = handler(self, self.onBloodyBattle),
         [CombatCenter.CombatType.RB_PVPPlayerData]  = handler(self, self.onPVPPlayerData),
         [CombatCenter.CombatType.RB_PVPHistoryData] = handler(self, self.onPVPHistoryData),
-        [CombatCenter.CombatType.RB_GVG]            = handler(self, self.onGVGCombat)
+        [CombatCenter.CombatType.RB_GVG]            = handler(self, self.onGVGCombat),
+        [CombatCenter.CombatType.RB_KILL_HERO]      = handler(self, self.onKillHeroCombat),
+        [CombatCenter.CombatType.RB_CountryFight]   = handler(self, self.onCountryFightCombat) 
     }
 
     if self.combatInfo.combatType == CombatCenter.CombatType.RB_Guide then
@@ -330,6 +332,9 @@ function CombatViewController:initCombatMap()
     elseif self.combatInfo.combatType == CombatCenter.CombatType.RB_GVG then
         self._pauseBt_t:setVisible(false)
         Functions.loadImageWithSprite(self._combatBg_t, g_Combat_Maps["GVG"])
+    elseif self.combatInfo.combatType == CombatCenter.CombatType.RB_CountryFight then
+        self._pauseBt_t:setVisible(false)
+        Functions.loadImageWithSprite(self._combatBg_t, g_Combat_Maps["GuoZhan"])
     else
         Functions.loadImageWithSprite(self._combatBg_t, "map/cbj1.jpg")
     end
@@ -407,6 +412,61 @@ function CombatViewController:onFbPveCombat(data, combatType)
 
     self:openChildView("app.ui.popViews.CombatBeforePopView", { isRemove = false, data = { heroInfo = self.heroCombatBeforInfo,
         enemyInfo = self.enemyCombatBeforInfo , fightCall = onPveBegin } })
+
+end
+
+--过关斩将
+function CombatViewController:onKillHeroCombat(data)    
+    --获取本方战斗信息
+    self.heroCombatBeforInfo = CombatCenter:getCombatBeforeHeroInfos(data)
+    self.enemyCombatBeforInfo = CombatCenter:getHeroKillCombatInfosOfId(self.combatInfo.big, self.combatInfo.small)   
+
+    local onFightCall= function()
+
+        local onKillHeroBegin = function(event)
+            PlayerData:setNengLiang(event.nengliang)
+            CombatCenter:setRand(event.data.seed)
+            self.heroCombatInfo        = CombatCenter:getCombatHeroInfos(event.data.sform)
+            self.enemyCombatInfo       = CombatCenter:getCombatHeroInfos(event.data.tform)
+
+            self:combatResLoad()
+        end
+        NetWork:addNetWorkListener({ 1, 1 }, Functions.createNetworkListener(onKillHeroBegin, true, "ret", handler(self, self.quitCombat) ))
+        NetWork:sendToServer({ idx = { 1, 1}, btype = self.combatInfo.combatType,
+            data = { pass = self.combatInfo.big, diff = self.combatInfo.small }})
+
+    end
+
+    self:openChildView("app.ui.popViews.CombatBeforePopView", { isRemove = false, data = { heroInfo = self.heroCombatBeforInfo,
+        enemyInfo = self.enemyCombatBeforInfo , fightCall = onFightCall } })
+
+end
+
+--国战
+function CombatViewController:onCountryFightCombat(data)    
+
+     --获取本方战斗信息
+    self.heroCombatBeforInfo = CombatCenter:getCombatBeforeHeroInfos(data)
+
+    --获取敌方pvp战斗数据
+    self.enemyCombatBeforInfo        = {}
+    self.enemyCombatBeforInfo.level  = self.combatInfo.playerData.level
+    self.enemyCombatBeforInfo.headId = self.combatInfo.playerData.headId
+    self.enemyCombatBeforInfo.power  = self.combatInfo.playerData.power
+    self.enemyCombatBeforInfo.name   = self.combatInfo.playerData.name
+
+    local onCountryFightBegin = function(event)
+
+        --修改天梯挑战次数
+        CombatCenter:setRand(event.data.seed)
+        self.heroCombatInfo  = CombatCenter:getGVGCombatHeroInfos(event.data.sform, self.combatInfo.combatType)
+        self.enemyCombatInfo = CombatCenter:getGVGCombatHeroInfos(event.data.tform, self.combatInfo.combatType)
+
+        self:combatResLoad()
+    end
+    NetWork:addNetWorkListener({ 1, 1 }, Functions.createNetworkListener(onCountryFightBegin, true, "ret", handler(self, self.quitCombat)))
+    NetWork:sendToServer({ idx = { 1, 1}, btype = self.combatInfo.combatType,
+    data = { big = self.combatInfo.big, small = self.combatInfo.small }})
 
 end
 
@@ -626,8 +686,8 @@ function CombatViewController:onGVGCombat(data)
 
         --修改天梯挑战次数
         CombatCenter:setRand(event.data.seed)
-        self.heroCombatInfo  = CombatCenter:getGVGCombatHeroInfos(event.data.sform)
-        self.enemyCombatInfo = CombatCenter:getGVGCombatHeroInfos(event.data.tform)
+        self.heroCombatInfo  = CombatCenter:getGVGCombatHeroInfos(event.data.sform, self.combatInfo.combatType)
+        self.enemyCombatInfo = CombatCenter:getGVGCombatHeroInfos(event.data.tform, self.combatInfo.combatType)
 
         self:combatResLoad()
     end
@@ -636,7 +696,6 @@ function CombatViewController:onGVGCombat(data)
     data = { big = self.combatInfo.big, small = self.combatInfo.small }})
 
 end
-
 
 -- function CombatViewController:jumpCombatFunc()
 
@@ -925,7 +984,7 @@ function CombatViewController:quitCombat()
 
     local quitFunc_ = function()
         self:clearFightRes()
-        GameCtlManager:pop(self, { data = { result = self.combatResult, combatType = self.combatInfo.combatType } })
+        GameCtlManager:pop(self, { data = { result = self.combatResult, combatType = self.combatInfo.combatType, starNum = self.m_combatStars, combatCount = self.m_combatCount} })
     end
 
     if self.combatInfo.combatType == CombatCenter.CombatType.RB_PVE and self.combatResult == CombatCenter.FightResult.WIN
@@ -1204,12 +1263,16 @@ function CombatViewController:fightOver(result)
                 isJump = 0
             end
 
-            if self.combatInfo.combatType ~= CombatCenter.CombatType.RB_GVG then
+            if self.combatInfo.combatType ~= CombatCenter.CombatType.RB_GVG and self.combatInfo.combatType ~= CombatCenter.CombatType.RB_CountryFight then
                 self:openChildView("app.ui.popViews.CombatOverPopView",
                                      { isRemove = false, data = { result = result, combatType = self.combatInfo.combatType ,
                                       combatInfo = self.combatInfo, isJump = isJump }} )
-            else
+            elseif self.combatInfo.combatType ~= CombatCenter.CombatType.RB_CountryFight then
                 self:openChildView("app.ui.popViews.GvgOverPopView",
+                                     { isRemove = false, data = { result = result, combatType = self.combatInfo.combatType ,
+                                      combatInfo = self.combatInfo }})
+            else
+                self:openChildView("app.ui.popViews.CountryFightPopView",
                                      { isRemove = false, data = { result = result, combatType = self.combatInfo.combatType ,
                                       combatInfo = self.combatInfo }})
             end

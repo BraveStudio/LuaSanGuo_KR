@@ -78,6 +78,9 @@ function PayPopView:initDisplayUI()
       self._firstPay_t:setVisible(false)
   end
 	local listHandler = function(index, widget, model, data)
+    if G_SDKType == 5 then
+      widget:getChildByName("yuanView"):setVisible(false)
+    end
 		local payGoldLabel = widget:getChildByName("payGoldLabel")
         local rmb = widget:getChildByName("rmb")
 --        local inf = widget:getChildByName("inf")
@@ -129,8 +132,17 @@ function PayPopView:initDisplayUI()
              Functions.printInfo(self.debug," onWidgetClick") 
              Functions.setAdbrixTag("retension","gold_recharging_inter")  
              Functions.callJavaFuc(function()
-                PromptManager:openHttpLinkPrompt() 
-                NativeUtil:javaCallHanler({command = "pay",productCode = data.productCode,productName = data.productName})
+                if GameState.storeAttr.isGusetLogin_b then 
+                     NoticeManager:openTips(GameCtlManager.currentController_t, {title = "Guest 로그인 상태입니다. 앱 삭제 또는 로그아웃 시 결제 내역이 사라질 수 있습니다.",handler = function()
+                            PromptManager:openHttpLinkPrompt() 
+                            NativeUtil:javaCallHanler({command = "pay",productCode = data.productCode,productName = data.productName})
+                      end})   
+                else
+                    PromptManager:openHttpLinkPrompt() 
+                    NativeUtil:javaCallHanler({command = "pay",productCode = data.productCode,productName = data.productName})
+                end
+
+               
              end)  
              Functions.callAnySdkFuc(function( )
                  PromptManager:openHttpLinkPrompt()

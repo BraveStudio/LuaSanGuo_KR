@@ -104,9 +104,9 @@ function LoginViewController:onTest_buttonClick()
         PromptManager:openTipPrompt(LanguageConfig.language_0_8)
         return
     end
--- -- --
---    userName = "GplayLogin_g14987646214490845501_4"
---    password = "GplayLogin_g14987646214490845501_4"
+-- -- -- --
+--    userName = "GplayLogin_113111105265422187879_4"
+--    password = "GplayLogin_113111105265422187879_4"
 
 
     --开始登陆
@@ -326,7 +326,7 @@ function LoginViewController:onDisplayView()
             end, 0.2)
         end
 
-        if self.data.loginType == LoginType.Sdk_Login then
+        if self.data.loginType == LoginType.Sdk_Login or self.data.loginType == LoginType.OneKey_Login then
             self._server = self.data.server
             self:initServerList_()
             self:openSelectServerPanel_()
@@ -419,7 +419,12 @@ function LoginViewController:openSelectServerPanel_()
     self._serverStateText_t:setString(Functions.getServerStateCode(self._server[index].status))
 
     self._logicServerId = tonumber(self._server[index].id)
-    NetWork:setServerInfo(self._server[index].ip, self._logicServerId, nil, self._server[index].name)
+
+    if G_SDKType ~= 5 then
+        NetWork:setServerInfo(self._server[index].ip, self._logicServerId, nil, self._server[index].name)
+    else
+        NetWork:setServerInfo(self._server[index].dn, self._logicServerId, nil, self._server[index].name)
+    end
 
     self:closeAllPanel()
     self._selectServerPanel_t:show()

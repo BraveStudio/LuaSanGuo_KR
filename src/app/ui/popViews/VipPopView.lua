@@ -65,7 +65,7 @@ function VipPopView:onPaybtClick()
     -- end
     
     self._controller_t:openChildView("app.ui.popViews.PayPopView",{isRemove = false})
-     -- VipData:RequestVipPay("0","0","GD201512021789764")
+     -- VipData:RequestVipPay("0","0","1000024173")
 end
 --@auto code Paybt btFunc end
 
@@ -100,7 +100,7 @@ end
 --@auto code Rightbt btFunc
 function VipPopView:onRightbtClick()
     Functions.printInfo(self.debug,"Rightbt button is click!")
-    if self.curVip < 15 then
+    if self.curVip < #g_VipCgf.VipLevel then
         self.pageTable[self.curVip]:setVisible(false)
         self.curVip  = self.curVip  + 1 
         self:showPage(self._pageView_t,g_VipCgf.VipLevelPrize,self.curVip,2) 

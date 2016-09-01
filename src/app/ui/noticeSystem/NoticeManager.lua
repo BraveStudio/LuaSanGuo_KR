@@ -19,6 +19,9 @@ NoticeManager.VIP_INFO = 14
 NoticeManager.EQUIP_ENHANCE = 15
 NoticeManager.GUID_BATTLE = 16
 NoticeManager.EXP_INFO = 17
+NoticeManager.HERO_KILL = 18
+
+NoticeManager.WAR_INFO = 20
 
 NoticeManager.debug = true
 

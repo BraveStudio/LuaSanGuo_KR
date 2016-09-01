@@ -383,6 +383,7 @@ local languageConfig_ch =
         language_1000_515 = "背包空间不足！",
         language_1000_516 = "武将包空间不足！",
         language_1000_517 = "超过物品叠加上限，领取失败！",
+        language_1000_518 = "超过物品叠加上限！",
 
         language_555_1 = "步兵攻击一般，有着较高的生命力，可惜移动速度偏慢，适合作为肉盾。",
         language_555_2 = "骑兵有着极佳的移动速度和攻击力，擅长突击。适合作为输出兵种撕破对方防线。",
@@ -535,6 +536,11 @@ local languageConfig_ch =
         User_Not_Found = "账户不存在",
         User_Password_Error = "账户密码输入错误",
         None_Error = "未知错误",
+        bind_naver_already = "账户已经绑定",
+        bind_naver_fail = "绑定账号失败",
+
+        ui_gameSetView_1 = "无国家",
+        ui_gameSetView_2 = "你确定要退出当前所在国家？",
 
         Server_State_1 = "正常",
         Server_State_2 = "关闭",
@@ -838,7 +844,25 @@ local languageConfig_ch =
         language_City_7 = "维护冶安等级提升级到%d，元宝增加提升至%d.",
         language_City_9 = "整顿商业等级提升级到%d，金币增加提升至%d.",
 
-
+        language_war_1 = "死亡",
+        language_war_2 = "魏国",
+        language_war_3 = "蜀国",
+        language_war_4 = "吴国",
+        language_war_5 = "群雄",
+        language_war_6 = "占领%s解锁",
+        language_war_7 = "权限不足",
+        language_war_8 = "%d万",
+        language_war_9 = "申请成功",
+        language_war_10 = "由于你在这里申请协助成功，你在%s的协助申请已失效！",
+        language_war_11 = "撤消职位",
+        language_war_12 = "任命成功",
+        language_war_13 = "撤消成功",
+        language_war_14 = "首次点击听天由命将获得200万金币奖励",
+        language_war_15 = "皇帝：",
+        language_war_16 = "国家公告",
+        language_war_17 = "你确定要加入%s？",
+        language_war_18 = "确定要随机选择国家吗？",
+        language_war_19 = "保护倒计时：%s",
 
         language_Compound_1 = "关卡ID",
         language_Compound_2 = "(未开启)",
@@ -860,6 +884,7 @@ local languageConfig_ch =
         language_Enhance_14 = "武将已经进阶到最大阶",
         language_Enhance_15 = "没有合适的武将添加",
         language_Enhance_16 = "武将等级不能超过主公等级，会损失一些经验，继续吗？",
+        language_Enhance_17 = "已经养成的资源不再退还，继续吗？",
 
         language_Enlist_1 = "今日免费次数：",
         language_Enlist_2 = "你有免费抽武将的机会哦！",

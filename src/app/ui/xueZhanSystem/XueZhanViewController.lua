@@ -120,60 +120,21 @@ end
 --@auto code Tiaozhanbt1 btFunc
 function XueZhanViewController:onTiaozhanbt1Click()
     Functions.printInfo(self.debug,"Tiaozhanbt1 button is click!")  
-    if self:checkXueZhanTime() then 
-        if XueZhanData.xueZhanData.m_xzlyPass <= g_VipCgf.xueZhanLevels then
-            if XueZhanData.xueZhanData.m_xzlyCount < g_VipCgf.xzlyAllCount[VipData.eventAttr.m_vipLevel] then
-                GameCtlManager:push("app.ui.combatSystem.CombatViewController", { data = { combatType = CombatCenter.CombatType.RB_BloodyBattle,
-                    majorHurdles = 1, littleLevels = XueZhanData.xueZhanData.m_xzlyPass,isPassFlag = self.passFlag } })
-            else
-                PromptManager:openTipPrompt(LanguageConfig.language_2_23) 
-            end
-        else
-            PromptManager:openTipPrompt(LanguageConfig.language_Teach35) 
-        end
-    else
-        PromptManager:openTipPrompt(LanguageConfig.language_6_25) 
-    end
+    self:goFightting(1)
 end
 --@auto code Tiaozhanbt1 btFunc end
 
 --@auto code Tiaozhanbt1_0 btFunc
 function XueZhanViewController:onTiaozhanbt1_0Click()
     Functions.printInfo(self.debug,"Tiaozhanbt1_0 button is click!")
-    if self:checkXueZhanTime() then 
-        if XueZhanData.xueZhanData.m_xzlyPass <= g_VipCgf.xueZhanLevels then
-            if XueZhanData.xueZhanData.m_xzlyCount < g_VipCgf.xzlyAllCount[VipData.eventAttr.m_vipLevel] then
-                GameCtlManager:push("app.ui.combatSystem.CombatViewController", { data = { combatType = CombatCenter.CombatType.RB_BloodyBattle,
-                    majorHurdles = 2, littleLevels = XueZhanData.xueZhanData.m_xzlyPass ,isPassFlag = self.passFlag} })
-            else
-                PromptManager:openTipPrompt(LanguageConfig.language_2_23) 
-            end
-        else
-             PromptManager:openTipPrompt(LanguageConfig.language_Teach35) 
-        end
-    else
-       PromptManager:openTipPrompt(LanguageConfig.language_6_25) 
-    end  
+    self:goFightting(2) 
 end
 --@auto code Tiaozhanbt1_0 btFunc end
 
 --@auto code Tiaozhanbt1_1 btFunc
 function XueZhanViewController:onTiaozhanbt1_1Click()
     Functions.printInfo(self.debug,"Tiaozhanbt1_1 button is click!")
-    if self:checkXueZhanTime() then 
-        if XueZhanData.xueZhanData.m_xzlyPass <= g_VipCgf.xueZhanLevels then
-            if XueZhanData.xueZhanData.m_xzlyCount < g_VipCgf.xzlyAllCount[VipData.eventAttr.m_vipLevel] then
-                GameCtlManager:push("app.ui.combatSystem.CombatViewController", { data = { combatType = CombatCenter.CombatType.RB_BloodyBattle,
-                    majorHurdles = 3, littleLevels = XueZhanData.xueZhanData.m_xzlyPass ,isPassFlag = self.passFlag} })
-            else
-                PromptManager:openTipPrompt(LanguageConfig.language_2_23) 
-            end
-        else
-            PromptManager:openTipPrompt(LanguageConfig.language_Teach35) 
-        end
-    else
-        PromptManager:openTipPrompt(LanguageConfig.language_6_25) 
-    end 
+    self:goFightting(3)
 end
 --@auto code Tiaozhanbt1_1 btFunc end
 
@@ -291,6 +252,48 @@ function XueZhanViewController:initUiDisplay_()
     else
         self.passFlag = true
     end
+end
+--战斗
+function XueZhanViewController:goFightting(passType)
+    if self:checkXueZhanTime() then 
+        if XueZhanData.xueZhanData.m_xzlyPass <= g_VipCgf.xueZhanLevels then
+
+            if XueZhanData.xueZhanData.m_xzlyCount < g_VipCgf.xzlyAllCount[VipData.eventAttr.m_vipLevel] then
+                if self:isPackageEnough(passType,XueZhanData.xueZhanData.m_xzlyPass) then 
+                    GameCtlManager:push("app.ui.combatSystem.CombatViewController", { data = { combatType = CombatCenter.CombatType.RB_BloodyBattle,
+                        majorHurdles = passType, littleLevels = XueZhanData.xueZhanData.m_xzlyPass ,isPassFlag = self.passFlag} })
+                else
+                    PromptManager:openTipPrompt(LanguageConfig.language_1000_518) 
+                end
+            else
+                PromptManager:openTipPrompt(LanguageConfig.language_2_23) 
+            end
+        else
+            PromptManager:openTipPrompt(LanguageConfig.language_Teach35) 
+        end
+    else
+        PromptManager:openTipPrompt(LanguageConfig.language_6_25) 
+    end 
+end
+--预判卡包及背包是否充足
+function XueZhanViewController:isPackageEnough(passType,passLevle)
+    local extPrize = ConfigHandler:getXueZhanPassExtPrize(passType,passLevle)
+    for k,v in pairs(extPrize) do 
+        if v[2] == 4 and v[1] > 0 then 
+            if PropData:getPropNumOfId(v[1]) + v[3] * XueZhanData.xueZhanData.m_xzRate > g_ItemCommonConfig.ItemOverlapMax then 
+                return false
+            end
+        elseif v[2] == 1 then 
+            if #HeroCardData:getAllHeroData() + v[3] * XueZhanData.xueZhanData.m_xzRate > g_heroBoxMaxNum then 
+                return false
+            end
+        elseif v[2] == 5 then 
+            if CompoundData:getCompoundDatanNum(v[1]) + v[3] * XueZhanData.xueZhanData.m_xzRate > g_ItemCommonConfig.ItemOverlapMax then 
+                return false
+            end
+        end
+    end
+    return true
 end
 function XueZhanViewController:initUiAnima_()
 

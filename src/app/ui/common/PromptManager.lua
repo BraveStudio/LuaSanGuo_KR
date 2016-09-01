@@ -67,6 +67,49 @@ function PromptManager:openTipPrompt(info)
         GameCtlManager:addCurBottomLayer(self.tipPanelView)
     end
 end
+--播放技能英雄漫画
+function PromptManager:playSpellHeroImage(info)
+    local getHeroImg = function (heroId,class)
+        local star = ConfigHandler:getHeroStarOfId(heroId) 
+        -- if star > 5 then 
+        --     local bigClass = Functions.formatHeroClass(class)
+        --     local heroImg = ConfigHandler:getHeroCardImageOfId(heroId,bigClass)
+        --     local heroImgTemp = string.split(heroImg,".png")
+        --     return heroImgTemp[1] .. "_N.png"
+        -- else
+        --     local heroImg = ConfigHandler:getHeroCardImageOfId(heroId)
+        --     return heroImg
+        -- end
+        local heroImg = "heroCard/test.png"
+        return heroImg
+    end
+    if not self.imageView then 
+        self.imageView =  cc.Sprite:create()
+        local model = info.model
+        Functions.loadImageWithSprite(self.imageView,getHeroImg(model.m_pid,model.m_class))
+        -- self.imageView:setAnchorPoint(cc.p(0,0.5))
+        -- self.imageView:setPosition(display.cx,display.cy+110)
+        -- local move = cc.MoveBy:create(1,cc.p(-560,0))
+
+        self.imageView:setAnchorPoint(cc.p(1,0.5))
+        self.imageView:setPosition(0,display.cy+110)
+        local move = cc.MoveBy:create(1,cc.p(1136,0))
+        local easeAction = cc.EaseElasticOut:create(move) 
+        local fedeTo = cc.FadeTo:create(0.5,0)
+        local seq = cc.Sequence:create(easeAction,cc.DelayTime:create(1.5),fedeTo,NULL)
+        transition.execute(self.imageView, seq, {
+            onComplete = function()
+                self.imageView:removeFromParent()
+            end})        
+        Functions.addCleanFuncWithNode(self.imageView, function()
+            self.imageView = nil
+        end)
+        GameCtlManager:addCurBottomLayer(self.imageView)
+    else
+        self.imageView:removeFromParent()
+        self:playSpellHeroImage(info)
+    end
+end
 --弹出道具或英雄详细信息
 --@data：{type=,id = ,time = ,target= } 
 --type:ItemType.HeroCard,

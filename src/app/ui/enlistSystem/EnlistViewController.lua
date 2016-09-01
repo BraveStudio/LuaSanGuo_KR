@@ -247,6 +247,9 @@ function EnlistViewController:showBaoTime()
     local onTime = function(event)
         local m_newtime = TimerManager:getCurrentSecond()
         m_newtime = m_newtime - EnlistData.m_sampleGTime
+        if m_newtime < 0 then 
+            m_newtime = 0
+        end
         m_newtime = g_SampleNewCfg.GCD - m_newtime
         if m_newtime < 0 then
             m_newtime = 0

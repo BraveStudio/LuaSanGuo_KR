@@ -4,4 +4,7 @@ config.json
 .svn
 !.gitignore
 *.zip
+*.sublime-project
+*.sublime-workspace
+frameworks
 simulator

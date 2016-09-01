@@ -58,17 +58,23 @@ function StartupSceneViewController:onStartbtClick()
             else            
                 if GameState.storeAttr.NaverUserId_s ~= "" and G_SDKType ~= 4 then
                     if GameState.storeAttr.NaverUserName_s ~= "" then   
-                        if G_SDKType == 5 and G_isFirstStartApp then         
-                            G_isFirstStartApp = false
-                            Functions.callJavaFuc(function()             
-                                    NativeUtil:GameCenterLogin()
-                            end)
-                        else 
-                            Functions.callJavaFuc(function()  
+                        -- if G_SDKType == 5 then
+                        --     if G_isFirstStartApp then
+                        --         Functions.callJavaFuc(function()
+                        --             G_isFirstStartApp = false
+                        --             NativeUtil:GameCenterLogin()
+                        --         end)
+                        --     else
+                        --         Functions.callJavaFuc(function()
+                        --             NativeUtil:syncGameCenter()
+                        --         end)
+                        --     end
+                        -- else
+                            Functions.callJavaFuc(function()
                                 PromptManager:openHttpLinkPrompt()        
                                 NativeUtil:javaCallHanler({command = "setUsrName",usrName = GameState.storeAttr.NaverUserName_s,usrId = GameState.storeAttr.NaverUserId_s})
                             end)
-                        end
+                        -- end
                     end
                     -- Functions.sdkLoginHandler(GameState.storeAttr.NaverUserId_s)
                 else

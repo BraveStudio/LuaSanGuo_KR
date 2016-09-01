@@ -438,7 +438,7 @@ end
 
 function GuildBattleViewController:onDisplayView()
 	Functions.printInfo(self.debug_b," GuildBattleViewController view enter display!")
-    Functions.loadImageWithWidget(self._Image_guild_map_t,"res/map/guildCity.png")
+    Functions.loadImageWithWidget(self._Image_guild_map_t,"map/guildCity.png")
     self.titleInit_X = self._Text_title_1_t:getPositionX()
     GuildBattleData:sendBuildingInfo(handler(self, self.callbackC))
 

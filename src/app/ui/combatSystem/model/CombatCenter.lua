@@ -22,7 +22,9 @@ CombatCenter.CombatType = {
     RB_Tandui = 9, -- tuandui 
     RB_Guide = 10 ,
 
-    RB_GVG = 11
+    RB_GVG = 11,
+    RB_KILL_HERO = 12,
+    RB_CountryFight = 14
 }
 
 CombatCenter.HurtType =
@@ -162,10 +164,10 @@ function CombatCenter:getCombatHeroInfos(heroInfos)
     heroCombatInfos.peopleInfos[#heroCombatInfos.peopleInfos].solderNumLevel = heroInfos.solderNumLevel
 
     --添加副将
-    local index = 0
-    for k, v in pairs(heroInfos.ViceHeros) do
-        index = index + 1
-        self:addHeroDataHandler_(heroCombatInfos.peopleInfos, v, "Commander" .. tostring(index))
+    for i = 1, 2 do
+        if heroInfos.ViceHeros[i] then
+            self:addHeroDataHandler_(heroCombatInfos.peopleInfos, heroInfos.ViceHeros[i], "Commander" .. tostring(i))
+        end
     end
     
     --添加偏将
@@ -184,7 +186,7 @@ function CombatCenter:getCombatHeroInfos(heroInfos)
     return heroCombatInfos
 end
 
-function CombatCenter:getGVGCombatHeroInfos(heroInfos)
+function CombatCenter:getGVGCombatHeroInfos(heroInfos, CombatType)
     assert(heroInfos.MainHero[1],"返回参数错误: MainHero is nil ")
     
 
@@ -224,24 +226,26 @@ function CombatCenter:getGVGCombatHeroInfos(heroInfos)
     heroCombatInfos.peopleInfos[#heroCombatInfos.peopleInfos + 1] = heroAddHandler(heroInfos.MainHero[1], "hero")
 
     --添加副将
-    local index = 0
-    for k, v in pairs(heroInfos.ViceHeros) do
-        index = index + 1
-        heroCombatInfos.peopleInfos[#heroCombatInfos.peopleInfos + 1] = heroAddHandler(v, "Commander" .. tostring(index))
+    for i = 1, 2 do
+        if heroInfos.ViceHeros[i] then
+            heroCombatInfos.peopleInfos[#heroCombatInfos.peopleInfos + 1] = heroAddHandler(heroInfos.ViceHeros[i], "Commander" .. tostring(i))
+        end
     end
     
     --添加偏将
     heroCombatInfos.partHeros = {}
     for k, v in pairs(heroInfos.PartHero) do
-        heroCombatInfos.peopleInfos[#heroCombatInfos.peopleInfos + 1] = heroAddHandler(v)
+        heroCombatInfos.partHeros[#heroCombatInfos.partHeros + 1] = heroAddHandler(v)
     end
     
     heroCombatInfos.equipInfos = heroInfos.equipInfos
 
-    -- --团队战斗，暂时不添加小兵
-    -- for i=1, #heroInfos.Soldiers do
-    --     self:addSoldierDataHandler_(heroCombatInfos.peopleInfos, heroInfos.Soldiers[i], "soldier")
-    -- end
+    --团队战斗，暂时不添加小兵
+    if CombatType == CombatCenter.CombatType.RB_CountryFight then
+        for i=1, #heroInfos.Soldiers do
+            self:addSoldierDataHandler_(heroCombatInfos.peopleInfos, heroInfos.Soldiers[i], "soldier")
+        end
+    end
     
     return heroCombatInfos
 end
@@ -397,6 +401,38 @@ function CombatCenter:getFbCombatInfosOfId( majorHurdles, littleLevels, preHps, 
     return enemyBeforeInfos, enemyCombatInfos
 end
 
+function CombatCenter:getHeroKillCombatInfosOfId(majorHurdles, littleLevels)
+    local enemyBeforeInfos  = {}
+    enemyBeforeInfos.level  = PlayerData.eventAttr.m_level
+    enemyBeforeInfos.headId = 1
+    
+    enemyBeforeInfos.heros  = {}
+    enemyBeforeInfos.classSet = {}
+    enemyBeforeInfos.power  = 0
+
+    local killHeroData = ConfigHandler:getKillHeroConfig(majorHurdles, littleLevels)
+
+    enemyBeforeInfos.name = ConfigHandler:getKillHeroRewardOfId(majorHurdles)["名称"]
+    
+    enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = killHeroData["主将id"]
+    enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = killHeroData["主将阶级"]
+
+    enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = killHeroData["主将id"],
+        level = killHeroData["主将等级"], class = killHeroData["主将阶级"] })
+
+    for i=1, 2 do
+        if not tonumber(killHeroData["副将" .. tostring(i) .. "id"]) or tonumber(killHeroData["副将" .. tostring(i) .. "id"]) == 0 then
+            break
+        end
+        enemyBeforeInfos.heros[#enemyBeforeInfos.heros+1] = killHeroData["副将" .. tostring(i) .. "id"]
+        enemyBeforeInfos.classSet[#enemyBeforeInfos.classSet+1] = killHeroData["副将" ..  tostring(i) .. "阶级"]
+        enemyBeforeInfos.power = enemyBeforeInfos.power + Functions.getNPCFightValue({ id = enemyBeforeInfos.heros[#enemyBeforeInfos.heros],
+            level = killHeroData["副将" ..  tostring(i) .. "等级"], class = killHeroData["副将" ..  tostring(i) .. "阶级"] })
+    end
+    
+    return enemyBeforeInfos
+end
+
 function CombatCenter:getHeroTrialInfos(majorHurdles, littleLevels, enemyIds)
 
     local enemyBeforeInfos  = {}
@@ -443,8 +479,8 @@ function CombatCenter:getHeroTrialInfos(majorHurdles, littleLevels, enemyIds)
 end
 
 function CombatCenter:getBloodyBattleData(majorHurdles, littleLevels, backCall)
-	local onBloodyDataRequire = function(event)
-	
+    local onBloodyDataRequire = function(event)
+    
         local enemyBeforeInfos  = {}
         enemyBeforeInfos.level  = littleLevels
         enemyBeforeInfos.headId = 1
@@ -460,8 +496,8 @@ function CombatCenter:getBloodyBattleData(majorHurdles, littleLevels, backCall)
                 level = event.data[i].level, class = event.data[i].class })*event.data.add)
         end
         backCall({ enemyCombatBeforInfo = enemyBeforeInfos })
-		return true
-	end
+        return true
+    end
     NetWork:addNetWorkListener({16,2}, Functions.createNetworkListener(onBloodyDataRequire,true,"ret"))
     NetWork:sendToServer({ idx = { 16, 2} , diff = majorHurdles })
 end
@@ -492,11 +528,11 @@ function CombatCenter:initCombat(heroCombatInfos, enemyCombatInfos, combatType, 
 end
 
 function CombatCenter:setEnemyAuto(isAuto)
-	SetEnemyAutoFight(isAuto)
+    SetEnemyAutoFight(isAuto)
 end
 
 function CombatCenter:setHeroAuto(isAuto)
-	SetSelfAutoFight(isAuto)
+    SetSelfAutoFight(isAuto)
 end
 
 function CombatCenter:addHeroDataHandler_(heroDatas, param, heroType, isFrdly)
@@ -508,8 +544,8 @@ function CombatCenter:addHeroDataHandler_(heroDatas, param, heroType, isFrdly)
     pointY = self:createPosOfTmxX(param.y * CombatCenter.CellSize)
     
     --添加参数
-	heroDatas[#heroDatas+1] = 
-	{
+    heroDatas[#heroDatas+1] = 
+    {
         id       = param.id,
         type     = heroType,
         x        = pointX,
@@ -520,8 +556,8 @@ function CombatCenter:addHeroDataHandler_(heroDatas, param, heroType, isFrdly)
         hpEx     = param.hp,
         fasEx    = param.mp,
         fafEx    = param.soldier
-	}
-	
+    }
+    
 end
 
 function CombatCenter:addSoldierDataHandler_(heroDatas, param, heroType, isFrdly)
@@ -598,6 +634,7 @@ function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType, hero
                     end
                     
                     beforeInfo.heros[#beforeInfo.heros + 1] = creature
+                    heroList[1] = creature
                 end
             elseif peopleInfos[i].type == "Commander1" then
 
@@ -610,6 +647,7 @@ function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType, hero
                         CreatureModel.viewType.lieutenant, self:createPos({ x = peopleInfos[i].x, y = peopleInfos[i].y }, 0, isFrdly), combatType, heroZxID, combatTime)
                     
                     beforeInfo.heros[#beforeInfo.heros + 1] = creature
+                    heroList[2] = creature
                 end
                 
             elseif peopleInfos[i].type == "Commander2" then
@@ -624,13 +662,13 @@ function CombatCenter:initCombatOfInfo_(creatureInfos, isFrdly, combatType, hero
                         CreatureModel.viewType.lieutenant, self:createPos({ x = peopleInfos[i].x, y = peopleInfos[i].y }, 0, isFrdly), combatType, heroZxID, combatTime)
                     
                     beforeInfo.heros[#beforeInfo.heros + 1] = creature
+                    heroList[3] = creature
                 end
             end
     
             if creature then
                 m_lead_enemy = creature.m_num + m_lead_enemy
                 self:addCreature(creature)
-                heroList[#heroList + 1] = creature
             end
         end
     end
@@ -695,7 +733,7 @@ end
 
 --@--public
 function CombatCenter:getCombatCreatures()
-	return self.fightCreatures
+    return self.fightCreatures
 end
 
 function CombatCenter:getAiEventList()
@@ -785,7 +823,7 @@ function CombatCenter:updateAI()
         else
             self:gameOver_()
         end
-	end
+    end
 end
 
 function CombatCenter:combatPause()
@@ -842,10 +880,10 @@ function CombatCenter:createPosOfCamp(pos, campType)
 end
 
 function CombatCenter:createChildPos(pos, count)
-	
-	local points = {}
-	if count == 1 then
-		points[#points+1] = pos
+    
+    local points = {}
+    if count == 1 then
+        points[#points+1] = pos
     elseif count == 2 then
         points[#points+1] = { x = pos.x, y = pos.y + CombatCenter.CellSize/4 }    
         points[#points+1] = { x = pos.x, y = pos.y - CombatCenter.CellSize/4 }
@@ -858,8 +896,8 @@ function CombatCenter:createChildPos(pos, count)
         points[#points+1] = { x = pos.x + CombatCenter.CellSize/4, y = pos.y - CombatCenter.CellSize/4 }
         points[#points+1] = { x = pos.x - CombatCenter.CellSize/4, y = pos.y + CombatCenter.CellSize/4 }
         points[#points+1] = { x = pos.x - CombatCenter.CellSize/4, y = pos.y - CombatCenter.CellSize/4 }
-	end
-	
+    end
+    
     return points
 end
 

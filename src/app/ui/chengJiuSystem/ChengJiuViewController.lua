@@ -157,13 +157,13 @@ end
 --tool code start
 function ChengJiuViewController:getChengjiuInfStr(index,data)
     local str = ""
-    if index == 1 then       
+    if index == 1 then --武将升级成就       
         if (data["m_get"] + 1) <= #g_csMainMsn[index][1] then
             str = string.format(LanguageConfig.language_cjrenwu_0,self:getHeroLevelOfRewardStag( data["m_get"]+1 ))
         else
-            str = string.format(LanguageConfig.language_cjrenwu_0,99)
+            str = string.format(LanguageConfig.language_cjrenwu_0,g_playerMaxLevel)
         end
-    elseif index == 2 then
+    elseif index == 2 then --卡牌进阶成就
         -- local temp_x = Functions.subIntOfNum((data["m_get"] + 1) / 6)
         local temp_x = data["m_get"] + 1
         -- local temp_y = Functions.subIntOfNum((data["m_get"] + 1) % 6)
@@ -194,32 +194,32 @@ function ChengJiuViewController:getChengjiuInfStr(index,data)
             str = LanguageConfig.language_cjrenwu_39
         end
         str = string.format(LanguageConfig.language_cjrenwu_1,str)
-    elseif index == 3 then
+    elseif index == 3 then --士兵强化成就
         if data["m_get"] + 1 <=  #g_csMainMsn[index][1] then
             str = string.format(LanguageConfig.language_cjrenwu_2,g_MakeMMSoldier[data["m_get"] + 1][1],g_MakeMMSoldier[data["m_get"] + 1][2])
         else
             str = string.format(LanguageConfig.language_cjrenwu_2,g_MakeMMSoldier[data["m_get"]][1],g_MakeMMSoldier[data["m_get"]][2])
         end
-    elseif index == 4 then
+    elseif index == 4 then--普通关卡成就
         if (data["m_get"] + 1) <= #g_csMainMsn[index][1] then
             str = string.format(LanguageConfig.language_cjrenwu_3,g_MakeMMPass[data["m_get"] + 1][1],g_MakeMMPass[data["m_get"] + 1][2])  
         else
             str = string.format(LanguageConfig.language_cjrenwu_3,g_MakeMMPass[data["m_get"]][1],g_MakeMMPass[data["m_get"]][2]) 
         end 
-    elseif index == 5 then
+    elseif index == 5 then --主公等级
         if (data["m_get"] + 1) <= #g_csMainMsn[index][1] then
             str = string.format(LanguageConfig.language_cjrenwu_4,self:getPlayerLevelOfRewardStag( data["m_get"]+1 ))
         else
             str = string.format(LanguageConfig.language_cjrenwu_4,g_playerMaxLevel)
         end
-    elseif index == 6 then
+    elseif index == 6 then --获得五星卡成就
         local temp_x = Functions.subIntOfNum((data["m_get"] + 1) * 10)
         if (data["m_get"] + 1) <= #g_csMainMsn[index][1] then
             str = string.format(LanguageConfig.language_cjrenwu_5,g_csMainMsn[index][3][data["m_get"] + 1])  
         else
             str = string.format(LanguageConfig.language_cjrenwu_5,g_csMainMsn[index][3][data["m_get"]])  
         end
-    elseif index == 7 then
+    elseif index == 7 then --精英关卡成就
         if (data["m_get"] + 1) <= #g_csMainMsn[index][1] then
             str = string.format(LanguageConfig.language_cjrenwu_6,g_MakeMMElitePass[data["m_get"] + 1][1],g_MakeMMElitePass[data["m_get"] + 1][2])   
         else

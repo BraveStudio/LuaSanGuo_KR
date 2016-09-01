@@ -304,6 +304,15 @@ function EmbattleData:removeHeroBeforeToCheck(heroMarks,handler)
         end
     end
 end
+--
+function EmbattleData:isHeroInEmabttleOfMark(heroMark)
+    local isHaveMarkInJson = false
+    if self:isHaveHeroMarkInJsonStr(heroMark) then 
+        isHaveMarkInJson = true
+    end
+    return isHaveMarkInJson
+end
+
 --将一组英雄从备用阵型中移除
 function EmbattleData:removeHeroMarksFromJson(heroMarks)
     for k,v in pairs(heroMarks) do

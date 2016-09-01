@@ -7,6 +7,7 @@ local deepLinkIntent = require("app.sdk.IGAWorksDeepLinkIntent")
 local scheduler = require("app.common.scheduler")  
 local isOpenPopup = true
 local isHavePopup = false
+local isStartupCafeHome = true
 function NativeUtil:init()
     cc.exports.JniBackCall = NativeUtil._JniBackCall
 
@@ -20,9 +21,9 @@ function NativeUtil:init()
                 if PlayerData.eventAttr.m_guideStageId == 0 then
                     -- for i = 1,#SDKConfig.popUpKey do 
                     self:javaCallHanler({command = "openPopUp",popUpKey = "lobby"})
-                    if G_isFirstStartApp then 
+                    if isStartupCafeHome then 
                         self:javaCallHanler({command = "openCafeHome"})
-                        G_isFirstStartApp = false
+                        isStartupCafeHome = false
                     end  
                     -- end
                 end
@@ -60,6 +61,21 @@ function NativeUtil:GameCenterLogin()
     PromptManager:openHttpLinkPrompt()
     self:javaCallHanler({ command = "GameCenterlogin" })
 end
+function NativeUtil:NaverLogin()
+    PromptManager:openHttpLinkPrompt()
+    self:javaCallHanler({ command = "NaverLogin" })
+end
+function NativeUtil:bindNaverLogin()
+    PromptManager:openHttpLinkPrompt()
+    self:javaCallHanler({ command = "bindNaverLogin" })
+end
+function NativeUtil:NaverLoginOut()
+    self:javaCallHanler({ command = "loginOut" })
+end
+function NativeUtil:syncGameCenter()
+    PromptManager:openHttpLinkPrompt()
+    self:javaCallHanler({ command = "syncGameCenter" })
+end
 function NativeUtil:startDrmCheck(callBack)
     drmCallBack = callBack
     self:javaCallHanler({command = "drmCheck",checkType = "startDRM"})
@@ -81,6 +97,26 @@ function NativeUtil._JniBackCall(msg)
             GameState.storeAttr.NaverUserName_s = usrName
             Functions.sdkLoginHandler(usrId)
             PromptManager:closeHttpLinkPrompt() 
+        elseif k == "BindLogin" then 
+            local data = string.split(v,"|")
+            local usrId = data[1]
+            local usrName = data[2]
+            print(usrId)
+            Functions.bindNaverAccount(usrId .. "_" .. tostring(G_SDKType), function( )
+                GameState.storeAttr.isLoginNaver_b = true
+                GameState.storeAttr.NaverUserId_s = usrId
+                GameState.storeAttr.NaverUserName_s = usrName
+                GameState.storeAttr.isGusetLogin_b  = false
+                GameEventCenter:dispatchEvent({ name = "BIND_NAVER_SUCCESS_EVENT"})
+                PromptManager:closeHttpLinkPrompt() 
+                print("bind success!")
+            end, function( )
+                PromptManager:closeHttpLinkPrompt()    
+                PromptManager:openTipPrompt(LanguageConfig.bind_naver_fail)
+                NativeUtil:javaCallHanler({ command = "loginOut" })
+                print("bind fail!")
+            end)
+                 
         elseif k == "fastLoginGame" then
             PromptManager:openHttpLinkPrompt()
             if msgTable["SetAdId"] then

@@ -7,7 +7,7 @@
 			<key>commonUI/res/cs/CombatBeforePopUI/buzhen.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{307,1},{53,31}}</string>
+				<string>{{182,1},{53,31}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -15,21 +15,10 @@
 				<key>sourceSize</key>
 				<string>{53,31}</string>
 			</dict>
-			<key>commonUI/res/cs/CombatBeforePopUI/kaizhan.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{1,1},{123,123}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false />
-				<key>sourceSize</key>
-				<string>{123,123}</string>
-			</dict>
 			<key>commonUI/res/cs/CombatBeforePopUI/zhanqianzhunbei.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{126,1},{179,55}}</string>
+				<string>{{1,1},{179,55}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -47,14 +36,14 @@
 			<key>realTextureFileName</key>
 			<string>CombatBeforePopUI.png</string>
 			<key>size</key>
-			<string>{361,125}</string>
+			<string>{236,57}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>361</integer>
+			<integer>236</integer>
 			<key>height</key>
-			<integer>125</integer>
+			<integer>57</integer>
 		</dict>
 	</dict>
 </plist>

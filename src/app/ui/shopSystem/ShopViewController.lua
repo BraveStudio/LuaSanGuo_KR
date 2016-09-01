@@ -310,7 +310,7 @@ function ShopViewController:refresh()
             print("button click")
             --打开二级界面
             if data.m_ItemState == 1 then
-                self:openChildView("app.ui.popViews.ShopPopView", { data = data })
+                self:openChildView("app.ui.popViews.ShopPopView", { data = {datas = data ,shopType = 1} })
             else
                 --弹出报错信息
                 PromptManager:openTipPrompt(LanguageConfig.language_Shop_2)

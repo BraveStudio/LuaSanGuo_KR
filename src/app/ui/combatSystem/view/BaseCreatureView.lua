@@ -347,7 +347,7 @@ function BaseCreatureView:onSkillEffectStart(event)
 
             --判断是否冰冻技能
             local buffType = ConfigHandler:getSkillBuffTypeOfId(event.data.id, event.data.isPt)
-            if buffType == 5 then
+            if buffType == 5 or buffType == 8  then
                 -- self:pause()
                 self:skillAnimaPause()
             end
@@ -404,7 +404,7 @@ function BaseCreatureView:onSkillEffectEnd(event)
     
                 --判断是否冰冻技能
                 local buffType = ConfigHandler:getSkillBuffTypeOfId(event.data.id, event.data.isPt)
-                if buffType == 5 then
+                if buffType == 5 or buffType == 8 then
                     -- self:resume()
                     self:skillAnimaResume()
                 end

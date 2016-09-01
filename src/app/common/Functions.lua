@@ -1526,6 +1526,10 @@ function Functions.initItemComOfId(itemView, id)
             img = "tyj/dynamicUI_res/achievement_soul.png"   
         elseif id == -6 then
             img = "commonUI/res/image/hunjin.png"
+        elseif id == -7 then
+            img = "commonUI/res/image/jifen.png"
+        elseif id == -8 then
+            img = "commonUI/res/image/nengliang.png"
         else
             assert(false, "特殊物品id没有找到，id = " .. tostring(id))
         end
@@ -1790,6 +1794,7 @@ function Functions.setLoginInf(msg,handler)
         local customParam = PluginChannel:getCustomParam()
         GameState.storeAttr.NaverUserId_s = Functions.getTableFieldOfPath(msgTable,customParam.path.usrId ) or "default"
         GameState.storeAttr.NaverUserName_s = Functions.getTableFieldOfPath(msgTable,customParam.path.usrName ) or ""
+
         if handler ~= nil then 
             handler(msgTable)
         end
@@ -1807,7 +1812,7 @@ function Functions.subIntOfNum(num)
 end
 
 --初始化功能资源节点
---@param : { "hunjin" , "huoyue", "jifen", "jinbi", "jitui", "soul", "yuanbao" }
+--@param : { "hunjin" , "huoyue", "jifen", "jinbi", "jitui", "soul", "yuanbao","nengliang","gongxian", "fenglu" }
 function Functions.initResNodeUI(resNode,param)
 
     --魂晶
@@ -1851,6 +1856,21 @@ function Functions.initResNodeUI(resNode,param)
         text:setString(tostring(PlayerData.eventAttr.m_gold))
         Functions.bindUiWithModelAttr(text , PlayerData, "m_gold")
     end
+    
+    local onNengLiang = function(text, textStr)
+        text:setString(tostring(PlayerData.eventAttr.m_nengliang))
+        Functions.bindUiWithModelAttr(text , PlayerData, "m_nengliang")
+    end
+    
+    local onGongXian = function(text, textStr)
+        text:setString(tostring(PlayerData.eventAttr.m_actif))
+        Functions.bindUiWithModelAttr(text , PlayerData, "m_actif")
+    end
+    
+    local onFengLu = function(text, textStr)
+        text:setString(tostring(PlayerData.eventAttr.m_fenglu))
+        Functions.bindUiWithModelAttr(text , PlayerData, "m_fenglu")
+    end
 
     local typeFuns = 
     {
@@ -1861,6 +1881,9 @@ function Functions.initResNodeUI(resNode,param)
         ["jitui"]   = onJitui,
         ["soul"]    = onSoul,
         ["yuanbao"] = onYuanbao,
+        ["nengliang"] = onNengLiang,
+        ["gongxian"] = onGongXian,
+        ["fenglu"]  = onFengLu,
     }
 
     for i=1, 3 do
@@ -3039,6 +3062,20 @@ function Functions.tableSeqFunc(tb, seqFunc, finishCallBack)
     loopFunc()
 end
 
+function Functions.getCountryNameById(id)
+    if id == 1 then
+        return LanguageConfig.language_war_2
+    elseif id == 2 then
+        return LanguageConfig.language_war_3
+    elseif id == 3 then
+        return LanguageConfig.language_war_4
+    elseif id == 100 then
+        return LanguageConfig.language_war_5
+    else
+        return LanguageConfig.ui_gameSetView_1
+    end
+end
+
 function Functions.clearOldVerData()
     --清除老版本缓存数据
     Functions.removePath(cc.FileUtils:getInstance():getWritablePath() .. "up")
@@ -3094,7 +3131,7 @@ function Functions.getGuildRankList(successCB,failCB)
     HttpClient:sendHttpRequest(url, param, function(state, data)
         PromptManager:closeHttpLinkPrompt()
         if state == 0 then
-            local urlTable = json.decode(data)
+            local urlTable = cjson.decode(data)
             successCB(urlTable.state, urlTable.Info)
         else
             if failCB then
@@ -3302,6 +3339,101 @@ function Functions.openNetWorkTip(errorCode, msg)
         msg = msg or "-_-!!!"
         PromptManager:openTipPrompt(msg)
     end
+end
+
+--显示绑定失败提示
+function Functions.openBindNaverTip(errorCode, msg)
+    if errorCode == 1 then
+        PromptManager:openTipPrompt(LanguageConfig.bind_naver_already)
+    else
+        msg = msg or "-_-!!!"
+        PromptManager:openTipPrompt(msg)
+    end
+end
+
+--@param: { userName = xxx, cb = xxx }
+-- userName :一键登录名，没有填空，cb : 登陆成功回调函数，回调数据 { userName = xxx }
+function Functions.oneKeyLogin(param)
+    local userName = param.userName
+    local listener = param.cb
+
+    local onLoginSuccess = function(event)
+
+        local data = event.data
+        if data then
+            if tonumber(data.error) ~= NetWork.WebErrCode.Success then
+                Functions.openNetWorkTip(data.error, data.reason)
+                return
+            end
+
+            GameState.storeAttr.serverToken_s = data.token
+            -- Functions.setAdbrixTag("firstTimeExperience","login_complete")
+
+            g_ServerList = data.server
+            -- GameState.userCreateTime = data.insertTime
+            GameCtlManager:goTo("app.ui.loginSystem.LoginViewController",
+             { server = g_ServerList, loginType = LoginType.OneKey_Login })
+        else
+            PromptManager:openTipPrompt(LanguageConfig.language_Login_1)
+        end
+    end
+
+    if not userName then
+        PromptManager:openHttpLinkPrompt()
+
+        -- 创建一个请求，并以 GET 方式发送数据到服务端
+        local url = ServerConfig.currentURL 
+        HttpClient:sendHttpRequest(url .. "sanguoGMSomeFunc/AddGuestService", "", function(state, data)
+            PromptManager:closeHttpLinkPrompt()
+            if state == 0 then
+                local urlTable = cjson.decode(data)
+                if tonumber(urlTable.status) == 0 then
+                    if listener then
+                        listener({ userName = urlTable.gId })
+                    end
+                    GameState.storeAttr.userName_s = urlTable.gId
+                    NetWork:loginUserServer(urlTable.gId, urlTable.gId, onLoginSuccess)
+                else
+                    PromptManager:openTipPrompt(LanguageConfig.language_Login_1)
+                end
+            else
+                PromptManager:openTipPrompt(LanguageConfig.language_Login_1)
+            end
+        end)
+    else
+        NetWork:loginUserServer(userName, userName, onLoginSuccess)
+    end
+end
+
+--绑定游客模式
+function Functions.bindNaverAccount(userId, onSuccess, onFail)
+    assert(userId, "param input is error!!!")
+
+    local url = ServerConfig.currentURL 
+
+    local info = {}
+    info["username"] = userId
+    info["password"] = userId
+    info["gaid"] = GameState.storeAttr.advertisingId_s
+    info["playerId"] = PlayerData.eventAttr.m_uid
+    info["servId"] = NetWork.serverId
+    info["isDebug"] = G_IsDebugClient
+    local param = Functions.createHttpParamOfTable(info)
+
+    PromptManager:openHttpLinkPrompt()
+    HttpClient:sendHttpRequest(url .. "sanguoGMSomeFunc/BindGuestService", param, function(state, data)
+        PromptManager:closeHttpLinkPrompt()
+        if state == 0 then
+            local urlTable = cjson.decode(data)
+            if tonumber(urlTable.status) == 0 then
+                if onSuccess then onSuccess(urlTable) end
+            else
+                if onFail then onFail(urlTable) end
+            end
+        else
+            PromptManager:openTipPrompt(LanguageConfig.language_Login_1)
+        end
+    end)
 end
 
 --获取网络状态代码
@@ -3760,7 +3892,7 @@ function Functions.buyPowerHandler(controller)
             local handler = function()
                 PlayerData:RequestBuyPowerInf(function()
                     -- Functions.setAdbrixTag("retention","energy_buy")
-                    if PlayerData.eventAttr.m_buyEnergyCount <= 14 then 
+                    if PlayerData.eventAttr.m_buyEnergyCount <= g_VipCgf.BugEnergy[VipData.eventAttr.m_vipLevel] then 
                         Functions.setAdbrixTag("retention","energy_buy_" .. tostring(PlayerData.eventAttr.m_buyEnergyCount),tostring(PlayerData.eventAttr.m_level))
                     end
                     PromptManager:openTipPrompt(LanguageConfig.language_Functions_2)
@@ -3786,7 +3918,7 @@ function Functions.buyMoneyHandler(controller)
         else
             local handler = function()
                 PlayerData:RequestBuyMoneyInf(function(money,burst)
-                    if PlayerData.eventAttr.m_buyMoneyCount <= 30 then 
+                    if PlayerData.eventAttr.m_buyMoneyCount <=  g_VipCgf.BuyMoney[VipData.eventAttr.m_vipLevel] then 
                         Functions.setAdbrixTag("retention","silver_buy_" .. tostring(PlayerData.eventAttr.m_buyMoneyCount),tostring(PlayerData.eventAttr.m_level))
                     end
                     NoticeManager:openRewardTips(controller, {type = NoticeManager.REWARD_COIN_TIPS,data ={money = money,burst = burst}})

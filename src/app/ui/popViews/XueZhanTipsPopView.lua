@@ -95,13 +95,13 @@ function XueZhanTipsPopView:setXueZhanLevel( currentLevel )
 	self.currentLevel = currentLevel
 end
 function XueZhanTipsPopView:getPrizeInf(allData,xueZhanType,currentLevel)
-	local selectedData = {}
-	for k,v in pairs(allData) do 
-		if v["难度"] == xueZhanType and v["关卡"] == currentLevel then 
-			selectedData = v
-		end
-	end
-	return selectedData
+    local selectedData = {}
+    for k,v in pairs(allData) do     
+        if v["难度"] == xueZhanType and v["关卡"] == currentLevel then 
+            selectedData = v
+        end
+    end
+    return selectedData
 end
 function XueZhanTipsPopView:setBasePrize(basePrize)
 	for k,v in pairs(basePrize) do 

@@ -90,13 +90,13 @@ function CompoundPopView:showLevel()
             end
 
             --大关卡
-            local big = ConfigHandler:getCardChapter(self.debrisData.m_id)
             --小关卡
             local Small = 1
 
             local buff = ""
-            buff = ConfigHandler:getCheckPointNameOfID(big)
-            local str = BiographyData:checkFbState({fbType = type, fbId = big, gkId = Small})
+            local strNum = string.format(LanguageConfig.language_Union_24, data.m_chapter)
+            buff = strNum.."  "..ConfigHandler:getCheckPointNameOfID(data.m_chapter)
+            local str = BiographyData:checkFbState({fbType = type, fbId = data.m_chapter, gkId = Small})
             if str == false then
                 buff = buff..LanguageConfig.language_Compound_2
             end
@@ -106,7 +106,7 @@ function CompoundPopView:showLevel()
                 print("button click")
                 --打开二级界面
                 --大关卡
-                local big = ConfigHandler:getCardChapter(self.debrisData.m_id)
+                local big = data.m_chapter
                 --小关卡
                 local Small = 1
 

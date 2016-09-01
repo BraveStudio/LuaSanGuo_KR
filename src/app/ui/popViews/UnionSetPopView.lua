@@ -168,6 +168,7 @@ function UnionSetPopView:onDisplayView()
     --加入类型
     self.join_type = data.eventAttr.m_join_type
     self.type = data.eventAttr.m_join_type
+    self:showType(self.type)
     --公会图标
     self.icon = data.eventAttr.m_pic
     self.pic = data.eventAttr.m_pic

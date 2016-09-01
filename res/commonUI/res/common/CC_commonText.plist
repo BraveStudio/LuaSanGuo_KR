@@ -62,7 +62,7 @@
 			<key>commonUI/res/common/csjg.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{656,317},{70,22}}</string>
+				<string>{{647,317},{70,22}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -216,7 +216,7 @@
 			<key>commonUI/res/common/jijies.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1,281},{71,18}}</string>
+				<string>{{645,341},{71,18}}</string>
 				<key>offset</key>
 				<string>{-1,0}</string>
 				<key>rotated</key>
@@ -447,7 +447,7 @@
 			<key>commonUI/res/common/suipian.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{541,315},{50,20}}</string>
+				<string>{{593,329},{50,20}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -524,7 +524,7 @@
 			<key>commonUI/res/common/weikaiq.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{728,317},{53,18}}</string>
+				<string>{{719,340},{53,18}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -568,7 +568,7 @@
 			<key>commonUI/res/common/ybao.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{728,337},{43,22}}</string>
+				<string>{{774,348},{43,22}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -634,7 +634,7 @@
 			<key>commonUI/res/common/yiyongyou.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{594,297},{60,21}}</string>
+				<string>{{719,317},{60,21}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -784,6 +784,28 @@
 				<false />
 				<key>sourceSize</key>
 				<string>{106,31}</string>
+			</dict>
+			<key>commonUI/res/common/jujue.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{541,315},{50,30}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{50,30}</string>
+			</dict>
+			<key>commonUI/res/common/tongyi.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{594,297},{51,30}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{51,30}</string>
 			</dict>
 		</dict>
 		<key>metadata</key>

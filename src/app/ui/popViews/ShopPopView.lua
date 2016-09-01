@@ -6,7 +6,7 @@ local Functions = require("app.common.Functions")
 
 ShopPopView.csbResPath = "lk/csb"
 ShopPopView.debug = true
-ShopPopView.studioSpriteFrames = {"IntegralShopUI_Text" }
+ShopPopView.studioSpriteFrames = {"IntegralShopUI_Text","ShopUI_Text" }
 --@auto code head end
 --@Pre loading
 ShopPopView.spriteFrameNames = 
@@ -88,7 +88,14 @@ end
 function ShopPopView:onButton_pop_buyClick()
     Functions.printInfo(self.debug,"Button_pop_buy button is click!")
     --购买接口
-    self:sendBuyShop()
+    if self.shopType == 2 then
+        self:sendUnionBuyShop()
+    elseif self.shopType == 3 then
+        self:senWarBuyShop()
+    else
+        self:sendBuyShop()
+    end
+
 end
 --@auto code Button_pop_buy btFunc end
 
@@ -115,26 +122,43 @@ function ShopPopView:onDisplayView(data)
 	Functions.printInfo(self.debug,"pop action finish ")
 	
     assert(data, "param is nil error")
-    self.shopModel = data
+
+    self.shopModel = data.datas
+    self.shopType = data.shopType
     
     --local shopTwo = self.shopModel.eventAttr
     local heroNode = nil
     local have_count = 0
     if self.shopModel.m_ItemType == 4 then--4为道具
-        heroNode = Functions.createPartNode({nodeType = ItemType.Prop, nodeId = data.m_ItemID})
+        heroNode = Functions.createPartNode({nodeType = ItemType.Prop, nodeId = self.shopModel.m_ItemID})
         self._Text_pop_cargo_name_t:setText(ConfigHandler:getPropNameOfId(self.shopModel.m_ItemID))
         Functions.initLabelOfString(self._Text_Pop_info_t, ConfigHandler:getPropInfOfId(self.shopModel.m_ItemID))
         
         --已经有的个数
         have_count = PropData:getPropNumOfId(self.shopModel.m_ItemID)
+        if self.shopModel.m_ItemID == -2 then
+            have_count = PlayerData.eventAttr.m_gold
+        elseif self.shopModel.m_ItemID == -3 then
+            have_count = PlayerData.eventAttr.m_money
+        elseif self.shopModel.m_ItemID == -4 then
+            have_count = PlayerData.eventAttr.m_energy
+        elseif self.shopModel.m_ItemID == -5 then
+            have_count = PlayerData.eventAttr.m_soul
+        elseif self.shopModel.m_ItemID == -6 then
+            have_count = PlayerData.eventAttr.m_hunjing
+        elseif self.shopModel.m_ItemID == -7 then
+
+        elseif self.shopModel.m_ItemID == -8 then
+            have_count = PlayerData.eventAttr.m_nengliang
+        end
     elseif self.shopModel.m_ItemType == 1 then--1为武将卡
-        heroNode = Functions.createPartNode({nodeType = ItemType.HeroCard, nodeId = data.m_ItemID})
+        heroNode = Functions.createPartNode({nodeType = ItemType.HeroCard, nodeId = self.shopModel.m_ItemID})
         
         self._Text_pop_cargo_name_t:setText(ConfigHandler:getHeroNameOfId(self.shopModel.m_ItemID))
         Functions.initLabelOfString(self._Text_Pop_info_t, ConfigHandler:getHeroDescriptionId(self.shopModel.m_ItemID))
         have_count = HeroCardData:getHaveHero(self.shopModel.m_ItemID)
     elseif self.shopModel.m_ItemType == 5 then--1为武将卡碎片
-        heroNode = Functions.createPartNode({nodeType = ItemType.CardFragment, nodeId = data.m_ItemID})
+        heroNode = Functions.createPartNode({nodeType = ItemType.CardFragment, nodeId = self.shopModel.m_ItemID})
         
         self._Text_pop_cargo_name_t:setText(ConfigHandler:getHeroNameOfId(self.shopModel.m_ItemID))
         Functions.initLabelOfString(self._Text_Pop_info_t, ConfigHandler:getHeroDescriptionId(self.shopModel.m_ItemID))
@@ -146,12 +170,18 @@ function ShopPopView:onDisplayView(data)
     self._Sprite_shop_pop_bg_t:addChild(heroNode)
     
     self._Image_expend_type_bao_t:ignoreContentAdaptWithSize(true)
-    if data.m_MoneyType == 1 then--1为元宝
-        Functions.loadImageWithWidget(self._Image_expend_type_bao_t, "commonUI/res/image/bao.png")
-    elseif data.m_MoneyType == 2 then--2为铜钱
-        Functions.loadImageWithWidget(self._Image_expend_type_bao_t, "commonUI/res/image/jinbi.png")
-    elseif data.m_MoneyType == 3 then--2为铜钱
-        Functions.loadImageWithWidget(self._Image_expend_type_bao_t, "commonUI/res/image/hunjin.png")
+    if self.shopType == 2 then
+        Functions.loadImageWithWidget(self._Image_expend_type_bao_t, "commonUI/res/image/gongxian.png")
+    elseif self.shopType == 3 then
+        Functions.loadImageWithWidget(self._Image_expend_type_bao_t, "commonUI/res/image/fenglu.png")
+    else
+        if self.shopModel.m_MoneyType == 1 then--1为元宝
+            Functions.loadImageWithWidget(self._Image_expend_type_bao_t, "commonUI/res/image/bao.png")
+        elseif self.shopModel.m_MoneyType == 2 then--2为铜钱
+            Functions.loadImageWithWidget(self._Image_expend_type_bao_t, "commonUI/res/image/jinbi.png")
+        elseif self.shopModel.m_MoneyType == 3 then--2为铜钱
+            Functions.loadImageWithWidget(self._Image_expend_type_bao_t, "commonUI/res/image/hunjin.png")
+        end
     end
 
     --已经有的个数
@@ -165,6 +195,50 @@ function ShopPopView:onCreate()
 end
 --@auto code output func end
 
+--购买国战商品
+function ShopPopView:senWarBuyShop()
+
+    local onWarShop = function(event)
+        PlayerData.eventAttr.m_fenglu = event.data.fenglu
+        local item = event.data.goods
+        Functions:addItemResources( {id = item[1], type = item[2], count = item[3], slot = item[4]} )
+
+        self._controller_t:closeChildView(self)
+        --弹出报错信息
+        PromptManager:openTipPrompt(LanguageConfig.language_9_7) 
+    end
+    
+    local oo = self.shopModel
+    NetWork:addNetWorkListener({ 30, 10 }, Functions.createNetworkListener(onWarShop,true,"ret"))
+    NetWork:sendToServer({ idx = { 30, 10 }, index = self.shopModel.m_Idx})
+end
+
+--购买公会商店物品
+function ShopPopView:sendUnionBuyShop()
+
+    local onShop = function(event)
+        if event.reqtype == 40 then
+            if event.ret == 1 then
+                PlayerData.eventAttr.m_actif = event.data.actif
+                UnionData:setShopBuy_count(event.data.count)
+                local item = event.data.item
+                Functions:addItemResources( {id = item[1], type = item[2], count = item[3], slot = item[4]} )
+                --公会等级提升的监听
+                GameEventCenter:dispatchEvent({ name = UnionData.UNION_BUY_EVENT, data = {} })
+                self._controller_t:closeChildView(self)
+                --弹出报错信息
+                PromptManager:openTipPrompt(LanguageConfig.language_9_7) 
+            else
+                --弹出报错信息
+                PromptManager:openTipPrompt(ConfigHandler:getServerErrorCode(event.ret))
+            end
+            return true
+        end
+    end
+    NetWork:addNetWorkListener({ 7, 1 }, onShop)
+    NetWork:sendToServer({ idx = { 7, 1 }, reqtype = 40, data = {index = self.shopModel.m_Idx} })
+
+end
 --购买商城物品
 function ShopPopView:sendBuyShop()
     Functions.printInfo(self.debug,"sendBuyShop")

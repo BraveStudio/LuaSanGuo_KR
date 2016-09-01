@@ -24,13 +24,17 @@ end
 function GameSetPopView:onInitUI()
 
     --output list
-    self._nstoreBz_t = self.csbNode:getChildByName("Panel_1"):getChildByName("nstoreBz")
+    self._codeText_t = self.csbNode:getChildByName("Panel_1"):getChildByName("codeText")
+	self._codeBg_t = self.csbNode:getChildByName("Panel_1"):getChildByName("codeBg")
+	self._nstoreBz_t = self.csbNode:getChildByName("Panel_1"):getChildByName("nstoreBz")
 	self._head_t = self.csbNode:getChildByName("Panel_1"):getChildByName("head")
 	self._playerNameTx_t = self.csbNode:getChildByName("Panel_1"):getChildByName("playerNameTx")
 	self._playerId_t = self.csbNode:getChildByName("Panel_1"):getChildByName("playerId")
 	self._playerLevelTx_t = self.csbNode:getChildByName("Panel_1"):getChildByName("playerLevelTx")
+	self._main_sbg_5_t = self.csbNode:getChildByName("Panel_1"):getChildByName("main_sbg_5")
 	self._playerExTx_0_t = self.csbNode:getChildByName("Panel_1"):getChildByName("playerExTx_0")
 	self._naverText_t = self.csbNode:getChildByName("Panel_1"):getChildByName("naverText")
+	self._guojiaText_t = self.csbNode:getChildByName("Panel_1"):getChildByName("guojiaText")
 	self._codeInput_t = self.csbNode:getChildByName("codeInput")
 	self._soundCheckBox_t = self.csbNode:getChildByName("soundCheckBox")
 	self._musicCheckBox_t = self.csbNode:getChildByName("musicCheckBox")
@@ -42,7 +46,10 @@ function GameSetPopView:onInitUI()
     --label list
     
     --button list
-    self._headBt_t = self.csbNode:getChildByName("Panel_1"):getChildByName("headBt")
+    self._bindBt_t = self.csbNode:getChildByName("Panel_1"):getChildByName("bindBt")
+	self._bindBt_t:onTouch(Functions.createClickListener(handler(self, self.onBindbtClick), ""))
+
+	self._headBt_t = self.csbNode:getChildByName("Panel_1"):getChildByName("headBt")
 	self._headBt_t:onTouch(Functions.createClickListener(handler(self, self.onHeadbtClick), ""))
 
 	self._sendInviteBt_t = self.csbNode:getChildByName("Panel_1"):getChildByName("sendInviteBt")
@@ -53,6 +60,9 @@ function GameSetPopView:onInitUI()
 
 	self._changeServerBt_t = self.csbNode:getChildByName("Panel_1"):getChildByName("changeServerBt")
 	self._changeServerBt_t:onTouch(Functions.createClickListener(handler(self, self.onChangeserverbtClick), ""))
+
+	self._quitCountryBt_t = self.csbNode:getChildByName("Panel_1"):getChildByName("quitCountryBt")
+	self._quitCountryBt_t:onTouch(Functions.createClickListener(handler(self, self.onQuitcountrybtClick), ""))
 
 	self._moreHeadBt_t = self.csbNode:getChildByName("head_panel_clolor"):getChildByName("moreHeadBt")
 	self._moreHeadBt_t:onTouch(Functions.createClickListener(handler(self, self.onMoreheadbtClick), ""))
@@ -86,6 +96,7 @@ function GameSetPopView:onLogoutbtClick()
     Functions.printInfo(self.debug,"Logoutbt button is click!")
     if not self.logouting then
         self.logouting = true
+        GameState.storeAttr.isGusetLogin_b = false
         if G_IsUseSDK and G_SDKType == 6 then 
             Functions.callAnySdkFuc(function( )
                 PluginChannel:logout()
@@ -164,6 +175,27 @@ function GameSetPopView:onChangeserverbtClick()
 end
 --@auto code Changeserverbt btFunc end
 
+--@auto code Bindbt btFunc
+function GameSetPopView:onBindbtClick()
+    Functions.printInfo(self.debug,"Bindbt button is click!")
+    Functions.callJavaFuc(function()
+        NativeUtil:bindNaverLogin()
+    end)
+end
+--@auto code Bindbt btFunc end
+
+--@auto code Quitcountrybt btFunc
+function GameSetPopView:onQuitcountrybtClick()
+    Functions.printInfo(self.debug,"Quitcountrybt button is click!")
+
+    local text = string.format(LanguageConfig.ui_gameSetView_2, Functions.getCountryNameById(PlayerData.eventAttr.m_camp))
+    --弹出框
+    NoticeManager:openTips(self:getController(), { handler = function()
+        WarData:sendExit()
+    end, title = text})
+end
+--@auto code Quitcountrybt btFunc end
+
 --@auto button backcall end
 
 
@@ -174,9 +206,10 @@ end
 
 function GameSetPopView:onDisplayView()
 	Functions.printInfo(self.debug,"pop action finish ")
-	
+
     self._codeInput_t:setPlaceHolder(LanguageConfig.ui_language_Chat_2)
     self._codeInput_t:onEvent(Functions.createInputListener(self._controller_t))
+    self._bindBt_t:setVisible(false)
 
     self.naverText = self.csbNode:getChildByName("Panel_1"):getChildByName("naverText")
 
@@ -226,22 +259,52 @@ function GameSetPopView:onDisplayView()
             self.naverText:setVisible(false)
             self._nstoreBz_t:setVisible(false)
         end
-    elseif GameState:getLoginType() == "AstoreLogin" then
-        if self.naverText then
-            self.naverText:setString(GameState.storeAttr.NaverUserName_s)
-            self._nstoreBz_t:ignoreContentAdaptWithSize(true)
-            Functions.loadImageWithWidget(self._nstoreBz_t, "cs/loadRes/loginLogo/gamecenter.png")
-        else
+    elseif GameState:getLoginType() == "AstoreLogin" or GameState.storeAttr.isGusetLogin_b  then
+
+        self._main_sbg_5_t:setVisible(false)        
+        self._nstoreBz_t:setVisible(true)
+
+        if GameState.storeAttr.isGusetLogin_b then
+            self._bindBt_t:setVisible(true)
             self.naverText:setVisible(false)
-            self._nstoreBz_t:setVisible(false)
+            Functions.bindEventListener(self, GameEventCenter, "BIND_NAVER_SUCCESS_EVENT", function()
+                self.naverText:setString(GameState.storeAttr.NaverUserName_s)
+                self._nstoreBz_t:ignoreContentAdaptWithSize(true)
+                self._bindBt_t:setVisible(false)
+                self.naverText:setVisible(true)
+                self._nstoreBz_t:setVisible(true)
+            end)
+        else
+            if self.naverText then
+                self.naverText:setString(GameState.storeAttr.NaverUserName_s)
+                self._nstoreBz_t:ignoreContentAdaptWithSize(true)
+                -- Functions.loadImageWithWidget(self._nstoreBz_t, "cs/loadRes/loginLogo/gamecenter.png")
+            else
+                self.naverText:setVisible(false)
+                self._nstoreBz_t:setVisible(false)
+            end
         end
 
         --ios屏蔽注销
-        self._logoutBt_t:setVisible(false)
-        self._changeServerBt_t:setPositionX(self._changeServerBt_t:getParent():getSize().width/2)
+        -- self._logoutBt_t:setVisible(false)
+        -- self._changeServerBt_t:setPositionX(self._changeServerBt_t:getParent():getSize().width/2)
     else
         self.naverText:setVisible(false)
         self._nstoreBz_t:setVisible(false)
+    end
+
+    if G_DeviceType == 2 then
+        if NetWork.serverName == "test1" then
+            self._codeInput_t:setVisible(false)
+            self._codeBg_t:setVisible(false)
+            self._codeText_t:setVisible(false)
+            self._sendInviteBt_t:setVisible(false)
+        else
+            self._codeInput_t:setVisible(true)
+            self._codeBg_t:setVisible(true)
+            self._codeText_t:setVisible(true)
+            self._sendInviteBt_t:setVisible(true)
+        end
     end
 
     --初始化人物显示信息
@@ -310,7 +373,29 @@ function GameSetPopView:onDisplayView()
     end
     
     Functions.bindListWithData(self._headList_t, headListData, listHandler)
-            
+    
+    local guoJiaPos = self._guojiaText_t:getPositionX()
+    local initCountryName = function(id)
+        local name = Functions.getCountryNameById(id)
+        self._guojiaText_t:setString(Functions.getCountryNameById(id))
+        if string.len(name) <= 4 then
+            self._guojiaText_t:setPositionX(guoJiaPos + 15)
+        else
+            self._guojiaText_t:setPositionX(guoJiaPos)
+        end
+        if not id or id == 0 then
+            self._quitCountryBt_t:setVisible(false)
+        else
+            self._quitCountryBt_t:setVisible(true)
+        end
+    end
+    
+    --国家显示
+    initCountryName(PlayerData.eventAttr.m_camp)
+    Functions.bindUiWithModelAttr(self._guojiaText_t, PlayerData, "m_camp", function(event)
+        initCountryName(event.data)
+    end)
+
 end
 
 function GameSetPopView:onCreate()

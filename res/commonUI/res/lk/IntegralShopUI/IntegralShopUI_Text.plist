@@ -18,13 +18,57 @@
 			<key>commonUI/res/lk/IntegralShopUI/goumaigeshu.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{452,0},{84,19}}</string>
+				<string>{{744,0},{84,19}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false />
 				<key>sourceSize</key>
 				<string>{84,19}</string>
+			</dict>
+			<key>commonUI/res/lk/IntegralShopPopUI/miu10.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{452,0},{70,73}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{70,73}</string>
+			</dict>
+			<key>commonUI/res/lk/IntegralShopPopUI/miu10_1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{525,0},{70,73}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{70,73}</string>
+			</dict>
+			<key>commonUI/res/lk/IntegralShopPopUI/add10.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{598,0},{70,73}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{70,73}</string>
+			</dict>
+			<key>commonUI/res/lk/IntegralShopPopUI/add10_1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{671,0},{70,73}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{70,73}</string>
 			</dict>
 		</dict>
 		<key>metadata</key>
@@ -36,12 +80,12 @@
 			<key>realTextureFileName</key>
 			<string>IntegralShopUI_Text.png</string>
 			<key>size</key>
-			<string>{536,406}</string>
+			<string>{828,406}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
-			<integer>536</integer>
+			<integer>828</integer>
 			<key>height</key>
 			<integer>406</integer>
 		</dict>

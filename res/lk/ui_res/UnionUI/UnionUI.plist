@@ -7,7 +7,7 @@
 			<key>lk/ui_res/UnionUI/Union_bar1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{365,457},{546,88}}</string>
+				<string>{{1124,431},{546,88}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -25,39 +25,6 @@
 				<false />
 				<key>sourceSize</key>
 				<string>{110,110}</string>
-			</dict>
-			<key>lk/ui_res/UnionUI/Union_but_down.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{1721,265},{187,73}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false />
-				<key>sourceSize</key>
-				<string>{187,73}</string>
-			</dict>
-			<key>lk/ui_res/UnionUI/Union_but_l.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{507,290},{186,73}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false />
-				<key>sourceSize</key>
-				<string>{186,73}</string>
-			</dict>
-			<key>lk/ui_res/UnionUI/Union_but_l_down.png</key>
-			<dict>
-				<key>frame</key>
-				<string>{{507,365},{186,73}}</string>
-				<key>offset</key>
-				<string>{0,0}</string>
-				<key>rotated</key>
-				<false />
-				<key>sourceSize</key>
-				<string>{186,73}</string>
 			</dict>
 			<key>lk/ui_res/UnionUI/Union_city.png</key>
 			<dict>
@@ -106,7 +73,7 @@
 			<key>lk/ui_res/UnionUI/Union_jindu.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{695,435},{293,20}}</string>
+				<string>{{1,407},{293,20}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -117,7 +84,7 @@
 			<key>lk/ui_res/UnionUI/Union_jindu_bg.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{695,382},{299,28}}</string>
+				<string>{{507,329},{299,28}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -172,7 +139,7 @@
 			<key>lk/ui_res/UnionUI/Union_red.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1721,408},{187,73}}</string>
+				<string>{{1721,265},{187,73}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -183,7 +150,7 @@
 			<key>lk/ui_res/UnionUI/Union_red_down.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{507,215},{187,73}}</string>
+				<string>{{1721,408},{187,73}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -205,7 +172,7 @@
 			<key>lk/ui_res/UnionUI/Union_text.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{695,412},{315,21}}</string>
+				<string>{{507,359},{315,21}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -216,7 +183,7 @@
 			<key>lk/ui_res/UnionUI/Union_time.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1,547},{817,28}}</string>
+				<string>{{1,516},{817,28}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -227,7 +194,7 @@
 			<key>lk/ui_res/UnionUI/Union_titlebg.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{913,511},{835,52}}</string>
+				<string>{{1,462},{835,52}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -282,7 +249,7 @@
 			<key>lk/ui_res/UnionUI/bg3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1012,431},{615,78}}</string>
+				<string>{{507,382},{615,78}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -304,7 +271,7 @@
 			<key>lk/ui_res/UnionUI/biaoqian.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1,407},{180,55}}</string>
+				<string>{{507,215},{180,55}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -315,7 +282,7 @@
 			<key>lk/ui_res/UnionUI/biaoqian_1.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{183,407},{180,55}}</string>
+				<string>{{507,272},{180,55}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -333,14 +300,14 @@
 			<key>realTextureFileName</key>
 			<string>UnionUI.png</string>
 			<key>size</key>
-			<string>{2040,576}</string>
+			<string>{2040,545}</string>
 		</dict>
 		<key>texture</key>
 		<dict>
 			<key>width</key>
 			<integer>2040</integer>
 			<key>height</key>
-			<integer>576</integer>
+			<integer>545</integer>
 		</dict>
 	</dict>
 </plist>

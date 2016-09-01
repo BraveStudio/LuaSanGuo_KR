@@ -47,6 +47,7 @@ function CombatOverPopView:onInitUI()
 	self._tuandui_text_t = self.csbNode:getChildByName("fightWinPanel"):getChildByName("result"):getChildByName("award_panel1"):getChildByName("tuandui_panel"):getChildByName("tuandui_text")
 	self._award_panel2_t = self.csbNode:getChildByName("fightWinPanel"):getChildByName("result"):getChildByName("award_panel2")
 	self._foods_t = self.csbNode:getChildByName("fightWinPanel"):getChildByName("result"):getChildByName("award_panel2"):getChildByName("foods")
+	self._awardText_t = self.csbNode:getChildByName("fightWinPanel"):getChildByName("result"):getChildByName("award_panel2"):getChildByName("awardText")
 	self._shilian_panel_t = self.csbNode:getChildByName("fightWinPanel"):getChildByName("result"):getChildByName("shilian_panel")
 	self._zhangong_bg_t = self.csbNode:getChildByName("fightWinPanel"):getChildByName("result"):getChildByName("shilian_panel"):getChildByName("zhangong_bg")
 	self._zgText_t = self.csbNode:getChildByName("fightWinPanel"):getChildByName("result"):getChildByName("shilian_panel"):getChildByName("zhangong_bg"):getChildByName("zgText")
@@ -201,6 +202,10 @@ function CombatOverPopView:onDisplayView(data)
 
         baseMsg.data.big = self.combatInfo.big
         baseMsg.data.small = self.combatInfo.small
+    elseif data.combatType == CombatCenter.CombatType.RB_KILL_HERO then
+        baseMsg.btype = 12
+        baseMsg.data.pass = self.combatInfo.big
+        baseMsg.data.diff = self.combatInfo.small
 	end 
     
     NetWork:addNetWorkListener({ 1, 2}, handler(self, self.onServerResponse))
@@ -330,6 +335,44 @@ function CombatOverPopView:onBloodyBattleFunc(data)
     end
     self:playStarAnima_(data.star, onPlayStarAnimaFinish)
 
+end
+
+function CombatOverPopView:onKillHeroFunc(data)
+
+    self._awardText_t:setVisible(false)
+
+   local onPlayStarAnimaFinish = function()
+
+        self._result_t:setVisible(true)
+        self._award_panel1_t:setVisible(true)
+        self._bloody_panel_t:setVisible(true)
+        self._award_panel2_t:setVisible(true)
+
+        --绑定fb获得数据显示
+        for i=1, 3 do
+            local child = self._bloody_panel_t:getChildByName("node" .. tostring(i))
+            if data.items.base[i] then
+
+                child:setVisible(true)
+                local text = child:getChildByName("text")
+                local image = child:getChildByName("image")
+                Functions.initLabelOfString(text, "+" .. tostring(data.items.base[i][3]))
+                Functions.loadImageWithSprite(image, "commonUI/res/image/" .. ResImageTable[data.items.base[i][1]] .. ".png")
+
+                PropData:addProp({m_id = data.items.base[i][1], m_count = data.items.base[i][3]})
+            else
+                child:setVisible(false)
+            end
+        end
+
+        if #data.items.extra > 0 then
+            self:showRewardFoods(data.items.extra)
+        end
+
+    end
+    self._controller_t.m_combatStars = data.star
+    self._controller_t.m_combatCount = data.count
+    self:playStarAnima_(data.star, onPlayStarAnimaFinish) 
 end
 
 function CombatOverPopView:onPVPlayerDataFunc(data)
@@ -467,16 +510,24 @@ function CombatOverPopView:displayCombatResult_(event)
         [CombatCenter.CombatType.RB_BloodyBattle]  = handler(self, self.onBloodyBattleFunc),
         [CombatCenter.CombatType.RB_PVPPlayerData] = handler(self, self.onPVPlayerDataFunc),
         [CombatCenter.CombatType.RB_GVG]           = handler(self, self.onGVGFunc),
+        [CombatCenter.CombatType.RB_KILL_HERO]     = handler(self, self.onKillHeroFunc)
         
     }
     
-    --同步体力
-    if self.currentType == CombatCenter.CombatType.RB_PVE or self.currentType == CombatCenter.CombatType.RB_ElitePVE
-    or  self.currentType == CombatCenter.CombatType.RB_HeroTrial then --血战不需要消耗体力
-        PlayerData:setPlayerPower(event.energy)
+    --同步战斗次数
+    if self.currentType == CombatCenter.CombatType.RB_KILL_HERO then --血战不需要消耗体力
+        self._controller_t.m_combatCount = event.count
+        PlayerData:setNengLiang(event.nengliang)
     end
     
     if self.combatResult == 1 then
+
+        --同步体力
+        if self.currentType == CombatCenter.CombatType.RB_PVE or self.currentType == CombatCenter.CombatType.RB_ElitePVE
+        or  self.currentType == CombatCenter.CombatType.RB_HeroTrial then --血战不需要消耗体力
+            PlayerData:setPlayerPower(event.energy)
+        end
+        
         Functions.callAnySdkFuc(function( )
             NativeUtil:javaCallHanler({command = "onCompleted",missionId = "003"})
         end)
@@ -524,6 +575,7 @@ function CombatOverPopView:displayCombatResult_(event)
             self._heroUpBt_t:setVisible(true)
             self._soldierUpBt_t:setVisible(true)
         end
+
     end
         
 end

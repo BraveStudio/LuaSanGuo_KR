@@ -46,6 +46,7 @@ g_SpWhiteBoxConfig = {}			--特殊白宝箱 做新手指引用，只能开出白
 g_BlueBoxConfig = {}			--蓝色宝箱
 g_PurPleBoxConfig = {}			--紫色宝箱	
 g_OrangeBoxConfig = {}			--橙色宝箱
+g_RedBoxConfig = {}				--红色宝箱
 g_heroBoxConfig = {}			--英雄宝箱
 g_FixBoxConfig = {}				--能开出固定英雄的宝箱
 
@@ -59,6 +60,9 @@ g_shoptem2 = {}
 g_shoptem3 = {}
 g_ShopSix = {}					--六星神将配置
 g_ShopPvpConfig = {}			--pvp商店配置
+g_gzInitshop = {}
+g_gzRandomshop = {}
+g_gzshop = {}
 
 
 --血战英雄配置
@@ -75,6 +79,7 @@ g_XssjConfig = {}
 
 --主角升级奖励
 g_heroLvUpReward = {}
+g_heroLvUpReward_extra = {}
 --配置相关的工具函数
 g_soldiersStreng = {}
 --服务器语言文字表
@@ -92,6 +97,12 @@ g_bigCity = {}
 g_bigTemCity = {}
 g_smallCity = {}
 g_gvgNpc = {}
+--攻城掠地相关
+g_gcldInfo = {}
+g_gcldNpc = {}
+--国战配置
+g_gznpc = {}
+g_gzidhehe = {}
 
 local function ReadNewFormation()
 	local title = {
@@ -950,6 +961,25 @@ local ReadOrangeBoxConfig = function()
 		end)
 	-- AddLog("Load PurPleBox Count: " .. tostring(count))
 end
+
+--红色宝箱
+local ReadRedBoxConfig = function()
+	local title = {
+		{'id', tonumber},					-- 道具id
+		{'goodtype', tonumber},				-- 类型
+		{'num', tonumber},					-- 数量
+		{4,tonumber},						-- 概率
+	}
+
+	local count = 0
+	LoadConfig('data/redboxconfig.txt', title,
+		function (row)
+			count = count + 1
+			g_RedBoxConfig[count] = row
+		end)
+	-- AddLog("Load RedBox Count: " .. tostring(count))
+end
+
 --卡牌宝箱
 local ReadheroBoxConfig = function()
 	local title = {
@@ -1081,6 +1111,52 @@ local ReadShopPvpConfig = function()
 		function (row)
 			count = count + 1
 			g_ShopPvpConfig[count] = row
+		end)
+	-- AddLog("Load ShopPvp Count: " .. tostring(count))
+end
+
+local ReadShopGuildConfig = function()
+	local title = {
+		{'goodid', tonumber},				-- 物品id
+		{'goodtype', tonumber},				-- 类型
+		{'goodnum', tonumber},				-- 数量
+		{'price',tonumber},					-- 价格
+		{'needlevel',tonumber},				-- 所需等级
+	}
+
+	local count = 0
+	LoadConfig('data/shopguild.txt', title,
+		function (row)
+			count = count + 1
+			g_ShopGuildConfig[count] = row
+		end)
+	-- AddLog("Load ShopPvp Count: " .. tostring(count))
+end
+--国战商店
+local ReadShopGZConfig = function()
+	local title = {
+		{'goodid', tonumber},				-- 物品id
+		{'goodtype', tonumber},				-- 类型
+		{'goodnum', tonumber},				-- 数量
+		{'price',tonumber},					-- 价格
+		{'gettype',tonumber},				-- 获得类型
+	}
+
+	local initcount = 0
+	local randomcount = 0
+	local allcount = 0
+	LoadConfig('data/shopgz.txt', title,
+		function (row)
+			local temp = row
+			if temp.gettype == 0 then
+				initcount = initcount + 1
+				g_gzInitshop[initcount] = temp
+			else
+				randomcount = randomcount + 1
+				g_gzRandomshop[randomcount] = temp
+			end
+			allcount = allcount + 1
+			g_gzshop[allcount] = temp
 		end)
 	-- AddLog("Load ShopPvp Count: " .. tostring(count))
 end
@@ -1224,12 +1300,25 @@ ReadheroLvUpReward = function()
 		function(row)
 			count = count + 1
 			local temp = row
-			--g_heroLvUpReward[temp.level] = temp
-			--if g_heroLvUpReward[temp.level] == nil then
-			--	g_heroLvUpReward[temp.level] = {}
-			--end
 			local goodcomd = loadstring("return".. temp.goods)()
 			table.insert(g_heroLvUpReward,temp.level,{level = temp.level,goods = goodcomd})
+		end
+		)
+end
+
+--主角升级额外奖励配置表<通过邮件发送>
+ReadheroLvUpReward_extra = function()
+		local title = {
+		{'level', tonumber},				--等级
+		{'goods', tostring},				--物品
+	}
+	local count = 0
+	LoadConfig('data/herolevelupreward_extra.txt',title,
+		function(row)
+			count = count + 1
+			local temp = row
+			local goodcomd = loadstring("return".. temp.goods)()
+			table.insert(g_heroLvUpReward_extra,temp.level,{level = temp.level,goods = goodcomd})
 		end
 		)
 end
@@ -1441,6 +1530,134 @@ ReadgvgNpc = function()
 		)
 end
 
+--大城配置
+ReadGCLDInfo = function()
+	local title = {
+		{'id', tonumber},				    	--大城id
+		{'name', tostring},						--名称
+		{'everyReward1',tostring},				--每日奖励1
+		{'everyReward2',tostring},				--每日奖励2
+		{'everyReward3',tostring},				--每日奖励3
+		{'everyReward4',tostring},				--每日奖励4
+		{'star1',tostring},						--星星奖励1
+		{'star2',tostring}						--星星奖励2
+	}
+	local count = 0
+	LoadConfig('data/gcldconfig.txt',title,
+		function(row)
+			count = count + 1
+			local temp = row
+			temp.everyReward1 = loadstring("return" .. temp.everyReward1)()
+			temp.everyReward2 = loadstring("return" .. temp.everyReward2)()
+			temp.everyReward3 = loadstring("return" .. temp.everyReward3)()
+			temp.everyReward4 = loadstring("return" .. temp.everyReward4)()
+			temp.star1 = loadstring("return" .. temp.star1)()
+			temp.star2 = loadstring("return" .. temp.star2)()
+			g_gcldInfo[temp.id] = temp
+		end
+		)
+end
+
+--g_gcldNpc
+ReadGCLDNpcConfig = function()
+	local title = {
+		{'cityid', tonumber},					--城池id
+		{'mainHeroId', tonumber},				--主将id
+		{'mainHeroClass', tonumber},			--主将阶级
+		{'mainHeroLevel',tonumber},				--主将等级
+		{'viceHero1Id',tonumber},				--副将1id
+		{'viceHero1Class',tonumber},			--副将1阶级
+		{'viceHero1Level',tonumber},			--副将1等级
+		{'viceHero2Id',tonumber},				--副将2id
+		{'viceHero2Class',tonumber},			--副将2阶级
+		{'viceHero2Level',tonumber},			--副将2等级
+		{'soldier1Id',tonumber},				--士兵1id
+		{'soldier2Id',tonumber},				--士兵2id
+		{'soldier3Id',tonumber},				--士兵3id
+		{'soldierLevel',tonumber},				--士兵等级
+		{'money',tonumber},						--钱币
+		{'id1',tonumber},						--id
+		{'type1',tonumber},						--类型
+		{'num1',tonumber},						--数量
+		{'prob1',tonumber},						--概率
+		{'id2',tonumber},						--id
+		{'type2',tonumber},						--类型
+		{'num2',tonumber},						--数量
+		{'prob2',tonumber},						--概率
+		{'id3',tonumber},						--id
+		{'type3',tonumber},						--类型
+		{'num3',tonumber},						--数量
+		{'prob3',tonumber},						--概率
+		{'id4',tonumber},						--id
+		{'type4',tonumber},						--类型
+		{'num4',tonumber},						--数量
+		{'prob4',tonumber},						--概率
+		{'id5',tonumber},						--id
+		{'type5',tonumber},						--类型
+		{'num5',tonumber},						--数量
+		{'prob5',tonumber},						--概率
+		{'expend',tonumber},					--消耗的能力
+	}
+	local count = 0
+	LoadConfig('data/gcldfbconfig.txt',title,
+		function(row)
+			count = count + 1
+			local temp = row
+			local id = math.floor(temp.cityid / 10)
+			local index = math.floor(temp.cityid % 10)
+			if not g_gcldNpc[id] then
+				g_gcldNpc[id] = {}
+			end
+			table.insert(g_gcldNpc[id],index,temp)
+		end
+		)
+end
+
+--国战npc配置
+ReadGZNPCInfo = function()
+	local title = {
+		{'min', tonumber},				    	--大城id
+		{'max', tonumber},						--名称
+		{'mainHeroId', tonumber},				--主将id
+		{'mainHeroClass', tonumber},			--主将阶级
+		{'mainHeroLevel',tonumber},				--主将等级
+		{'viceHero1Id',tonumber},				--副将1id
+		{'viceHero1Class',tonumber},			--副将1阶级
+		{'viceHero1Level',tonumber},			--副将1等级
+		{'viceHero2Id',tonumber},				--副将2id
+		{'viceHero2Class',tonumber},			--副将2阶级
+		{'viceHero2Level',tonumber},			--副将2等级
+		{'soldier1Id',tonumber},				--士兵1id
+		{'soldier2Id',tonumber},				--士兵2id
+		{'soldier3Id',tonumber},				--士兵3id
+		{'soldierLevel',tonumber},				--士兵等级
+	}
+	local count = 0
+	LoadConfig('data/gznpc.txt',title,
+		function(row)
+            local temp = row
+			count = count + 1
+			g_gznpc[count] = temp
+		end
+		)
+end
+
+--国战npc id配置 呵呵
+ReadGZIDInfo = function()
+	local title = {
+		{'id', tonumber},				    	--呵呵
+	}
+	local count = 0
+	LoadConfig('data/gzid.txt',title,
+		function(row)
+            local temp = row
+            count = count + 1
+			g_gzidhehe[count] = temp
+		end
+		)
+end
+
+
 ReadNewFormation()
 ReadPassConfig()
 ReadRoleCardConfig()
@@ -1459,6 +1676,7 @@ ReadSpWhiteBoxConfig()
 ReadBlueBoxConfig()
 ReadPurPleBoxConfig()
 ReadOrangeBoxConfig()
+ReadRedBoxConfig()
 ReadheroBoxConfig()
 ReadFixBoxConfig()
 
@@ -1467,6 +1685,7 @@ ReadShopVip1Config()
 ReadShopVip2Config()
 ReadShopSixConfig()
 ReadShopPvpConfig()
+ReadShopGZConfig()
 ReadXssjconfig()
 ReadNpcConfig()
 ReadXzlyrewards()
@@ -1474,6 +1693,7 @@ ReadNpcHeroTrail()
 ReadPTHeroTrail()
 ReadSJHeroTrail()
 ReadheroLvUpReward()
+ReadheroLvUpReward_extra()
 ReadRoleHandBook()
 ReadsoldiersStreng()
 ReadserverLanguage()
@@ -1485,4 +1705,8 @@ ReaderrorCode()
 ReadBigCity()
 ReadSmallCity()
 ReadgvgNpc()
+ReadGCLDInfo()
+ReadGCLDNpcConfig()
+ReadGZNPCInfo()
+ReadGZIDInfo()
 g_EquipCardConfig = g_EquipConfig

@@ -37,6 +37,9 @@ PlayerData.eventAttr.m_curBagSize = 40 --当前玩家道具背包数量
 PlayerData.eventAttr.m_curEquipmentBagSize = 100 --当前玩家装备背包数量
 PlayerData.eventAttr.m_freeChatCnt = 0 --世界聊天免费次数
 PlayerData.eventAttr.m_vipFirstFlag = 0   --vip首充标示：是否有奖可领 1/0
+PlayerData.eventAttr.m_nengliang = 0 --玩家能量
+PlayerData.eventAttr.m_actif = 0 --玩家贡献
+PlayerData.eventAttr.m_campID = 0 --国家id
 function PlayerData:init()
     self.super.init(self)
     
@@ -70,7 +73,6 @@ function PlayerData:init()
             else
                 PlayerData.eventAttr.m_guideId = 0
             end
-
         --     self.dataInitFinish = true
         -- end
     end
@@ -155,6 +157,10 @@ function PlayerData:setPlayerPower(value)
         value = 2000
     end
     PlayerData.eventAttr.m_energy = value
+end
+
+function PlayerData:setNengLiang(value)
+    PlayerData.eventAttr.m_nengliang = value
 end
 
 

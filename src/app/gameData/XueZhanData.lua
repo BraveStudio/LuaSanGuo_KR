@@ -26,6 +26,7 @@ XueZhanData.xueZhanData.m_xzlyStar = 0            --剩余星数
 XueZhanData.xueZhanData.startTime = 0            --血战开启时间
 XueZhanData.xueZhanData.endTime = 0            --血战开启时间
 XueZhanData.xueZhanData.buffFlag = 0              --血战Buff
+XueZhanData.xueZhanData.m_xzRate = 1           --奖励倍数
 XueZhanData.xueZhanData.buff = {}                 --当buffFlag=1时有效 
 --发送
 function XueZhanData:loadXueZhanData(hander)

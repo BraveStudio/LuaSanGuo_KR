@@ -68,7 +68,7 @@ end
 function SpellPiece:initSkillData_(skillInfo)
 	
 	local skillData = {}
-	skillData.m_skillId = skillInfo["ID"]
+	skillData.m_skillId = skillInfo.ID
     skillData.m_skillName = skillInfo["技能名字"]
     skillData.m_SkillDescribe = skillInfo["技能描述"]
     skillData.m_SkillCd = skillInfo["CD时间"] * CombatCenter.BATTLE_FPS
@@ -111,7 +111,7 @@ end
 
 function SpellPiece:initPassiveSkillData_(skillInfo)
     local passiveSkillData = {}
-    passiveSkillData.m_id = skillInfo["id"]
+    passiveSkillData.m_id = skillInfo.id
     passiveSkillData.m_name = skillInfo["name"]
     passiveSkillData.m_describe = skillInfo["describe"]
     passiveSkillData.m_addHp = skillInfo["hpPercent"]
